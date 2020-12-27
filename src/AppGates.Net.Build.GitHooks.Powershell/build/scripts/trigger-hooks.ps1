@@ -1,6 +1,6 @@
 ﻿param (
     [string]
-    $hookFilePath = "C:\git\appgates\infrastructure.versioning\src\AppGates.Net.Build.GitHooks.Powershell\build\hooks\pre-commit",
+    $hookFilePath = "C:\git\appgates\build\src\AppGates.Net.Build.GitHooks.Powershell\build\hooks\pre-commit",
 
     [bool]
     $invokeDirect = $false
@@ -110,11 +110,13 @@
     }
 }
 catch
-{
-    if (!$psISE)
+{	    
+
+    Write-Host "Fatal in git hooks powershell error occurred:  $_.Exception.Message" -ForegroundColor Red;;
+
+#    if (!$psISE)
     {
-	    Write-Host "Fatal in git hooks powershell error occurred:  $_.Exception.Message" -ForegroundColor Red;;
-	    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+#	    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
     }
 
     exit 100
