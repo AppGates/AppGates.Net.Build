@@ -6,6 +6,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>False</GenerateDependencyFile>
+    <Nuget_AutoPushEnabled>false</Nuget_AutoPushEnabled>
+    <Nuget_AutoPushPublishLevels>none</Nuget_AutoPushPublishLevels>
   </PropertyGroup>
 
   <ItemGroup>

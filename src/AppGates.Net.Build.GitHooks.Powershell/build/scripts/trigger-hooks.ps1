@@ -57,7 +57,7 @@
             {
                 $hookScripts.Add($hookScript)
             }
-            else if(est-Path -path $genericScript -PathType Leaf)
+            elseif(Test-Path -path $genericScript -PathType Leaf)
             {
                 $hookScripts.Add($genericScript)
             }

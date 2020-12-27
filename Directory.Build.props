@@ -6,7 +6,11 @@
     <UseVersioningSdk>true</UseVersioningSdk>
     <UseLatestSdk>true</UseLatestSdk>
     <!--<UseVersioningSdk  Condition="'$(MSBuildProjectName)' == 'AppGates.Build.ApiManagement.Sdk'" >false</UseVersioningSdk>-->
-
+    <!--<Nuget_AutoPush_Gitlab_ServerUrl>https://gitlab.com</Nuget_AutoPush_Gitlab_ServerUrl>
+    <Nuget_AutoPush_Gitlab_Project>23327371</Nuget_AutoPush_Gitlab_Project>
+       <Nuget_AutoPush_Gitlab_Username>$(GitLab_UserName)</Nuget_AutoPush_Gitlab_Username>
+       <Nuget_AutoPush_Gitlab_Password>$(GitLab_AccessToken)</Nuget_AutoPush_Gitlab_Password>-->
+ <Nuget_AutoPush_NugetOrgToken>$(AppGates_Nuget_PushToken)</Nuget_AutoPush_NugetOrgToken>
     <Nuget_AutoPush_DefaultSource_ApiKey>$(AppGates_Nuget_PushToken)</Nuget_AutoPush_DefaultSource_ApiKey>
   </PropertyGroup>
   <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.3.1609081814" Project="Sdk.props"/>
@@ -15,7 +19,8 @@
     <When Condition="'$(MSBuildProjectName)' != '_Root'">
 
       <PropertyGroup>
-        <Nuget_AutoPushEnabled>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test').Equals(false))</Nuget_AutoPushEnabled>
+        <Nuget_AutoPushPublishLevels>global</Nuget_AutoPushPublishLevels>
+        <Nuget_AutoPushPublishLevels Condition="$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test'))">internal</Nuget_AutoPushPublishLevels>
 
         <IsNoBinaryPackage>$(MSBuildProjectName.StartsWith('AppGates.Net.Build.'))</IsNoBinaryPackage>
         <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
