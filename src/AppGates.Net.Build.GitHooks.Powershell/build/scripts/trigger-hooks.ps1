@@ -1,6 +1,6 @@
 ﻿param (
     [string]
-    $hookFilePath = "C:\git\collaboration\infrastructure.versioning\src\AppGates.Net.Build.GitHooks.Powershell\build\hooks\pre-commit",
+    $hookFilePath = "C:\git\appgates\infrastructure.versioning\src\AppGates.Net.Build.GitHooks.Powershell\build\hooks\pre-commit",
 
     [bool]
     $invokeDirect = $false

@@ -55,11 +55,11 @@
 catch
 {
 
-        if (!$psISE)
-        {
-	        Write-Host "Fatal in git hooks powershell error occurred:  $_.Exception.Message" -ForegroundColor Red;;
-	        $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
-        }
+    if (!$psISE)
+    {
+	    Write-Host "Fatal in git hooks powershell error occurred:  $_.Exception.Message" -ForegroundColor Red;
+	    $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
+    }
 
     exit 100
 }
