@@ -22,6 +22,7 @@
     <None Include=".git-ps-hooks\pre-push.ps1" />
     <None Include=".git-ps-hooks\pre-rebase.ps1" />
     <None Include=".git-ps-hooks\pre-receive.ps1" />
+    <None Include=".gitlab-ci.yml" />
     <None Include="Directory.Build.props" />
     <None Include="Directory.Build.targets" />
     <None Include="NuGet.Config" />
@@ -29,6 +30,12 @@
     <None Include="src\.git-ps-hooks\pre-commit.ps1" />
   </ItemGroup>
 
+  <Target Name="PackSolution">
+    <ItemGroup>
+      <SolutionFileToPack Include="src\*.sln"/>
+    </ItemGroup>
+    <Exec Command="dotnet pack %(SolutionFileToPack.Identity)"/>
+  </Target>
 
 
   <!-- BEGIN disable default compile and copy binary behaviour -->

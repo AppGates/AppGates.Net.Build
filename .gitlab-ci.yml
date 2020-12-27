@@ -1,0 +1,5 @@
+build:
+  image: mcr.microsoft.com/dotnet/sdk:latest
+  stage: build
+  script:
+    - dotnet pack
