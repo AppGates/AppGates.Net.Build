@@ -1,0 +1,30 @@
+﻿<Project>
+  <PropertyGroup>
+
+    <OriginalGeneratePackageOnBuild>$(GeneratePackageOnBuild)</OriginalGeneratePackageOnBuild>
+    <GeneratePackageOnBuild>$(OriginalGeneratePackageOnBuild.Equals(false))</GeneratePackageOnBuild>
+    <GeneratePackageOnBuildIsGlobal>$(OriginalGeneratePackageOnBuild.Equals($(GeneratePackageOnBuild)))</GeneratePackageOnBuildIsGlobal>
+    <NoBuild>$(GeneratePackageOnBuildIsGlobal)</NoBuild>
+    <GeneratePackageOnBuild Condition="$(GeneratePackageOnBuildIsGlobal) == false">$(OriginalGeneratePackageOnBuild)</GeneratePackageOnBuild>
+    <BuildDependsOn
+      Condition="$(NoBuild)"></BuildDependsOn>
+    
+  </PropertyGroup>
+
+  <Target Name="ToggleNoBuildOff"
+          Condition="$(GeneratePackageOnBuildIsGlobal)"
+          BeforeTargets="_CheckForBuildWithNoBuild">
+    <PropertyGroup>
+      <NoBuild>false</NoBuild>
+    </PropertyGroup>
+  </Target>
+  
+  <Target Name="ToggleNoBuildOn"
+          Condition="$(GeneratePackageOnBuildIsGlobal)"
+          AfterTargets="_CheckForBuildWithNoBuild">
+    <PropertyGroup>
+      <NoBuild>true</NoBuild>
+    </PropertyGroup>
+  </Target>
+
+</Project>

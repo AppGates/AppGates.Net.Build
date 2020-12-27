@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppGates.Build.Versioning.Test.ExternalLibrary" Version="*" />
+    <ProjectReference Include="..\AppGates.Build.Versioning.Test.InternalLibrary\AppGates.Build.Versioning.Test.InternalLibrary.csproj">
+      <!--<AdditionalProperties>GeneratePackageOnBuild=true</AdditionalProperties>-->
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

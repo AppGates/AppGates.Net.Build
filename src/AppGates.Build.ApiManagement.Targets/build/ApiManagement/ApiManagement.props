@@ -1,0 +1,29 @@
+﻿<Project>
+
+  <!--<ItemGroup>
+    <PackageReference Include="AppGates.Build.ApiManagement.Tasks" Version="*" PrivateAssets ="all"/>
+  </ItemGroup>-->
+
+  <PropertyGroup>
+    <PublicApiShippedFilePath>PublicAPI.Shipped.txt</PublicApiShippedFilePath>
+    <PublicApiUnshippedFilePath>PublicAPI.Unshipped.txt</PublicApiUnshippedFilePath>
+    <CompileErrorOnBreakingChange Condition="'$(CompileErrorOnBreakingChange)' == ''">true</CompileErrorOnBreakingChange>
+    <WarningsAsErrors Condition="$(CompileErrorOnBreakingChange)">$(WarningsAsErrors);RS0016;RS0017;RS0022;RS0024;RS0025;RS0026;RS0027</WarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="$(PublicApiShippedFilePath)" />
+    <AdditionalFiles Include="$(PublicApiUnshippedFilePath)" />
+  </ItemGroup>
+  <!--<ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="3.3.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>-->
+  <Target Name="EnsureApiFilesExist" BeforeTargets="BeforeBuild">
+    <WriteLinesToFile File="$(PublicApiShippedFilePath)" Lines="" 
+                      Condition="Exists('$(PublicApiShippedFilePath)') == false"/>
+    <WriteLinesToFile File="$(PublicApiUnshippedFilePath)" Lines=""
+                    Condition="Exists('$(PublicApiUnshippedFilePath)') == false"/>
+  </Target>
+</Project>

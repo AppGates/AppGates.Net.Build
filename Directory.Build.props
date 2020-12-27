@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project  >
+
+  <PropertyGroup>
+    <DirectoryBuildProps>true</DirectoryBuildProps>
+    <UseVersioningSdk>true</UseVersioningSdk>
+    <UseLatestSdk>true</UseLatestSdk>
+    <!--<UseVersioningSdk  Condition="'$(MSBuildProjectName)' == 'AppGates.Build.ApiManagement.Sdk'" >false</UseVersioningSdk>-->
+
+    <Nuget_AutoPush_DefaultSource_ApiKey>$(AppGates_Nuget_PushToken)</Nuget_AutoPush_DefaultSource_ApiKey>
+  </PropertyGroup>
+  <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.64.1608744270" Project="Sdk.props"/>
+
+  <Choose>
+    <When Condition="'$(MSBuildProjectName)' != '_Root'">
+
+      <PropertyGroup>
+        <Nuget_AutoPushEnabled>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test').Equals(false))</Nuget_AutoPushEnabled>
+
+        <IsNoBinaryPackage>$(MSBuildProjectName.StartsWith('AppGates.Net.Build.'))</IsNoBinaryPackage>
+        <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
+        <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
+        <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
+
+        <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->
+        <PackageOutputPath>$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
+        <!--<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>-->
+        <!--<RebuildOnVisualStudioPack>true</RebuildOnVisualStudioPack>-->
+
+
+
+        <TestProperty  >$(CI.Equals('true'))</TestProperty>
+        <TestProperty2 Condition="'$(TestProperty2)' == ''">$(TestProperty.Equals('False'))</TestProperty2>
+        <!--<TestProperty2 Condition="'$(TestProperty)' == 'false'">true</TestProperty2>-->
+
+
+      </PropertyGroup>
+
+      
+      <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+
+        <PackageReference Include="Nerdbank.GitVersioning" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <!--<PackageReference Include="AppGates.Build.ApiManagement.Targets" Version="*">
+    <PrivateAssets>all</PrivateAssets>
+    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+  </PackageReference>-->
+
+
+        <PackageReference Include="AppGates.Net.Build.TransitivePack" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets> build; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+
+
+
+        <PackageReference Include="AppGates.Net.Build.LocalVersioning" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="AppGates.Net.Build.Hooks" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+        
+        <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+
+        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+        </PackageReference>
+      </ItemGroup>
+
+    </When>
+  </Choose>
+
+
+
+
+
+
+  <!--<PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>-->
+
+  <!--<Sdk Name="AppGates.Build.ApiManagement.Sdk" Version="1.1.64.1608740523"/>-->
+
+
+
+  <!--<ItemGroup>
+    <PackageReference 
+      Condition="'$(MSBuildProjectName)' != 'AppGates.Build.ApiManagement.Targets' AND '$(MSBuildProjectName)' != 'AppGates.Build.ApiManagement.Sdk'" 
+      Include="AppGates.Build.ApiManagement.Targets" Version="*"/>
+  </ItemGroup>-->
+
+
+  
+  
+  
+</Project>

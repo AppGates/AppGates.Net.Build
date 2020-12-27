@@ -1,0 +1,21 @@
+﻿<Project>
+  <ItemGroup>
+    <None Update="buildMultiTargeting\**\*">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="Sdk\**\*">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="build\**\*">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="buildTransitive\**\*">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+
+  </ItemGroup>
+</Project>

@@ -1,0 +1,8 @@
+﻿<Project>
+  <PropertyGroup>
+    <!--<IsNoBinaryPackage Condition="'$(IsNoBinaryPackage)' == ''">$([System.IO.Directory]::GetFiles('$(MSBuildProjectDirectory)','*.cs', SearchOption.AllDirectories).get_Length().Equals(0))</IsNoBinaryPackage>-->
+    <IsNoBinaryPackage Condition="'$(IsNoBinaryPackage)' == ''">true</IsNoBinaryPackage>
+  </PropertyGroup>
+
+  <Import Condition="'$(IsNoBinaryPackage)' == 'true'" Project="targets\DisableBinaryOutput.targets" />
+</Project>

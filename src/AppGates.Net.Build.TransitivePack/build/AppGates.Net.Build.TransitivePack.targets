@@ -1,0 +1,26 @@
+﻿<Project>
+
+   <Import Project="targets\SupressVisualStudioDepedencyBuild.targets" 
+          Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+
+  <Import Project="targets\FixVisualStudioPack.targets" 
+          Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+
+
+  <!--Will be invoked by FixVisualStudioPack.targets-->
+  <Target Name="RecursivePack">
+    <MSBuild
+   Targets="RecursivePack"
+   Projects="@(ProjectReference)"
+   Properties="NoBuild=true"
+   RemoveProperties="TargetFramework;BuildingInsideVisualStudio"
+   />
+
+    <Message Importance="high" Condition="$(IsPackable)" Text="RecursivePack: $(MSBuildProjectName)"/>
+    <CallTarget Targets="Pack" Condition="$(IsPackable)"/>
+   
+
+  </Target>
+ 
+ 
+</Project>

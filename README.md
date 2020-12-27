@@ -1,0 +1,1 @@
+# AppGates.Build.Versioning

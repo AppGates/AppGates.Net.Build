@@ -1,0 +1,7 @@
+﻿<Project>
+
+  <Import Project="targets\RestoreHandling.targets"/>
+  <!--<Import Project="targets\FixRebuildForMultiTargetProjects.targets" Condition="'$(TargetFramework)' == ''"/>
+  <Import Project="targets\ProvideCleanOnlyHook.targets" />-->
+
+</Project>

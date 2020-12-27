@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AvoidCycleErrorOnSelfReference>true</AvoidCycleErrorOnSelfReference>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeProjectBinaryOutput>false</IncludeProjectBinaryOutput>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+ 
+  <Target Name="RemoveCompile" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Compile Remove="@(Compile)" />
+    </ItemGroup>
+  </Target>
+  <!--<ItemGroup>
+    <None Update="buildMultiTargeting\AppGates.Net.Build.TransitivePack.props">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="buildMultiTargeting\AppGates.Net.Build.TransitivePack.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="build\AppGates.Net.Build.TransitivePack.props">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="build\AppGates.Net.Build.TransitivePack.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="build\targets\SupressVisualStudioDepedencyBuild.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="build\targets\FixVisualStudioPack.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>-->
+
+</Project>

@@ -1,0 +1,16 @@
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChange
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChange.UpdateVersion(System.Func<(System.IO.DirectoryInfo RepositoryDirectory, LibGit2Sharp.StatusOptions Options), System.Collections.Generic.IEnumerable<LibGit2Sharp.StatusEntry>> getStatus) -> Nerdbank.GitVersioning.VersionOptions
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChange.UpdateVersionOnApiChange(System.IO.DirectoryInfo projectDirectory, System.IO.FileInfo gitVersionFile = null, System.IO.FileInfo publicApiShippedFile = null, System.IO.FileInfo publicApiUnshippedFile = null, System.IO.FileInfo packageLockFile = null) -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.GitVersionFilePath.get -> string
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.GitVersionFilePath.set -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PackageLockFilePath.get -> string
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PackageLockFilePath.set -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.ProjectDirectoryPath.get -> string
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.ProjectDirectoryPath.set -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PublicApiShippedFilePath.get -> string
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PublicApiShippedFilePath.set -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PublicApiUnshippedFilePath.get -> string
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.PublicApiUnshippedFilePath.set -> void
+AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.UpdateVersionOnApiChangeTask() -> void
+override AppGates.Build.ApiManagement.Tasks.UpdateVersionOnApiChangeTask.Execute() -> bool

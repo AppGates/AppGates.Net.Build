@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.Build.NoTargets/2.0.1">
+  <!--<Sdk Name="AppGates.Build.ApiManagement.Sdk" Version="1.1.64.1608740523"/>-->
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>False</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="version.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppGates.Net.Build.GitHooks.Powershell" PrivateAssets="all" Version="*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".git-ps-hooks\pre-commit.ps1" />
+    <None Include=".git-ps-hooks\pre-merge-commit.ps1" />
+    <None Include=".git-ps-hooks\pre-push.ps1" />
+    <None Include=".git-ps-hooks\pre-rebase.ps1" />
+    <None Include=".git-ps-hooks\pre-receive.ps1" />
+    <None Include="Directory.Build.props" />
+    <None Include="Directory.Build.targets" />
+    <None Include="NuGet.Config" />
+    <None Include="README.md" />
+    <None Include="src\.git-ps-hooks\pre-commit.ps1" />
+  </ItemGroup>
+
+
+
+  <!-- BEGIN disable default compile and copy binary behaviour -->
+  <!--<Target Name="Build" DependsOnTargets=""></Target>
+  <Target Name="CoreCompile" />
+  <PropertyGroup>
+    <SkipCopyBuildProduct>true</SkipCopyBuildProduct>
+  </PropertyGroup>-->
+  <!-- END disable default compile and copy binary behaviour -->
+</Project>

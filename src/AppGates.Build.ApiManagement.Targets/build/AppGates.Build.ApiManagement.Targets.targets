@@ -1,0 +1,6 @@
+﻿<Project>
+
+  <!--<Import  Condition="$(UseApiManagement)" Project="LocalPack\LocalPack.targets"/>-->
+  <Import  Condition="$(UseApiManagement)" Project="ApiManagement\ApiManagement.targets"/>
+
+</Project>

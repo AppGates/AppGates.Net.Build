@@ -1,0 +1,2 @@
+AppGates.Build.Versioning.Test.ExternalLibrary.Class1ztzoioiwerwasdasasda
+AppGates.Build.Versioning.Test.ExternalLibrary.Class1ztzoioiwerwasdasasda.Class1ztzoioiwerwasdasasda() -> void

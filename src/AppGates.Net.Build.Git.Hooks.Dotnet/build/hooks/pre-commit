@@ -1,0 +1,16 @@
+#!/bin/sh
+$0/../../scripts/trigger-hooks.sh $0
+
+# "C:\Program Files\Git\bin\bash.exe" -i -c $0/../pre-commit.sh --window full --needs-console
+# "C:\Program Files\Git\git-bash.exe"  -c $0/../pre-commit.sh --needs-console
+
+
+
+# list all build ins 
+# compgen -b
+
+# get all available commands
+#compgen -c
+
+# powershell $0/../pre-commit.ps1 &
+

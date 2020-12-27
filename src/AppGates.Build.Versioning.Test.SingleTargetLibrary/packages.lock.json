@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "dependencies": {
+    ".NETFramework,Version=v4.8": {
+      "AppGates.Build.ApiManagement.Sdk": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.64.1608760930",
+        "contentHash": "Vs5WjucMxoyyX0wWQ0L6DvWR1Xc5wJGlSD/mBsUjpLw4dNWonONkAIbEnHGJir6o76g/yDW8Rtux7GpS5aDnZw=="
+      },
+      "AppGates.Net.Build.Deterministic": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.9.1608467458",
+        "contentHash": "ItHNLpFJgIyUQ+5KYVOeOd+4gx8nEKHo6GM/Pe/3RRL+L2R+5f93QxClYxz8sWUwrRxYXBiUIy8qb4z13OH2Gg=="
+      },
+      "AppGates.Net.Build.Hooks": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.30.1608489540",
+        "contentHash": "QbHSdKxCPTb9S+IksRgRY7VRLnduHP+uVfY9TliFP3PuEIvFr+kIItOnmGSJTGsNaByD/WWMlVMLdT08I2IhSQ=="
+      },
+      "AppGates.Net.Build.LocalVersioning": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.30.1608501058",
+        "contentHash": "0jG7JTSm2+qXw7qCoBprSeDKxMAWN8QF3AHCa8MjGC9s8EnPuIKES8BmCn38qjC1TwJ/dfXJU4hliiZ3wtVOTQ=="
+      },
+      "AppGates.Net.Build.NoBinaryPackage": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.30.1608489466",
+        "contentHash": "Q70MO/+qjdqJEt6WH1H05ewt6gaUJT/9zywiIHzeYDlrA0uhTTycAgvb5fkau1OXts0DsZBtz7c3iHpBUR1iFQ=="
+      },
+      "AppGates.Net.Build.Packaging.AutoPush": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.66.1609069232",
+        "contentHash": "wpVlpRDGMzpqC7T4rd66i8+c3dMWBxMq4GF8Li7Qjmfy/KPysaLyfohMUYCo5gtfMxhkXxzpTW7LgIAYPbuKRw=="
+      },
+      "AppGates.Net.Build.TargetPackage": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.30.1608479419",
+        "contentHash": "4i9MUl2C0d6RJZ1OIt55g1XCWGekOh+z358zLhJWJfCHtuBkYKIVScFNZ08bKNIqSHf6mzR4T5QciIDoaYVtcA=="
+      },
+      "AppGates.Net.Build.TransitivePack": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "1.1.30.1608479393",
+        "contentHash": "xv6pbqNN08zRoVmMsE0jWWqyLbYP4NywIA6e5yRMx/HTQFODeMHHFVlFHtiqGkkBOnLz9P+twsnbCndMqkTF5w=="
+      },
+      "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "3.3.2",
+        "contentHash": "jlQnHJZX+Y3WygwqKNRTp/BtnSb/o+a2FFn/Ot7jeSCC5ZtrHtOi04gw5o3WSEU3OpVzrKjZVQRUwKFJncxKyA=="
+      },
+      "Microsoft.NETFramework.ReferenceAssemblies": {
+        "type": "Direct",
+        "requested": "[1.0.0, )",
+        "resolved": "1.0.0",
+        "contentHash": "7D2TMufjGiowmt0E941kVoTIS+GTNzaPopuzM1/1LSaJAdJdBrVP0SkZW7AgDd0a2U1DjsIeaKG1wxGVBNLDMw==",
+        "dependencies": {
+          "Microsoft.NETFramework.ReferenceAssemblies.net48": "1.0.0"
+        }
+      },
+      "Nerdbank.GitVersioning": {
+        "type": "Direct",
+        "requested": "[*, )",
+        "resolved": "3.3.37",
+        "contentHash": "YlDKV/gSHQGDThWSGqVyPfKeNP/kx1fj/NPFFgGc/cxzgIbXv4jtYOcbFOz3ZIeAKtpCcSAmVNDOikBs3OxI/A=="
+      },
+      "AppGates.Build.Versioning.Test.ExternalLibrary": {
+        "type": "Transitive",
+        "resolved": "1.1.33.1608480196",
+        "contentHash": "OAp3GyQfzRvqFyEM/HQo+NHddPVtFAEKTMfxzwZpfRiytw2lkPlZd7c+2LGIuKE6pvYfIZ1YjPIFKmQR6Fznbg==",
+        "dependencies": {
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.1.33.1608480194"
+        }
+      },
+      "AppGates.Build.Versioning.Test.TransitiveLibrary": {
+        "type": "Transitive",
+        "resolved": "1.1.33.1608480194",
+        "contentHash": "R62nEi1EXTsjf/hO85TqBGHC/pTj1YlOrRLZEIZx6E9ZY6phQU9SWC+OOARy23BuoCAC5C3YUv8QhSia3hjVNw=="
+      },
+      "Microsoft.NETFramework.ReferenceAssemblies.net48": {
+        "type": "Transitive",
+        "resolved": "1.0.0",
+        "contentHash": "k2VyV/lct0PT9dS3Il90tBpoM2V/4dJuP5iXe1ckLbBp5FZP1XUsNbRtkuSuzcuqHm1j0OVRPdV980S4bJRe0A=="
+      },
+      "appgates.build.versioning.test.internal.multitarget": {
+        "type": "Project",
+        "dependencies": {
+          "AppGates.Build.Versioning.Test.ExternalLibrary": "0.0.0",
+          "AppGates.Build.Versioning.Test.InternalLibrary": "1.0.0"
+        }
+      },
+      "appgates.build.versioning.test.internallibrary": {
+        "type": "Project",
+        "dependencies": {
+          "AppGates.Build.Versioning.Test.TransitiveProjectLibrary": "1.0.0"
+        }
+      },
+      "appgates.build.versioning.test.multitargetlibrary": {
+        "type": "Project",
+        "dependencies": {
+          "AppGates.Build.Versioning.Test.ExternalLibrary": "0.0.0",
+          "AppGates.Build.Versioning.Test.Internal.MultiTarget": "1.0.0",
+          "AppGates.Build.Versioning.Test.InternalLibrary": "1.0.0"
+        }
+      },
+      "appgates.build.versioning.test.transitiveprojectlibrary": {
+        "type": "Project"
+      }
+    }
+  }
+}

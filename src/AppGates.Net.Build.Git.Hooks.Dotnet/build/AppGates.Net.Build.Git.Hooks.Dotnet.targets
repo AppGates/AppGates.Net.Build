@@ -1,0 +1,12 @@
+﻿<Project>
+  <PropertyGroup>
+    <GitPreCommitDependsOn Condition="'$(GitPreCommitDependsOn)' == ''"></GitPreCommitDependsOn>
+    <GitPreCommitBeforeTargets Condition="'$(GitPreCommitBeforeTargets)' == ''"></GitPreCommitBeforeTargets>
+  </PropertyGroup>
+
+  <Target Name ="GitPreCommit" DependsOnTargets="$(GitPreCommitDependsOn)" BeforeTargets="$(GitPreCommitBeforeTargets)">
+    
+  </Target>
+  
+
+</Project>

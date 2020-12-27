@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AppGates.Build.Versioning.Test.ExternalLibrary" Version="*" />
+    <ProjectReference Include="..\AppGates.Build.Versioning.Test.Internal.MultiTarget\AppGates.Build.Versioning.Test.Internal.MultiTarget.csproj" />
+    <ProjectReference Include="..\AppGates.Build.Versioning.Test.InternalLibrary\AppGates.Build.Versioning.Test.InternalLibrary.csproj">
+      <!--<AdditionalProperties>GeneratePackageOnBuild=true</AdditionalProperties>-->
+    </ProjectReference>
+  </ItemGroup>
+
+</Project>

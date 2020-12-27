@@ -1,0 +1,2 @@
+AppGates.Build.Versioning.Test.ReferencingLibrary.Class123
+AppGates.Build.Versioning.Test.ReferencingLibrary.Class123.Class123() -> void

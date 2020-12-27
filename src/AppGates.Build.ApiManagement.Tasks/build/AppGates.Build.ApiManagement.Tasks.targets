@@ -1,0 +1,11 @@
+﻿<Project>
+
+  <Import Project="targets\ApiManagementToVersioning\ApiManagementToVersioning.targets"/>
+
+  <Target Name="Loglog" BeforeTargets="BeforeBuild">
+    <Message  Importance="high" Text="PkgNerdBank_GitVersioning: $(PkgNerdBank_GitVersioning)"/>
+  </Target>
+
+
+
+</Project>

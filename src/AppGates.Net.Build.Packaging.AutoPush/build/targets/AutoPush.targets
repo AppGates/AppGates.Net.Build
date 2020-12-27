@@ -1,0 +1,93 @@
+﻿<Project>
+ 
+  <PropertyGroup>
+    <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">true</Nuget_AutoPushEnabled>
+
+
+    <!--GitLab-->
+    <Nuget_AutoPush_Gitlab_Project Condition="'$(Nuget_AutoPush_Gitlab_Project)' == ''">$(CI_PROJECT_ID)</Nuget_AutoPush_Gitlab_Project>
+    <Nuget_AutoPush_Gitlab_Enabled Condition="'$(Nuget_AutoPush_Gitlab_Enabled)' == ''">true</Nuget_AutoPush_Gitlab_Enabled>
+  </PropertyGroup>
+  <!--GitLab-->
+  <PropertyGroup Condition="'$(Nuget_AutoPush_Gitlab_Enabled)' == 'true' AND '$(Nuget_AutoPush_Gitlab_Project)' != ''">
+   
+    <Nuget_AutoPush_DefaultSource_Address 
+      Condition="'$(Nuget_AutoPush_DefaultSource_Address)' == ''">$(CI_SERVER_URL)/api/v4/projects/$(Nuget_AutoPush_Gitlab_Project)/packages/nuget/index.json</Nuget_AutoPush_DefaultSource_Address>
+
+    <Nuget_AutoPush_DefaultSource_Username
+      Condition="'$(Nuget_AutoPush_DefaultSource_Username)' == ''">$(CI_DEPLOY_USER)</Nuget_AutoPush_DefaultSource_Username>
+  
+    <Nuget_AutoPush_DefaultSource_Username
+      Condition="'$(Nuget_AutoPush_DefaultSource_Username)' == ''">PushUser</Nuget_AutoPush_DefaultSource_Username>
+
+    <Nuget_AutoPush_DefaultSource_Password
+      Condition="'$(Nuget_AutoPush_DefaultSource_Password)' == ''">$(CI_DEPLOY_PASSWORD)</Nuget_AutoPush_DefaultSource_Password>
+
+    <Nuget_AutoPush_DefaultSource_Password
+      Condition="'$(Nuget_AutoPush_DefaultSource_Password)' == ''">$(CI_JOB_TOKEN)</Nuget_AutoPush_DefaultSource_Password>
+   
+    <Nuget_AutoPush_Gitlab_Enabled 
+      Condition="'$(Nuget_AutoPush_Gitlab_Enabled)' == ''">$(Nuget_AutoPush_Gitlab_Password.Equals('').Equals(false))</Nuget_AutoPush_Gitlab_Enabled>
+  </PropertyGroup>
+  <!--nuget.org fallback when api key is defined-->
+  <PropertyGroup Condition="'$(Nuget_AutoPush_DefaultSource_ApiKey)' !=''">
+    <Nuget_AutoPush_DefaultSource_Address 
+      Condition="'$(Nuget_AutoPush_DefaultSource_Address)' == ''">https://api.nuget.org/v3/index.json</Nuget_AutoPush_DefaultSource_Address>
+  </PropertyGroup>
+  
+  <!--Auto Push Source-->
+  <ItemGroup Condition="'$(Nuget_AutoPush_DefaultSource_Address)' != ''">
+    <Nuget_AutoPushSource Include="AutoPush_DefaultSource">
+      <Address>$(Nuget_AutoPush_DefaultSource_Address)</Address>
+      <Username Condition="'$(Nuget_AutoPush_DefaultSource_Username)' != ''">$(Nuget_AutoPush_DefaultSource_Username)</Username>
+      <Password Condition="'$(Nuget_AutoPush_DefaultSource_Password)' != ''">$(Nuget_AutoPush_DefaultSource_Password)</Password>
+      <ApiKey Condition="'$(Nuget_AutoPush_DefaultSource_ApiKey)' != ''">$(Nuget_AutoPush_DefaultSource_ApiKey)</ApiKey>
+    </Nuget_AutoPushSource>
+  </ItemGroup>
+
+
+  <Target Name="LogAutoPushSettings"  BeforeTargets="AutoPush" Condition="'$(IsPackable)' == 'true'">
+    <Message Importance="$(BuildSdkLogPriority)" Text="Nuget_AutoPushEnabled is set to: '$(Nuget_AutoPushEnabled)'. To activate it set the environment variable or msbuild property Nuget_AutoPushEnabled to true."></Message>
+    <Message Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '@(Nuget_AutoPushSource)' != ''" Importance="$(BuildSdkLogPriority)" Text="Pushing to sources '@(Nuget_AutoPushSource)' you can change it by adding items to the 'Nuget_AutoPushSource' item group. The identity is the name of the source, possible MetaData Items are: Address, Username/Password or ApiKey."></Message>
+  </Target>
+
+  <Target Name="AutoPush" AfterTargets="Pack" Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '$(IsPackable)' == 'true'">
+
+    <ItemGroup>
+      <Nuget_AutoPushSource_WithBasicAuth Include="@(Nuget_AutoPushSource->HasMetadata('Password'))"/>
+      <Nuget_AutoPushSource_WithApiKeyAuth Include="@(Nuget_AutoPushSource->HasMetadata('ApiKey'))"/>
+      <Nuget_AutoPushSource_WithNoAuth Include="@(Nuget_AutoPushSource)" Exclude="@(Nuget_AutoPushSource_WithBasicAuth);@(Nuget_AutoPushSource_WithApiKeyAuth)"/>
+    </ItemGroup>
+    
+    <PropertyGroup>
+      <Nuget_AutoPush_PackagePath>$(PackageOutputPath.TrimEnd('\'))\$(PackageId).$(PackageVersion).nupkg</Nuget_AutoPush_PackagePath>
+      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithApiKeyAuth.Address)" -k "%(Nuget_AutoPushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
+      <PushWithConfigCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
+      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
+      <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
+    </PropertyGroup>
+
+    <!--with config (basic auth)-->
+    <Delete Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" Files="$(PushNugetConfigPath)"/>
+
+    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
+          Command="dotnet new nugetconfig" ></Exec>
+
+    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
+          Command="dotnet nuget add source %(Nuget_AutoPushSource_WithBasicAuth.Address) -n %(Nuget_AutoPushSource_WithBasicAuth.Identity) -u %(Nuget_AutoPushSource_WithBasicAuth.Username) -p %(Nuget_AutoPushSource_WithBasicAuth.Password)" ></Exec>
+
+    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
+          Command="$(PushWithConfigCommand)" />
+
+    <!--with api key-->
+    <Exec Condition="'@(Nuget_AutoPushSource_WithApiKeyAuth)' != ''"
+          Command="$(PushWithApiKeyCommand)" />
+
+    <!--without auth-->
+    <Exec Condition="'@(Nuget_AutoPushSource_WithNoAuth)' != ''"
+          Command="$(PushWithNoAuthCommand)" />
+
+ 
+  </Target>
+
+</Project>

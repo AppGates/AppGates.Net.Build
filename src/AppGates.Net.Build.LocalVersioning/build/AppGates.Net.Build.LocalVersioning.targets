@@ -1,0 +1,9 @@
+﻿<Project>
+  <PropertyGroup>
+    <IsLocalBuild Condition="'$(IsLocalBuild)' == ''">$(CI.Equals('true').Equals(false))</IsLocalBuild>
+  </PropertyGroup>
+
+  <Import Project="targets\HandleVersionForLocalBuild.targets" 
+          Condition="$(IsLocalBuild)"/>
+
+</Project>

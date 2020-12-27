@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppGates.Build.Versioning.Test.TransitiveLibrary\AppGates.Build.Versioning.Test.TransitiveLibrary.csproj" />
+  </ItemGroup>
+
+ 
+</Project>

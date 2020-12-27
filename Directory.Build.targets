@@ -1,0 +1,43 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <DirectoryBuildTargets>true</DirectoryBuildTargets>
+
+  </PropertyGroup>
+  <!--<Target Name="TestLog" AfterTargets="AfterBuild">
+    <PropertyGroup>
+      <GitRepositoryRootPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '.git\HEAD'))</GitRepositoryRootPath>
+      <GitDirectoryPath Condition="'$(GitRepositoryRootPath)' != ''">$(GitRepositoryRootPath)\.git</GitDirectoryPath>
+      <GitHooksDirectoryPath Condition="'$(GitDirectoryPath)' != ''">$(GitDirectoryPath)\hooks</GitHooksDirectoryPath>
+      <PreCommitScript Condition="'$(GitRepositoryRootPath)' != ''">$(GitRepositoryRootPath)\pre-commit.sh</PreCommitScript>
+    </PropertyGroup>
+
+    <Copy
+       SourceFiles="$(PreCommitScript)"
+      DestinationFiles="$(GitHooksDirectoryPath)\pre-commit"/>
+           
+    <Message Importance="high" Text="TestDirectory: $(TestDirectory)"/>
+  </Target>-->
+
+
+  <!--Begin: Avoid cycle error when package builds itself-->
+
+  <Choose>
+    <When Condition="$(AvoidCycleErrorOnSelfReference) == 'true'">
+      <PropertyGroup>
+        <PackageId Condition="'$(PackageId)' == ''">$(MSBuildProjectName)</PackageId>
+        <PackageIdTemp>$(PackageId)</PackageIdTemp>
+        <PackageId>$(PackageId)_temp</PackageId>
+      </PropertyGroup>
+    </When>
+  </Choose>
+  <Target Name="_UpdatePackageId" BeforeTargets="$(PackDependsOn)" Condition="$(AvoidCycleErrorOnSelfReference) == 'true'" >
+    <PropertyGroup>
+      <PackageId>$(PackageIdTemp)</PackageId>
+    </PropertyGroup>
+  </Target>
+  <!--End: Avoid cycle error when package builds itself-->
+  
+  <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.64.1608744270" Project="Sdk.targets"/>
+
+</Project>

@@ -1,0 +1,25 @@
+﻿<Project>
+ 
+  <Choose>
+    <When Condition="'$(UseLatestSdk)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="AppGates.Build.ApiManagement.Sdk"
+                          Version="*"
+                          ExcludeAssets="all"
+                          PrivateAssets="all"
+                          GeneratePathProperty="true"/>
+      </ItemGroup>
+      <PropertyGroup  Condition="'$(PkgAppGates_Build_ApiManagement_Sdk)' == ''">
+        <RestoredSdkVersionCount>$([System.IO.Directory]::GetDirectories('$(MSBuildThisFileDirectory)\..\..\').get_Length())</RestoredSdkVersionCount>
+        <RestoredSdkVersionIndex>$([MSBuild]::Subtract( $(RestoredSdkVersionCount), 1 ))</RestoredSdkVersionIndex>
+        <PkgAppGates_Build_ApiManagement_Sdk>$([System.IO.Directory]::GetDirectories('$(MSBuildThisFileDirectory)\..\..\')[$(RestoredSdkVersionIndex)])</PkgAppGates_Build_ApiManagement_Sdk>
+      </PropertyGroup>
+    </When>
+    <Otherwise >
+      <PropertyGroup>
+        <PkgAppGates_Build_ApiManagement_Sdk>$(MSBuildThisFileDirectory)..\</PkgAppGates_Build_ApiManagement_Sdk>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(PkgAppGates_Build_ApiManagement_Sdk)\build\AppGates.Build.ApiManagement.Sdk$(MSBuildThisFileExtension)"/>
+</Project>

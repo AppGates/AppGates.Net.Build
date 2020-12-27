@@ -1,0 +1,17 @@
+﻿<Project>
+  
+  <PropertyGroup>
+    <DirectoryBuildPropsCopy2>$(DirectoryBuildProps)</DirectoryBuildPropsCopy2>
+    <DirectoryBuildTargetsCopy2>$(DirectoryBuildTargets)</DirectoryBuildTargetsCopy2>
+  </PropertyGroup>
+  
+  <Target Name="LogSdk" AfterTargets="AfterBuild">
+    <Message Importance="high" Text="Hello from '$(MSBuildThisFileDirectory)'. Used SDK index '$(RestoredSdkVersionIndex)'"></Message>
+    <Message Importance="high" Text="DirectoryBuildPropsCopy1: $(DirectoryBuildPropsCopy1)"/>
+    <Message Importance="high" Text="DirectoryBuildTargetsCopy1: $(DirectoryBuildTargetsCopy1)"/>
+    <Message Importance="high" Text="DirectoryBuildPropsCopy2: $(DirectoryBuildPropsCopy2)"/>
+    <Message Importance="high" Text="DirectoryBuildTargetsCopy2: $(DirectoryBuildTargetsCopy2)"/>
+  </Target>
+
+
+</Project>

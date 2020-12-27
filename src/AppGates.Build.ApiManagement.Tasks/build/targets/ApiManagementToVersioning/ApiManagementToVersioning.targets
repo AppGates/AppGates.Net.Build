@@ -1,0 +1,10 @@
+﻿<Project>
+  <PropertyGroup>
+    <VersioningBuildTasksAssemblyFilePath>$(MSBuildThisFileDirectory)\..\lib\netstandard2.0\$(MSBuildThisFileName).dll</VersioningBuildTasksAssemblyFilePath>
+  </PropertyGroup>
+
+  <UsingTask TaskName="UpdateVersionOnApiChangeTask" AssemblyFile="$(VersioningBuildTasksAssemblyFilePath)"/>
+
+ 
+
+</Project>

@@ -1,0 +1,2 @@
+AppGates.Build.Versioning.Test.Internal.MultiTarget.Class1
+AppGates.Build.Versioning.Test.Internal.MultiTarget.Class1.Class1() -> void

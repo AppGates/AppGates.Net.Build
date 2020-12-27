@@ -1,0 +1,54 @@
+﻿<Project>
+  <PropertyGroup>
+
+    <IsPackableCopy>$(IsPackable)</IsPackableCopy>
+    <IsPackableCopy Condition="'$(IsPackableCopy)' == ''">true</IsPackableCopy>
+
+  </PropertyGroup>
+
+  <!--<Target Name="LogDispatchToInner" BeforeTargets ="DispatchToInnerBuilds">
+    <Message Importance="high" Text="Hello"/>
+  </Target>-->
+
+
+  <!--Avoid the weird half dependency build of Visual Studio during pack-->
+  <PropertyGroup >
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <Target Name="RestorePackable">
+    <PropertyGroup>
+      <IsPackable>$(IsPackableCopy)</IsPackable>
+      <BuildingInsideVisualStudio>false</BuildingInsideVisualStudio>
+      <!--<NoBuild>false</NoBuild>
+      <BuildDependsOn>$(BuildDependsOnCopy)</BuildDependsOn>-->
+    </PropertyGroup>
+  </Target>
+  <Target Name="CustomPack" AfterTargets="Pack" DependsOnTargets="RestorePackable" >
+
+    <!--<Message Importance="high" Text="BuildingInsideVisualStudio: $(BuildingInsideVisualStudio)"/>
+    <Message Importance="high" Text="BuildDependsOn: $(BuildDependsOn)"/>
+    <Message Importance="high" Text="NoBuild: $(NoBuild)"/>-->
+
+    <!--Ensure recursive restore and build-->
+    
+    <!--<CallTarget Targets="Restore"/>-->
+    <!--<CallTarget Targets="Rebuild"/>-->
+    <MSBuild
+      Targets="Build"
+      Projects="$(MSBuildProjectFullPath)"
+      RemoveProperties="BuildingInsideVisualStudio"
+       />
+
+    <!--Pack dependencies recursive-->
+    <CallTarget Targets="RecursivePack"/>
+    <!--<Message Importance="high" Text="PackSelf: $(MSBuildProjectName), IsPackable: $(IsPackable)"/>-->
+
+    <!--Pack this project-->
+    <CallTarget Targets="GenerateNuspec" Condition="$(IsPackable)"/>
+  </Target>
+
+
+
+
+</Project>

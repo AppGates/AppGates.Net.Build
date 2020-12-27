@@ -1,0 +1,29 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <GitRepositoryRootPath>$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), '.git\HEAD'))</GitRepositoryRootPath>
+    <GitDirectoryPath Condition="'$(GitRepositoryRootPath)' != ''">$(GitRepositoryRootPath)\.git</GitDirectoryPath>
+    <GitHooksDirectoryPath Condition="'$(GitDirectoryPath)' != ''">$(GitDirectoryPath)\hooks</GitHooksDirectoryPath>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RedirectGitHookPath Condition="'$(RedirectGitHookPath)' == ''">$(MSBuildThisFileDirectory)hooks</RedirectGitHookPath>
+  </PropertyGroup>
+
+  <Target Name ="DeployGitHooks" BeforeTargets="PrepareForBuild">
+    <Exec Command="git config core.hooksPath" ConsoleToMSBuild="true" StandardOutputImportance="low">
+      <Output TaskParameter="ConsoleOutput" PropertyName="CurrentHooksPath"/>
+    </Exec>
+    <CallTarget Targets="ConfigureHooksPath" Condition="'$(RedirectGitHookPath)' != '$(CurrentHooksPath)'"/>
+  </Target>
+
+  <Target Name ="ConfigureHooksPath">
+    <PropertyGroup>
+      <GitConfigHookPathCommand>git config core.hooksPath $(RedirectGitHookPath)</GitConfigHookPathCommand>
+    </PropertyGroup>
+    <Message Importance="high" Text="Exec: $(GitConfigHookPathCommand)"/>
+    <Exec Command="$(GitConfigHookPathCommand)"/>
+    <Message Importance="high" Text="git hooks for powershell core have been configured. Run 'git config core.hooksPath' to reset the setting."/>
+  </Target>
+
+</Project>

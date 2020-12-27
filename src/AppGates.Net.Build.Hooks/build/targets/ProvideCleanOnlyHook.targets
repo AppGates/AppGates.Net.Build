@@ -1,0 +1,20 @@
+﻿<Project>
+  <!--</Target>-->
+  <Target Name="DetectRebuild" BeforeTargets="BeforeRebuild" >
+    <!--<Message Importance="high" Text="Rebuilding..."/>-->
+    <PropertyGroup>
+      <IsRebuild>true</IsRebuild>
+    </PropertyGroup>
+  </Target>
+  <Target Name="TriggerCleanOnly" AfterTargets="Clean" >
+    <!--<Message Importance="high" Text="Cleaned..."/>-->
+    <CallTarget Condition="'$(IsRebuild)' != 'true' AND '$(IsInnerBuild)' != 'true'" Targets="CleanOnly"/>
+  </Target>
+  <Target Name="CleanOnly">
+    <!--<Message Importance="high" Text="CleanOnly"/>-->
+    <!--<Message Importance="high" Text="IsLocalBuild: $(IsLocalBuild)"/>-->
+    <!--<Delete Condition="'$(RestorePackagesWithLockFile)' != 'true'" Files="$(MSBuildProjectDirectory)\packages.lock.json"/>-->
+    <!--<CallTarget Targets="Restore"/>-->
+  </Target>
+
+</Project>

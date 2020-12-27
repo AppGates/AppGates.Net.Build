@@ -1,0 +1,7 @@
+﻿<Project>
+  <PropertyGroup>
+    <DirectoryBuildPropsCopy1>$(DirectoryBuildProps)</DirectoryBuildPropsCopy1>
+    <DirectoryBuildTargetsCopy1>$(DirectoryBuildTargets)</DirectoryBuildTargetsCopy1>
+  </PropertyGroup>
+
+</Project>

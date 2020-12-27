@@ -1,0 +1,5 @@
+﻿<Project>
+  <Import Project="$(PkgAppGates_Build_ApiManagement_Sdk)\build\AppGates.Build.ApiManagement.Sdk$(MSBuildThisFileExtension)"/>
+
+ 
+</Project>

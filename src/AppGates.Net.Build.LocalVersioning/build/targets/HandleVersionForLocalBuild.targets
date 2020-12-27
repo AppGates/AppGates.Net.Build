@@ -1,0 +1,98 @@
+﻿<Project>
+  <PropertyGroup>
+    <UseTimeStampAsLocalVersion Condition="'$(UseTimeStampAsLocalVersion)' == ''">true</UseTimeStampAsLocalVersion>
+  </PropertyGroup>
+  <!--BeforeTargets="_IntermediatePack;BeforeBuild;ResolveFrameworkReferencesDesignTime"-->
+  <Target Name="IncrementLocalBuildId"
+          BeforeTargets="_IntermediatePack;BeforeBuild"
+          DependsOnTargets="GetLocalBuildId">
+    <PropertyGroup>
+      <VersionIsDirty>$([System.IO.File]::Exists('$(VersionDirtyFileFullPath)'))</VersionIsDirty>
+    </PropertyGroup>
+    <Message Importance="high" Text="VersionIsDirty: $(VersionIsDirty)"/>
+    <CallTarget  Condition="$(VersionIsDirty)" Targets ="DoIncrementLocalBuildId"/>
+  </Target>
+
+  
+
+  <Target Name="CreateOrGetLocalBuildId"
+          AfterTargets="GetBuildVersion"
+          DependsOnTargets="GetLocalBuildId">
+    <PropertyGroup>
+      <CommitId>$(BuildVersion.Split('-')[0].Split('.')[3])</CommitId>
+    </PropertyGroup>
+
+    <Message Text="CommitId: $(CommitId)"/>
+
+    <PropertyGroup>
+      <LocalBuildVersion>$(BuildVersion.Replace('.$(CommitId)','.$(LocalBuildId)'))</LocalBuildVersion>
+      <BuildVersion>$(LocalBuildVersion)</BuildVersion>
+      <PackageVersion>$(LocalBuildVersion)</PackageVersion>
+      <FileVersion>$(LocalBuildVersion)</FileVersion>
+    </PropertyGroup>
+  </Target>
+  <Target Name="IncrementLocalBuildIdAfterSuccessfulPack"
+          Condition="$(IsPackable)"
+          AfterTargets="GenerateNuspec"
+          DependsOnTargets="GetLocalBuildId">
+
+    <!--<CallTarget Targets="IncrementLocalBuildId"/>-->
+    <PropertyGroup>
+      <PackageFilePath>$(PackageOutputAbsolutePath)$(PackageId).$(PackageVersion).nupkg</PackageFilePath>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(VersionDirtyFileFullPath)" Lines="" ></WriteLinesToFile>
+    <Message Importance="high"  Text="PackagePath: file://$(PackageFilePath)"></Message>
+  </Target>
+
+  <Target Name="DoIncrementLocalBuildId">
+    <PropertyGroup>
+      <LocalBuildId Condition="$(UseTimeStampAsLocalVersion) == true ">$([MSBuild]::Subtract($([System.Math]::Floor($([MSBuild]::Divide($([System.DateTime]::UtcNow.Ticks), 10000000)))), 62135596800))</LocalBuildId>
+      <LocalBuildId Condition="$(UseTimeStampAsLocalVersion) == false">$([MSBuild]::Add('$(LocalBuildId)', '1'))</LocalBuildId>
+    </PropertyGroup>
+    <Delete Files="$(VersionDirtyFileFullPath)"></Delete>
+
+    <Message Importance="high"  Text="Increment local build id of '$(MSBuildProjectName)' to '$(LocalBuildId)'"></Message>
+
+    <WriteLinesToFile File="$(VersionFileFullPath)"
+                      Lines="$(LocalBuildId)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
+
+  </Target>
+
+
+  <!--<Target Name="IncrementLocalBuildId">
+    <PropertyGroup>
+      <LocalBuildId>$([MSBuild]::Add('$(LocalBuildId)', '1'))</LocalBuildId>
+    </PropertyGroup>
+
+    <Message Importance="high"  Text="Increment local build id of '$(MSBuildProjectName)' to '$(NextLocalBuildId)'"></Message>
+
+    <WriteLinesToFile File="$(VersionFileFullPath)"
+                      Lines="$(LocalBuildId)" Overwrite="true" WriteOnlyWhenDifferent="true"/>
+
+  </Target>-->
+
+  <Target Name="GetNextLocalBuildId" DependsOnTargets="GetLocalBuildId">
+    <ReadLinesFromFile Condition="Exists('$(VersionDirtyFileFullPath)')" File="$(VersionFileFullPath)">
+      <Output TaskParameter="Lines" PropertyName="LocalBuildId"/>
+    </ReadLinesFromFile>
+
+  </Target>
+  <Target Name="GetLocalBuildId">
+    <PropertyGroup>
+      <VersionFilePath>$(BaseIntermediateOutputPath)\local_build.version</VersionFilePath>
+      <VersionFileFullPath>$([System.IO.Path]::GetFullPath('$(VersionFilePath)'))</VersionFileFullPath>
+      <VersionDirtyFileFullPath>$(VersionFileFullPath).dirty</VersionDirtyFileFullPath>
+    </PropertyGroup>
+    <ReadLinesFromFile Condition="Exists('$(VersionFileFullPath)')" File="$(VersionFileFullPath)">
+      <Output TaskParameter="Lines" PropertyName="LocalBuildId"/>
+    </ReadLinesFromFile>
+    <PropertyGroup Condition="Exists('$(VersionFileFullPath)') == false">
+      <!--get initial values-->
+      <LocalBuildId Condition="$(UseTimeStampAsLocalVersion) == true ">$([MSBuild]::Subtract($([System.Math]::Floor($([MSBuild]::Divide($([System.DateTime]::UtcNow.Ticks), 10000000)))), 62135596800))</LocalBuildId>
+      <LocalBuildId Condition="$(UseTimeStampAsLocalVersion) == false">100000</LocalBuildId>
+
+    </PropertyGroup>
+    <Message Text="Read Local Build Id '$(LocalBuildId)' from 'file://$(VersionFileFullPath)'"/>
+  </Target>
+
+</Project>

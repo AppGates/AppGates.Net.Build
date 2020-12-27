@@ -1,0 +1,5 @@
+﻿<Project>
+  <Import Project="targets\FixRebuildForMultiTargetProjects.targets" Condition="'$(TargetFramework)' == ''"/>
+  <Import Project="targets\ProvideCleanOnlyHook.targets" />
+  <!--<Import Project="targets\AvoidCycleErrorOnSelfReference.targets"/>-->
+</Project>

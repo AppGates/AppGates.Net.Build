@@ -1,0 +1,2 @@
+AppGates.Build.Versioning.Test.TransitiveLibrary.Class1
+AppGates.Build.Versioning.Test.TransitiveLibrary.Class1.Class1() -> void

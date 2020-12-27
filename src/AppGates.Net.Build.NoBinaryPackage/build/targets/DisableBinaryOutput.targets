@@ -1,0 +1,15 @@
+﻿<Project>
+  <PropertyGroup>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <IncludeProjectBinaryOutput>false</IncludeProjectBinaryOutput>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <NoWarn>$(NoWarn);CS2008</NoWarn>
+
+  </PropertyGroup>
+  <Target Name="RemoveOtherCompileItems" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Compile Remove="@(Compile)"/>
+    </ItemGroup>
+  </Target>
+</Project>
