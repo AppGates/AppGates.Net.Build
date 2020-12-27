@@ -30,11 +30,11 @@
     <None Include="src\.git-ps-hooks\pre-commit.ps1" />
   </ItemGroup>
 
-  <Target Name="PackSolution">
+  <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkiSolutionPack)' != 'true'">
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln"/>
     </ItemGroup>
-    <Exec Command="dotnet pack %(SolutionFileToPack.Identity)"/>
+    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkiSolutionPack=true"/>
   </Target>
 
 
