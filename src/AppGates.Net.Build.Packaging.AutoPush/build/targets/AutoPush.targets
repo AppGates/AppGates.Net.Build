@@ -88,6 +88,9 @@
     <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
           Command="dotnet nuget add source %(Nuget_AutoPushSource_WithBasicAuth.Address) -n %(Nuget_AutoPushSource_WithBasicAuth.Identity) -u %(Nuget_AutoPushSource_WithBasicAuth.Username) -p %(Nuget_AutoPushSource_WithBasicAuth.Password) --store-password-in-clear-text" ></Exec>
 
+    <Message Importance="high" Text="Generated config '$(PushNugetConfigPath)':"/>
+    <Message Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
+   
     <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
           Command="$(PushWithConfigCommand)" />
 

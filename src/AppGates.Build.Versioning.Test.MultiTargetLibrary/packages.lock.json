@@ -44,8 +44,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.6.1609115369",
-        "contentHash": "jGJLtKygRjBWbIkuwQCQLat7pwujfA/nUR7Fh/c5l13rTgIcIyaNrxLjQ2eNRerjIlpBJa5mLIwBYkkukvzIGA=="
+        "resolved": "1.2.8.1609116098",
+        "contentHash": "FqByKS0Dns0qlwk4P8J7aBjI8vD1ccgo36N1sv2FVe3WT4IoaQ7Qm8Sj7czzKt9KPpbY9Cl3GkkTkbzs45zPwA=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",
@@ -136,8 +136,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.6.1609115369",
-        "contentHash": "jGJLtKygRjBWbIkuwQCQLat7pwujfA/nUR7Fh/c5l13rTgIcIyaNrxLjQ2eNRerjIlpBJa5mLIwBYkkukvzIGA=="
+        "resolved": "1.2.8.1609116098",
+        "contentHash": "FqByKS0Dns0qlwk4P8J7aBjI8vD1ccgo36N1sv2FVe3WT4IoaQ7Qm8Sj7czzKt9KPpbY9Cl3GkkTkbzs45zPwA=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",
