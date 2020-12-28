@@ -35,8 +35,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.2.1609103710",
-        "contentHash": "OmH0Wq4j6KgCe10XGaU+1t3OZMK19w/gvHJIh897VEsyGUnIDuB/kzUPIBAcJzbvklKQrkMFTVPQbcvIgHkCKA=="
+        "resolved": "1.2.4.1609110036",
+        "contentHash": "jec1ZAN7PJSmuA/cuEiIuM7cl1JI42IjFCGtAPXNzdNF+kRxJPcRp40CuFEPXqGNU85d6GT+FzTfG3wbQ62mew=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",
@@ -73,16 +73,16 @@
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.2.1609108341",
-        "contentHash": "Gb+3Iia1YxWXb/kw5577gmAxyLDuLPRoc0bqfMLJvCqFE4dDyC3+6eBDb5sQQ1SMtD9SCh9hM7ISaWlEE8qPOA==",
+        "resolved": "1.2.4.1609113111",
+        "contentHash": "QgdhikS5e+so9GmqYPOpMt/8v8irxyU/tnGQ8irmuYO2kt47i5i4Kfu4M6ksFBu7o9EM7j9LFaBfrC9SOIVrEQ==",
         "dependencies": {
-          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.2.1609108345"
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.4.1609113114"
         }
       },
       "AppGates.Build.Versioning.Test.TransitiveLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.2.1609108345",
-        "contentHash": "pxQnVGxp5NirhGpJMN6AamiMXIarbznBvxlxss2oYSa5aa7Q39p/TkazioYRFaK97wAjP3dnQJ7cWWdRcbRHvg=="
+        "resolved": "1.2.4.1609113114",
+        "contentHash": "/r6XO3yceFY7fHYCRo8XFCsHdCzJ/Gs4IAo5m1304zpeYXWlFjc8I1fR08VOZaqKDWgUmuVzXM0l/oZe0U4dgA=="
       },
       "Microsoft.NETFramework.ReferenceAssemblies.net48": {
         "type": "Transitive",

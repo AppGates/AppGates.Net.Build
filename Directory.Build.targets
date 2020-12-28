@@ -1,7 +1,7 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <DirectoryBuildTargets>true</DirectoryBuildTargets>
+    <DirectoryBuildTargets>$(Nuget_AutoPush_Gitlab_Project_Registry)</DirectoryBuildTargets>
 
   </PropertyGroup>
   <!--<Target Name="TestLog" AfterTargets="AfterBuild">

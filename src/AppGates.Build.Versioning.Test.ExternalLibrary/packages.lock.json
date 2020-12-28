@@ -35,8 +35,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.2.1609103710",
-        "contentHash": "OmH0Wq4j6KgCe10XGaU+1t3OZMK19w/gvHJIh897VEsyGUnIDuB/kzUPIBAcJzbvklKQrkMFTVPQbcvIgHkCKA=="
+        "resolved": "1.2.4.1609110036",
+        "contentHash": "jec1ZAN7PJSmuA/cuEiIuM7cl1JI42IjFCGtAPXNzdNF+kRxJPcRp40CuFEPXqGNU85d6GT+FzTfG3wbQ62mew=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",

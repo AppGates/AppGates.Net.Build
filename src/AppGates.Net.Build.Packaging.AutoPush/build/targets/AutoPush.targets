@@ -9,9 +9,10 @@
   <!--gitlab-->
   <PropertyGroup>
     <Nuget_AutoPush_Gitlab_ServerUrl Condition="'$(Nuget_AutoPush_Gitlab_ServerUrl)' == ''">$(CI_SERVER_URL)</Nuget_AutoPush_Gitlab_ServerUrl>
-
     <Nuget_AutoPush_Gitlab_Project Condition="'$(Nuget_AutoPush_Gitlab_Project)' == ''">$(CI_PROJECT_ID)</Nuget_AutoPush_Gitlab_Project>
+    <Nuget_AutoPush_Gitlab_Project_Registry Condition="'$(Nuget_AutoPush_Gitlab_Project)' != ''">$(Nuget_AutoPush_Gitlab_ServerUrl)/api/v4/projects/$(Nuget_AutoPush_Gitlab_Project)/packages/nuget/index.json</Nuget_AutoPush_Gitlab_Project_Registry>
 
+    
     <Nuget_AutoPush_Gitlab_Username
       Condition="'$(Nuget_AutoPush_Gitlab_Username)' == ''">$(CI_DEPLOY_USER)</Nuget_AutoPush_Gitlab_Username>
 
@@ -25,9 +26,9 @@
       Condition="'$(Nuget_AutoPush_Gitlab_Password)' == ''">$(CI_JOB_TOKEN)</Nuget_AutoPush_Gitlab_Password>
 
   </PropertyGroup>
-  <ItemGroup Condition="'$(Nuget_AutoPush_Gitlab_Project)' != ''">
+  <ItemGroup Condition="'$(Nuget_AutoPush_Gitlab_Project_Registry)' != ''">
     <Nuget_AutoPushSource Include="AutoPush_Gitlab_Internal">
-      <Address>$(Nuget_AutoPush_Gitlab_ServerUrl)/api/v4/projects/$(Nuget_AutoPush_Gitlab_Project)/packages/nuget/index.json</Address>
+      <Address>$(Nuget_AutoPush_Gitlab_Project_Registry)</Address>
       <PublishLevel>internal</PublishLevel>
       <Username>$(Nuget_AutoPush_Gitlab_Username)</Username>
       <Password>$(Nuget_AutoPush_Gitlab_Password)</Password>
