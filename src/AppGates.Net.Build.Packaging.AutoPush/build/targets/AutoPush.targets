@@ -72,7 +72,7 @@
     </ItemGroup>
     
     <PropertyGroup>
-      <Nuget_AutoPush_PackagePath>$(PackageOutputPath.TrimEnd('\'))\$(PackageId).$(PackageVersion).nupkg</Nuget_AutoPush_PackagePath>
+      <Nuget_AutoPush_PackagePath>$(PackageOutputPath.TrimEnd('\').Trim('/'))\$(PackageId).$(PackageVersion).nupkg</Nuget_AutoPush_PackagePath>
       <PushWithApiKeyCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithApiKeyAuth.Address)" -k "%(Nuget_AutoPushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
       <PushWithConfigCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
       <PushWithNoAuthCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
@@ -88,8 +88,8 @@
     <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
           Command="dotnet nuget add source %(Nuget_AutoPushSource_WithBasicAuth.Address) -n %(Nuget_AutoPushSource_WithBasicAuth.Identity) -u %(Nuget_AutoPushSource_WithBasicAuth.Username) -p %(Nuget_AutoPushSource_WithBasicAuth.Password) --store-password-in-clear-text" ></Exec>
 
-    <Message Importance="high" Text="Generated config '$(PushNugetConfigPath)':"/>
-    <Message Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
+    <Message Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  Importance="high" Text="Generated config '$(PushNugetConfigPath)':"/>
+    <Message Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
    
     <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
           Command="$(PushWithConfigCommand)" />
