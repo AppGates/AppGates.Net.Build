@@ -10,7 +10,7 @@
   <ItemGroup>
     <!--<PackageReference Include="LibGit2Sharp" Version="0.26.2" />-->
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.7.0" PrivateAssets="all" />
-    <PackageReference Include="AppGates.Net.Extensions" PrivateAssets="all" GeneratePathProperty="true"  Version="*"/>
+    <!--<PackageReference Include="AppGates.Net.Extensions" PrivateAssets="all" GeneratePathProperty="true"  Version="*"/>-->
     <None Include="$(AppGates_Net_Extensions)\build\MSBuildCore\**\*.*"
       Visible="false" PackagePath="/lib/$(TargetFramework)" Pack="true" />
 

@@ -38,7 +38,7 @@ namespace AppGates.Build.ApiManagement.Tasks
 
         private void DoExecute()
         {
-            var updater = new UpdateVersionOnApiChange(this.ProjectDirectoryPath.ToDirectoryInfo(), 
+            var updater = new UpdateVersionOnApiChange(new DirectoryInfo(this.ProjectDirectoryPath), 
                 this.GitVersionFile, this.PublicApiShippedFile,
                 this.PublicApiUnshippedFile, this.PackageLockFile);
 

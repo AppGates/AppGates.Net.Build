@@ -50,15 +50,6 @@
         "resolved": "1.2.0.1609083235",
         "contentHash": "L5PMO7DN16KR0JDQUIsWkzB6qjx0WWBBFOOpdL4uh0XCTJxpZOmVWoHg2shvAOM7kYeK+uDcOwMnOi0eU9HepA=="
       },
-      "AppGates.Net.Extensions": {
-        "type": "Direct",
-        "requested": "[*, )",
-        "resolved": "1.0.1607881714",
-        "contentHash": "xaFSZHIg8bCgirkfBrkV7S6maWCXEFbGbnWQkBWk1r5csnaWfwsrzDDzWmExMKdy8T8r/uW5CtQ1vOuHYPPXSw==",
-        "dependencies": {
-          "AppGates.Net.Extensions.Core": "1.0.1607120945"
-        }
-      },
       "Microsoft.Build.Utilities.Core": {
         "type": "Direct",
         "requested": "[16.7.0, )",
@@ -91,19 +82,6 @@
         "contentHash": "st47PosZSHrjECdjeIzZQbzivYBJFv6P2nv4cj2ypdI204DO+vZ7l5raGMiX4eXMJ53RfOIg+/s4DHVZ54Nu2A==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0"
-        }
-      },
-      "AppGates.Net": {
-        "type": "Transitive",
-        "resolved": "1.0.1607120937",
-        "contentHash": "OskoZn94+UGZksh+qCQ6a8kIEzKaxNRPc8Wf1GzY55B/WQlCm8iqPoITN3vjLCW1uak4Iu5RayvcX51mYLfRaQ=="
-      },
-      "AppGates.Net.Extensions.Core": {
-        "type": "Transitive",
-        "resolved": "1.0.1607120945",
-        "contentHash": "Yjq9txaXh1VWpYsY8MDaEdcSvswML1QUDfkfjlCz0lwXPwLho3uHM64x+9o92/S3IyyBoF1k6y6trow7O8UTBA==",
-        "dependencies": {
-          "AppGates.Net": "1.0.1607120937"
         }
       },
       "Microsoft.Build.Framework": {
