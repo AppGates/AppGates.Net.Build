@@ -73,9 +73,9 @@
     
     <PropertyGroup>
       <Nuget_AutoPush_PackagePath>$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg</Nuget_AutoPush_PackagePath>
-      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithApiKeyAuth.Address)" -k "%(Nuget_AutoPushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
-      <PushWithConfigCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
-      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) -s "%(Nuget_AutoPushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
+      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_AutoPushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
+      <PushWithConfigCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
+      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
       <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
     </PropertyGroup>
 
