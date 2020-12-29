@@ -27,24 +27,32 @@
     <None Include=".gitlab-ci.yml" />
     <None Include="Directory.Build.props" />
     <None Include="Directory.Build.targets" />
-    <None Include="NuGet.Config" />
     <None Include="README.md" />
     <None Include="src\.git-ps-hooks\pre-commit.ps1" />
   </ItemGroup>
 
   <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
     <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln"/>
+      <SolutionFileToPack Include="src\*.sln" />
     </ItemGroup>
-    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true"/>
+    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
   </Target>
   <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
     <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln"/>
+      <SolutionFileToPack Include="src\*.sln" />
     </ItemGroup>
-    <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true"/>
+    <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
   </Target>
 
+  <Target Name="CleanSolution" AfterTargets="CleanOnly" Condition="'$(SkipSolutionOperation)' != 'true'">
+    <Message Importance="high" Text="Clear nuget http-cache...." />
+    <Exec Command="dotnet nuget locals http-cache --clear" />
+    <ItemGroup>
+      <SolutionFileToPack Include="src\*.sln" />
+    </ItemGroup>
+    <Exec Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
+
+  </Target>
   <!-- BEGIN disable default compile and copy binary behaviour -->
   <!--<Target Name="Build" DependsOnTargets=""></Target>
   <Target Name="CoreCompile" />

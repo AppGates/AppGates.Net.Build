@@ -33,14 +33,6 @@
       <PackagePath>/</PackagePath>
       <Pack>true</Pack>
     </None>
-    <None Update="build\targets\ProvideCleanOnlyHook.targets">
-      <PackagePath>/</PackagePath>
-      <Pack>true</Pack>
-    </None>
-    <None Update="build\targets\FixRebuildForMultiTargetProjects.targets">
-      <PackagePath>/</PackagePath>
-      <Pack>true</Pack>
-    </None>
     <None Update="build\targets\RestoreHandling.targets">
       <PackagePath>/</PackagePath>
       <Pack>true</Pack>

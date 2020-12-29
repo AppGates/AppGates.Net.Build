@@ -17,6 +17,14 @@
   </PropertyGroup>
   <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.3.1609081814" Project="Sdk.props"/>
 
+
+  <ItemGroup>
+    <PackageReference Include="AppGates.Net.Build.Hooks" Version="*">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
   <Choose>
     <When Condition="'$(MSBuildProjectName)' != '_Root'">
 
@@ -75,11 +83,7 @@
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
         </PackageReference>
-        <PackageReference Include="AppGates.Net.Build.Hooks" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-
+   
         <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
