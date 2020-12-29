@@ -36,7 +36,7 @@
         <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
         <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
         <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
-        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <RestorePackagesWithLockFile>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test.'))</RestorePackagesWithLockFile>
         <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
 
         <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->

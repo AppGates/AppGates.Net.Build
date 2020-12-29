@@ -5,59 +5,59 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.15",
-        "contentHash": "3rIdb/EwRLNxMnqcCZfSW6ZPGku0lHSgDw2K8CFwIAUZBvyRZTgyW46Jv0n4CPALDqt9xsV5edv6wruFRbqzmw=="
+        "resolved": "1.2.16",
+        "contentHash": "fmJ65Gz2nsKvirxrKlvxcvM8VP+hL7puXgMqGJVD2FwljDtxU/CZg7f9dDzABPcAWx6xizpOBKXFQCIebD5Aig=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.14",
-        "contentHash": "LT9cHsNP9ecsw0wLI88nYmFRA3uzml7Q741+KWTWMEeXiYwV2H/6O2OiKepjTSCPJGIBA6+eCHX5zrTXivwWQA==",
+        "resolved": "1.2.18.1609115363",
+        "contentHash": "/xHu/Y82WBzUFOuW09MkveYDeuf1jp0CNWNgnNoUU56CGQWIM2RW0UUGSCQYUJ4BQvIxAIWJiz56hjf1Fmn10Q==",
         "dependencies": {
-          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.14"
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.18.1609115363"
         }
       },
       "AppGates.Net.Build.Deterministic": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.5",
-        "contentHash": "244wnVA549pRBcfcas5nD85wmw4yXdTHBJZvo6sXuuBQ5MUvb2UGiIrEkl+uLIVY64h5EBFOgT27B9zk9c3+vA=="
+        "resolved": "1.2.6",
+        "contentHash": "B5r9ChlxfoTqKwENAi5REy7HKWA2PwoX3dlvNBbnO1yH8xfbs75JDMtp0R8FgDh/jiqGRi4hqd6ZE/N0Ngdseg=="
       },
       "AppGates.Net.Build.Hooks": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.15",
-        "contentHash": "WvFPGvaIXQTA7NkdjUvt9ndUK9O7RUSlZbA0bxz+TcejcI7jbFrzjMqoB3q9ML0v+rBzxPpeInoGXVIs32iLnQ=="
+        "resolved": "1.2.16",
+        "contentHash": "Nw9/jRkLmB/5kq6WpDU3Y9zB50dsIx7OKSAT0++os0y7Eg9lxyZeYoUgREr+dMfzJkruScfSi2hII9CWbwzgQw=="
       },
       "AppGates.Net.Build.LocalVersioning": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.5",
-        "contentHash": "IyB31BqZv6RkezYW013kZF2Yq8nibeYlEHd9OeCEUZVmoQ3F68lD2FIW4RGSbc8+X615DX731UR79ydZ8lNJrA=="
+        "resolved": "1.2.6",
+        "contentHash": "8WGldxevRpXHXzZBByj9Jo1kQCqv6TehLpCfLPZEGp4EYB5q6hR9TgSVqj4T1f/ro/mruo0PbDDFIcle4QMnBw=="
       },
       "AppGates.Net.Build.NoBinaryPackage": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.15",
-        "contentHash": "pgWPvhCxU/6TEM7zKlDMBeodk2w9bFHuThtbHibP4oCE1ag5FXCWo0LrGH4bKDmi9uHe2+mds308WS0hdjuKMw=="
+        "resolved": "1.2.16",
+        "contentHash": "UcOdWUpkdz+/zWvrpHmYcXuCCOZVMalf/yA1UvL15rXUJirVIXcaVTQ2KZoIrGqRQy2vLc4/HQe6xYI4lWqcLg=="
       },
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.15",
-        "contentHash": "0IUrBauTQRyBFPk2BzscMZVE8ANuiGBYMUIrpCMzi/pSxcY+26XeJJxUtyMTb1TFlcKXgivXEpuexE86dyoCXQ=="
+        "resolved": "1.2.16",
+        "contentHash": "HF2wDOL3iQQA4gtaTkL4zR/WxFFfVKWQERBTgDDll3C/qDDJehFdj4qv5p5XauwMzuPjY6Fsh9Yx2V8MjV8u6A=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.15",
-        "contentHash": "8jGgmDH+U2aRx3e9Ef/lie4B5QS+xAmr+6G5kuPm7wtvzhdTddGHCGYEK9TShaxi0M7/kaj3KY0qqgdBY2ihBA=="
+        "resolved": "1.2.16",
+        "contentHash": "LMclUtOY/qaz/vK2/HPCoYfP0ySHV/ImmU4eaKt5vDVIEjYTtw7oJmp8JkpZgnkGv7aipkuhdJUeJvkCHyPjGw=="
       },
       "AppGates.Net.Build.TransitivePack": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.5",
-        "contentHash": "3FhYcnDhwI4nNsQWer0exg4FIdCop+gVuA9PgpTAESa6BsY8Ar9H9G9faj9TyrvLLQLyCe4OawiriEZO/w2tdg=="
+        "resolved": "1.2.6",
+        "contentHash": "9MKSIxnebvDWUiy0uRjjsi3ydAg8V0QXa3v+eneEqeHM7sQ45qgoW68Sg2s6IjS+4N6HlZGhj7xWnUQ0rrc3/Q=="
       },
       "Microsoft.CodeAnalysis.PublicApiAnalyzers": {
         "type": "Direct",
@@ -82,8 +82,8 @@
       },
       "AppGates.Build.Versioning.Test.TransitiveLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.14",
-        "contentHash": "MHfS4c/+HZ2eJJVN4vNABtGDRnI8Wi/oS1DA22iaRyBVZ0xAAp8mahCqR0UCSxMZIMCAhPO/LXzUcmlAABe5tQ=="
+        "resolved": "1.2.18.1609115363",
+        "contentHash": "uCRT9v5k2BDFSc8bE/qF3uj1ejrRk4n8sL8/qUNC9eOzptBmfry15Wfngr3UdjSP6BmuH7FBj2a+qR9Z+EytYA=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
