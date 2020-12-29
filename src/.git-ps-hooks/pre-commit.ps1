@@ -3,10 +3,12 @@
 #echo "$gitRepositoryRoot"
 #cd $PSScriptRoot
 #cd ..
-$solution = Resolve-Path  "$PWD\*.sln" | Select -ExpandProperty Path
-
-echo $solution
-dotnet build $solution
+#$solutions = Resolve-Path  "$PWD\*.sln" | Select -ExpandProperty Path
+#foreach($solution in $solutions)
+#{
+#echo $solution
+#dotnet build $solution
+#}
 #echo $LASTEXITCODE 
 #echo "Hello 1 from powershell commit"
 #sleep 1 

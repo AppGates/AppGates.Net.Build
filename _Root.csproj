@@ -32,13 +32,18 @@
     <None Include="src\.git-ps-hooks\pre-commit.ps1" />
   </ItemGroup>
 
-  <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkiSolutionPack)' != 'true'">
+  <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln"/>
     </ItemGroup>
-    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkiSolutionPack=true"/>
+    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true"/>
   </Target>
-
+  <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
+    <ItemGroup>
+      <SolutionFileToPack Include="src\*.sln"/>
+    </ItemGroup>
+    <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true"/>
+  </Target>
 
   <!-- BEGIN disable default compile and copy binary behaviour -->
   <!--<Target Name="Build" DependsOnTargets=""></Target>
