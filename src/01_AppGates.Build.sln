@@ -3,35 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30608.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.ReferencingLibrary", "AppGates.Build.Versioning.Test.ReferencingLibrary\AppGates.Build.Versioning.Test.ReferencingLibrary.csproj", "{87522102-D3D8-4B21-A69F-3EF4AD0048DA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.ExternalLibrary", "AppGates.Build.Versioning.Test.ExternalLibrary\AppGates.Build.Versioning.Test.ExternalLibrary.csproj", "{A9A972B7-2433-4E24-8070-4F4D7A75A2B8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.InternalLibrary", "AppGates.Build.Versioning.Test.InternalLibrary\AppGates.Build.Versioning.Test.InternalLibrary.csproj", "{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.TransitiveProjectLibrary", "AppGates.Build.Versioning.Test.TransitiveProjectLibrary\AppGates.Build.Versioning.Test.TransitiveProjectLibrary.csproj", "{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.ApiManagement.Tasks", "AppGates.Build.ApiManagement.Tasks\AppGates.Build.ApiManagement.Tasks.csproj", "{068CA0E3-74DF-4F09-8D99-E650FD7020A5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.ApiManagement.Targets", "AppGates.Build.ApiManagement.Targets\AppGates.Build.ApiManagement.Targets.csproj", "{E7E82111-F2AC-4A59-9966-DE9C4BABB3B8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.ApiManagement.Sdk", "AppGates.Build.ApiManagement.Sdk\AppGates.Build.ApiManagement.Sdk.csproj", "{2AFF1BBE-7348-4BAA-838D-DEA5B6870E6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.TransitiveLibrary", "AppGates.Build.Versioning.Test.TransitiveLibrary\AppGates.Build.Versioning.Test.TransitiveLibrary.csproj", "{3A131967-EDD0-4E4B-84D6-08765553356D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.MultiTargetLibrary", "AppGates.Build.Versioning.Test.MultiTargetLibrary\AppGates.Build.Versioning.Test.MultiTargetLibrary.csproj", "{761E9646-BEE4-48F1-A882-768220D03513}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.Internal.MultiTarget", "AppGates.Build.Versioning.Test.Internal.MultiTarget\AppGates.Build.Versioning.Test.Internal.MultiTarget.csproj", "{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.TransitivePack", "AppGates.Net.Build.TransitivePack\AppGates.Net.Build.TransitivePack.csproj", "{4E2B49B8-5BBB-47DA-9A1A-3E3D9DDC0286}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.LocalVersioning", "AppGates.Net.Build.LocalVersioning\AppGates.Net.Build.LocalVersioning.csproj", "{BCDCF0CA-6DBA-4703-8438-76E03A693711}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{AA4E5AFD-F072-49CB-9240-18B1B4FCA462}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.Versioning.Test.SingleTargetLibrary", "AppGates.Build.Versioning.Test.SingleTargetLibrary\AppGates.Build.Versioning.Test.SingleTargetLibrary.csproj", "{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Deterministic", "AppGates.Net.Build.Deterministic\AppGates.Net.Build.Deterministic.csproj", "{AA78567E-25FA-4E08-94FF-823EC4C69703}"
 EndProject
@@ -49,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.GitHooks
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Git.Hooks.Dotnet", "AppGates.Net.Build.Git.Hooks.Dotnet\AppGates.Net.Build.Git.Hooks.Dotnet.csproj", "{9D0675C8-6570-4B02-A624-3FF09047B9B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGates.Net.Build.Packaging.AutoPush", "AppGates.Net.Build.Packaging.AutoPush\AppGates.Net.Build.Packaging.AutoPush.csproj", "{5F08FEA5-3760-4229-8B6D-74942940F721}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Packaging.AutoPush", "AppGates.Net.Build.Packaging.AutoPush\AppGates.Net.Build.Packaging.AutoPush.csproj", "{5F08FEA5-3760-4229-8B6D-74942940F721}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,22 +39,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87522102-D3D8-4B21-A69F-3EF4AD0048DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87522102-D3D8-4B21-A69F-3EF4AD0048DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87522102-D3D8-4B21-A69F-3EF4AD0048DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87522102-D3D8-4B21-A69F-3EF4AD0048DA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A9A972B7-2433-4E24-8070-4F4D7A75A2B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A9A972B7-2433-4E24-8070-4F4D7A75A2B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A9A972B7-2433-4E24-8070-4F4D7A75A2B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A9A972B7-2433-4E24-8070-4F4D7A75A2B8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{068CA0E3-74DF-4F09-8D99-E650FD7020A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{068CA0E3-74DF-4F09-8D99-E650FD7020A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{068CA0E3-74DF-4F09-8D99-E650FD7020A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -85,18 +51,6 @@ Global
 		{2AFF1BBE-7348-4BAA-838D-DEA5B6870E6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AFF1BBE-7348-4BAA-838D-DEA5B6870E6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AFF1BBE-7348-4BAA-838D-DEA5B6870E6C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A131967-EDD0-4E4B-84D6-08765553356D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A131967-EDD0-4E4B-84D6-08765553356D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A131967-EDD0-4E4B-84D6-08765553356D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A131967-EDD0-4E4B-84D6-08765553356D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{761E9646-BEE4-48F1-A882-768220D03513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{761E9646-BEE4-48F1-A882-768220D03513}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{761E9646-BEE4-48F1-A882-768220D03513}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{761E9646-BEE4-48F1-A882-768220D03513}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E2B49B8-5BBB-47DA-9A1A-3E3D9DDC0286}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E2B49B8-5BBB-47DA-9A1A-3E3D9DDC0286}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E2B49B8-5BBB-47DA-9A1A-3E3D9DDC0286}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -105,10 +59,6 @@ Global
 		{BCDCF0CA-6DBA-4703-8438-76E03A693711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BCDCF0CA-6DBA-4703-8438-76E03A693711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BCDCF0CA-6DBA-4703-8438-76E03A693711}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AA78567E-25FA-4E08-94FF-823EC4C69703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AA78567E-25FA-4E08-94FF-823EC4C69703}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA78567E-25FA-4E08-94FF-823EC4C69703}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -146,19 +96,11 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{87522102-D3D8-4B21-A69F-3EF4AD0048DA} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
-		{A9A972B7-2433-4E24-8070-4F4D7A75A2B8} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
-		{BA9BE4C8-689E-41E4-9B3C-1D1E0C50F275} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
-		{12FAC97A-3DD0-41FE-A363-CDDC40EBCBFA} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 		{068CA0E3-74DF-4F09-8D99-E650FD7020A5} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{E7E82111-F2AC-4A59-9966-DE9C4BABB3B8} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{2AFF1BBE-7348-4BAA-838D-DEA5B6870E6C} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
-		{3A131967-EDD0-4E4B-84D6-08765553356D} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
-		{761E9646-BEE4-48F1-A882-768220D03513} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
-		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 		{4E2B49B8-5BBB-47DA-9A1A-3E3D9DDC0286} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{BCDCF0CA-6DBA-4703-8438-76E03A693711} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
-		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 		{AA78567E-25FA-4E08-94FF-823EC4C69703} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{AEBE05D8-D6D0-4F94-A42F-4C8B0F47D1AC} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{DFC5F3AF-800C-4759-B34B-7317032A45E7} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
