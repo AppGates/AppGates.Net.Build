@@ -41,6 +41,7 @@
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln" />
     </ItemGroup>
+    <Exec Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
     <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
   </Target>
 
