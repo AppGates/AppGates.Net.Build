@@ -1,17 +1,36 @@
 ﻿<Project>
-  
   <PropertyGroup>
-    <DirectoryBuildPropsCopy2>$(DirectoryBuildProps)</DirectoryBuildPropsCopy2>
-    <DirectoryBuildTargetsCopy2>$(DirectoryBuildTargets)</DirectoryBuildTargetsCopy2>
+    <RepositoryProjectName>_Root</RepositoryProjectName>
   </PropertyGroup>
-  
-  <Target Name="LogSdk" AfterTargets="AfterBuild">
-    <Message Importance="high" Text="Hello from '$(MSBuildThisFileDirectory)'. Used SDK index '$(RestoredSdkVersionIndex)'"></Message>
-    <Message Importance="high" Text="DirectoryBuildPropsCopy1: $(DirectoryBuildPropsCopy1)"/>
-    <Message Importance="high" Text="DirectoryBuildTargetsCopy1: $(DirectoryBuildTargetsCopy1)"/>
-    <Message Importance="high" Text="DirectoryBuildPropsCopy2: $(DirectoryBuildPropsCopy2)"/>
-    <Message Importance="high" Text="DirectoryBuildTargetsCopy2: $(DirectoryBuildTargetsCopy2)"/>
-  </Target>
+  <ItemGroup>
+    <PackageReference Include="AppGates.Net.Build.Hooks" Version="*" PrivateAssets="all"/>
+  </ItemGroup>
 
+  <Choose>
+    <When Condition="'$(MSBuildProjectName)' == '$(RepositoryProjectName)'">
+      <ItemGroup>
+        <PackageReference Include="AppGates.Net.Build.Pipeline" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.GitHooks.Powershell" Version="*" PrivateAssets="all"/>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
+        <PackageReference Include="NUnit" Version="*" />
+        <PackageReference Include="NUnit3TestAdapter" Version="*" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*"/>
+      </ItemGroup>
+      <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Nerdbank.GitVersioning" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.TransitivePack" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.LocalVersioning" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
+      </ItemGroup>
+
+    </Otherwise>
+  </Choose>
 
 </Project>

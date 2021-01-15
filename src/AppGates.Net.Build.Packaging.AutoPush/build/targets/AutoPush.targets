@@ -65,44 +65,48 @@
   <Target Name="AutoPush" AfterTargets="Pack" Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '$(IsPackable)' == 'true'">
 
     <ItemGroup>
-      <Nuget_AutoPushSource_WithPublishLevel Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))" Include="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))"/>
-      <Nuget_AutoPushSource_WithBasicAuth Include="@(Nuget_AutoPushSource_WithPublishLevel->HasMetadata('Password'))"/>
-      <Nuget_AutoPushSource_WithApiKeyAuth Include="@(Nuget_AutoPushSource_WithPublishLevel->HasMetadata('ApiKey'))"/>
-      <Nuget_AutoPushSource_WithNoAuth Include="@(Nuget_AutoPushSource_WithPublishLevel)" Exclude="@(Nuget_AutoPushSource_WithBasicAuth);@(Nuget_AutoPushSource_WithApiKeyAuth)"/>
+      <Nuget_PushSource Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))" Include="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))"/>
     </ItemGroup>
-    
+  </Target>
+
+  <Target Name="Push" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
+
+    <Message Importance="high" Text="Pushing to '%(Nuget_PushSource.Address)'..." />
+    <ItemGroup>
+      <Nuget_PushSource_WithBasicAuth Include="@(Nuget_PushSource->HasMetadata('Password'))"/>
+      <Nuget_PushSource_WithApiKeyAuth Include="@(Nuget_PushSource->HasMetadata('ApiKey'))"/>
+      <Nuget_PushSource_WithNoAuth Include="@(Nuget_PushSource)" Exclude="@(Nuget_PushSource_WithBasicAuth);@(Nuget_PushSource_WithApiKeyAuth)"/>
+    </ItemGroup>
+
     <PropertyGroup>
-      <Nuget_AutoPush_PackagePath>$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg</Nuget_AutoPush_PackagePath>
-      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_AutoPushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
-      <PushWithConfigCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
-      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_AutoPush_PackagePath) --skip-duplicate --source "%(Nuget_AutoPushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
+      <Nuget_Push_PackagePath>$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg</Nuget_Push_PackagePath>
+      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_PushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
+      <PushWithConfigCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
+      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
       <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
     </PropertyGroup>
 
     <!--with config (basic auth)-->
-    <Delete Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" Files="$(PushNugetConfigPath)"/>
+    <Delete Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" Files="$(PushNugetConfigPath)"/>
 
-    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
+    <Exec Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
           Command="dotnet new nugetconfig" ></Exec>
 
-    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
-          Command="dotnet nuget add source %(Nuget_AutoPushSource_WithBasicAuth.Address) -n %(Nuget_AutoPushSource_WithBasicAuth.Identity) -u %(Nuget_AutoPushSource_WithBasicAuth.Username) -p %(Nuget_AutoPushSource_WithBasicAuth.Password) --store-password-in-clear-text" ></Exec>
+    <Exec Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''"  WorkingDirectory="$(IntermediateOutputPath)"
+          Command="dotnet nuget add source %(Nuget_PushSource_WithBasicAuth.Address) -n %(Nuget_PushSource_WithBasicAuth.Identity) -u %(Nuget_PushSource_WithBasicAuth.Username) -p %(Nuget_PushSource_WithBasicAuth.Password) --store-password-in-clear-text" ></Exec>
 
-    <Message Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  Importance="high" Text="Generated config '$(PushNugetConfigPath)':"/>
-    <Message Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''"  Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
-   
-    <Exec Condition="'@(Nuget_AutoPushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
+    <Message Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''"  Importance="high" Text="Generated config '$(PushNugetConfigPath)':"/>
+    <Message Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''"  Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
+
+    <Exec Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
           Command="$(PushWithConfigCommand)" />
 
     <!--with api key-->
-    <Exec Condition="'@(Nuget_AutoPushSource_WithApiKeyAuth)' != ''"
+    <Exec Condition="'@(Nuget_PushSource_WithApiKeyAuth)' != ''"
           Command="$(PushWithApiKeyCommand)" />
 
     <!--without auth-->
-    <Exec Condition="'@(Nuget_AutoPushSource_WithNoAuth)' != ''"
+    <Exec Condition="'@(Nuget_PushSource_WithNoAuth)' != ''"
           Command="$(PushWithNoAuthCommand)" />
-
- 
   </Target>
-
 </Project>

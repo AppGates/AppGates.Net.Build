@@ -8,7 +8,7 @@
     <IsDevelopmentDependency>true</IsDevelopmentDependency>
   </PropertyGroup>
   
-  <ItemGroup>
+  <!--<ItemGroup>
     <Range Include="1;2;">
       <Number>%(Identity)</Number>
     </Range>
@@ -21,7 +21,7 @@
 
   <Target Name="Loglogx" AfterTargets="AfterBuild">
     <Message Importance="high" Text="Range: %(Range.Identity)" />
-  </Target>
+  </Target>-->
   
 
 </Project>

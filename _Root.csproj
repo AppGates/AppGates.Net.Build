@@ -30,6 +30,9 @@
     <None Include="src\.git-ps-hooks\pre-commit.ps1" />
   </ItemGroup>
 
+  <Target Name="Push">
+    
+  </Target>
   
   <!-- BEGIN disable default compile and copy binary behaviour -->
   <!--<Target Name="Build" DependsOnTargets=""></Target>

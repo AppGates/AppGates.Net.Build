@@ -4,7 +4,6 @@
   <PropertyGroup>
     <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/23327371/packages/nuget/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
 
-    <DirectoryBuildProps>true</DirectoryBuildProps>
     <UseVersioningSdk>true</UseVersioningSdk>
     <UseLatestSdk>true</UseLatestSdk>
     <!--<UseVersioningSdk  Condition="'$(MSBuildProjectName)' == 'AppGates.Build.ApiManagement.Sdk'" >false</UseVersioningSdk>-->
@@ -18,19 +17,12 @@
   <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.3.1609081814" Project="Sdk.props"/>
 
 
-  <Target Name="Logloglog" BeforeTargets="BeforeBuild">
-    <Message Importance="high" Text="MSBuildProjectDirectory: $(MSBuildProjectDirectory)"/>
-    <Message Importance="high" Text="MSBuildProjectName: $(MSBuildProjectName)"/>
-  </Target>
 
   <PropertyGroup>
     <Nuget_AutoPushPublishLevels>global</Nuget_AutoPushPublishLevels>
     <Nuget_AutoPushPublishLevels Condition="$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test'))">internal</Nuget_AutoPushPublishLevels>
 
 
-    <IsNoBinaryPackage>false</IsNoBinaryPackage>
-    <IsNoBinaryPackage Condition="Exists('$(MSBuildProjectDirectory)\build\$(MSBuildProjectName).targets')"
-      >$([System.IO.Directory]::GetFiles('$(MSBuildProjectDirectory)','*.cs', SearchOption.AllDirectories).get_Length().Equals(0))</IsNoBinaryPackage>
     <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
     <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
     <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
@@ -45,41 +37,6 @@
   </PropertyGroup>
 
   
-  <ItemGroup>
-    <PackageReference Include="AppGates.Net.Build.Hooks" Version="*">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
-  
-  <Choose>
-    <When Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
-      <ItemGroup>
-        <PackageReference Include="NUnit" Version="*" />
-        <PackageReference Include="NUnit3TestAdapter" Version="*" />
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*"/>
-      </ItemGroup>
-    </When>
-    <When Condition="'$(MSBuildProjectName)' == '_Root'">
-      <ItemGroup>
-        <PackageReference Include="AppGates.Net.Build.Pipeline" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.GitHooks.Powershell" Version="*" PrivateAssets="all"/>
-      </ItemGroup>
-    </When>
-    <Otherwise>
-      <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="Nerdbank.GitVersioning" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.TransitivePack" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.LocalVersioning" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
-      </ItemGroup>
-
-    </Otherwise>
-  </Choose>
 
 
 
