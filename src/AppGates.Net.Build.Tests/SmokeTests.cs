@@ -2,8 +2,9 @@ using NUnit.Framework;
 
 namespace AppGates.Net.Build.Tests
 {
-    public class Tests
+    public class SmokeTests
     {
+
         [SetUp]
         public void Setup()
         {
