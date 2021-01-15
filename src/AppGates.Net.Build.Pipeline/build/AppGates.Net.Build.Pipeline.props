@@ -1,0 +1,9 @@
+﻿<Project>
+
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <GenerateDependencyFile>False</GenerateDependencyFile>
+  </PropertyGroup>
+  
+</Project>

@@ -11,10 +11,10 @@
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.19",
-        "contentHash": "sn2HqREtYOkakh9yRlJrVYbKcCtduv6ACovrs1fwQZClPZxLEehlTBUnRpOWTHHdq+sU8oQlfI987la5KhiDyg==",
+        "resolved": "1.2.21",
+        "contentHash": "IjMi90DqX8bFHNMpuCjaNZMvvUVhFp6M1yEFzih9TwdsYhNbzx+WteYlGUguxCxCFl7p84CQKKuauwWsO7lyxw==",
         "dependencies": {
-          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.19"
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.21"
         }
       },
       "AppGates.Net.Build.Deterministic": {
@@ -73,8 +73,8 @@
       },
       "AppGates.Build.Versioning.Test.TransitiveLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.19",
-        "contentHash": "j7dlcJSnjqBU51Fv/njcvMyl7J9tjAxUXL9vAaOLX9bj67F5/1uCrg91dB3Cz4HlCARL26JJMLwM3ku5wOsJQw=="
+        "resolved": "1.2.21",
+        "contentHash": "LoSShJhJCrgWILX75EJP0BXNzFXhmA/AJ9mY3Q/weam5H9ZhshTeMdfilUkqkkoo8fX/CAkDIS5DmgaxF5iN0g=="
       },
       "appgates.build.versioning.test.internal.multitarget": {
         "type": "Project",
@@ -103,10 +103,10 @@
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.19",
-        "contentHash": "sn2HqREtYOkakh9yRlJrVYbKcCtduv6ACovrs1fwQZClPZxLEehlTBUnRpOWTHHdq+sU8oQlfI987la5KhiDyg==",
+        "resolved": "1.2.21",
+        "contentHash": "IjMi90DqX8bFHNMpuCjaNZMvvUVhFp6M1yEFzih9TwdsYhNbzx+WteYlGUguxCxCFl7p84CQKKuauwWsO7lyxw==",
         "dependencies": {
-          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.19"
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.21"
         }
       },
       "AppGates.Net.Build.Deterministic": {
@@ -165,8 +165,8 @@
       },
       "AppGates.Build.Versioning.Test.TransitiveLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.19",
-        "contentHash": "j7dlcJSnjqBU51Fv/njcvMyl7J9tjAxUXL9vAaOLX9bj67F5/1uCrg91dB3Cz4HlCARL26JJMLwM3ku5wOsJQw=="
+        "resolved": "1.2.21",
+        "contentHash": "LoSShJhJCrgWILX75EJP0BXNzFXhmA/AJ9mY3Q/weam5H9ZhshTeMdfilUkqkkoo8fX/CAkDIS5DmgaxF5iN0g=="
       },
       "appgates.build.versioning.test.internal.multitarget": {
         "type": "Project",

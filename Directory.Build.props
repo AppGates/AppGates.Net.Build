@@ -18,6 +18,26 @@
   <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.3.1609081814" Project="Sdk.props"/>
 
 
+
+  <PropertyGroup>
+    <Nuget_AutoPushPublishLevels>global</Nuget_AutoPushPublishLevels>
+    <Nuget_AutoPushPublishLevels Condition="$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test'))">internal</Nuget_AutoPushPublishLevels>
+
+    <IsNoBinaryPackage>$(MSBuildProjectName.StartsWith('AppGates.Net.Build.'))</IsNoBinaryPackage>
+    <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
+    <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
+    <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
+    <RestorePackagesWithLockFile>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test.'))</RestorePackagesWithLockFile>
+    <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
+
+    <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->
+    <PackageOutputPath>$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
+    <!--<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>-->
+    <!--<RebuildOnVisualStudioPack>true</RebuildOnVisualStudioPack>-->
+
+  </PropertyGroup>
+
+  
   <ItemGroup>
     <PackageReference Include="AppGates.Net.Build.Hooks" Version="*">
       <PrivateAssets>all</PrivateAssets>
@@ -26,86 +46,25 @@
   </ItemGroup>
   
   <Choose>
-    <When Condition="'$(MSBuildProjectName)' != '_Root'">
-
-      <PropertyGroup>
-        <Nuget_AutoPushPublishLevels>global</Nuget_AutoPushPublishLevels>
-        <Nuget_AutoPushPublishLevels Condition="$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test'))">internal</Nuget_AutoPushPublishLevels>
-
-        <IsNoBinaryPackage>$(MSBuildProjectName.StartsWith('AppGates.Net.Build.'))</IsNoBinaryPackage>
-        <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
-        <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
-        <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
-        <RestorePackagesWithLockFile>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test.'))</RestorePackagesWithLockFile>
-        <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
-
-        <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->
-        <PackageOutputPath>$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
-        <!--<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>-->
-        <!--<RebuildOnVisualStudioPack>true</RebuildOnVisualStudioPack>-->
-
-
-
-        <TestProperty  >$(CI.Equals('true'))</TestProperty>
-        <TestProperty2 Condition="'$(TestProperty2)' == ''">$(TestProperty.Equals('False'))</TestProperty2>
-        <!--<TestProperty2 Condition="'$(TestProperty)' == 'false'">true</TestProperty2>-->
-
-
-      </PropertyGroup>
-
-      
+    <When Condition="'$(MSBuildProjectName)' == '_Root'">
       <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-
-
-        <PackageReference Include="Nerdbank.GitVersioning" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-
-        <!--<PackageReference Include="AppGates.Build.ApiManagement.Targets" Version="*">
-    <PrivateAssets>all</PrivateAssets>
-    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-  </PackageReference>-->
-
-
-        <PackageReference Include="AppGates.Net.Build.TransitivePack" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets> build; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-
-
-
-        <PackageReference Include="AppGates.Net.Build.LocalVersioning" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-   
-        <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-
-        <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-        
-        <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
-
-        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive; buildMultiTargeting; </IncludeAssets>
-        </PackageReference>
+        <PackageReference Include="AppGates.Net.Build.Pipeline" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.GitHooks.Powershell" Version="*" PrivateAssets="all"/>
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.PublicApiAnalyzers" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="Nerdbank.GitVersioning" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.TransitivePack" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.LocalVersioning" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
       </ItemGroup>
 
-    </When>
+    </Otherwise>
   </Choose>
 
 
