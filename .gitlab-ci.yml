@@ -22,7 +22,7 @@ test:
     - dotnet test
 
 push:
-  stage: publish
+  stage: deploy
   dependencies:
     - test
   script:
