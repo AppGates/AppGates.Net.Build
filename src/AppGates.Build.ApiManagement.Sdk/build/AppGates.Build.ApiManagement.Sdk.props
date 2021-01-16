@@ -1,2 +1,3 @@
 ﻿<Project>
+  <Import Project="targets\ImportGlobalImports.props"/>
 </Project>

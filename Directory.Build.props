@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project  >
 
+  <Target Name="Loglasd" AfterTargets="AfterBuild">
+
+    <Message Text="IsNoBinaryPackage: $(IsNoBinaryPackage)" Importance="high"/>
+  </Target>
   <PropertyGroup>
     <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/23327371/packages/nuget/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
 
@@ -25,7 +29,7 @@
     <!--<UseTimeStampAsLocalVersion>false</UseTimeStampAsLocalVersion>-->
     <!--<NuGetLockFilePath>$(MSBuildProjectDirectory)\packages.lock.json</NuGetLockFilePath>-->
     <!--<AutoDeleteLockFileWhenDisabled>true</AutoDeleteLockFileWhenDisabled>-->
-    <RestorePackagesWithLockFile>$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test.'))</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile Condition="'$(RestorePackagesWithLockFile)' == ''">$(MSBuildProjectName.StartsWith('AppGates.Build.Versioning.Test.'))</RestorePackagesWithLockFile>
     <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
 
     <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->

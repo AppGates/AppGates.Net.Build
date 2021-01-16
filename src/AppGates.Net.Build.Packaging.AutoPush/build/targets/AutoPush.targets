@@ -67,7 +67,6 @@
 
   <Target Name="Push" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
 
-    <Message Importance="high" Text="Pushing to '%(Nuget_PushSource.Address)'..." />
     <ItemGroup>
       <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('IsEnabled')->WithMetadataValue('IsEnabled','true'))"/>
 
@@ -83,6 +82,7 @@
       <PushWithNoAuthCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
       <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
     </PropertyGroup>
+    <Message  Condition="'@(Nuget_PushSource_Enabled)' != ''" Importance="high" Text="Pushing to '%(Nuget_PushSource_Enabled.Address)'..." />
 
     <!--with config (basic auth)-->
     <Delete Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" Files="$(PushNugetConfigPath)"/>

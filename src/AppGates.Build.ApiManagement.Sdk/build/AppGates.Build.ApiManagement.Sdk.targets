@@ -8,7 +8,21 @@
 
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == '$(RepositoryProjectName)'">
+      <PropertyGroup>
+        <RootDirectory Condition="'$(RootDirectory)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), _root))</RootDirectory>
+        <RootDirectory Condition="'$(RootDirectory)' == ''">$(MSBuildProjectDirectory)</RootDirectory>
+        <GlobalDirectory Condition="'$(GlobalDirectory)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), _global))</GlobalDirectory>
+        <GlobalDirectory Condition="'$(GlobalDirectory)' == ''">$(RootDirectory)\..\</GlobalDirectory>
+      </PropertyGroup>
       <ItemGroup>
+        <None Include="$(RootDirectory)\*.*" Visible="true"/>
+        <None Include="$(RootDirectory)\.github\**\*.*" Visible="true"/>
+        <None Include="$(RootDirectory)\.git-ps-hooks\**\*.*" Visible="true"/>
+        <None Remove="$(MSBuildProjectFile)"/>
+        <None Include="$(GlobalDirectory)\*.*" Link="_global\%(Filename)%(Extension)" Visible="true"/>
+      </ItemGroup>
+      <ItemGroup>
+        
         <PackageReference Include="AppGates.Net.Build.Pipeline" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.GitHooks.Powershell" Version="*" PrivateAssets="all"/>
       </ItemGroup>
@@ -32,5 +46,6 @@
 
     </Otherwise>
   </Choose>
+  <Import Project="targets\ImportGlobalImports.targets"/>
 
 </Project>

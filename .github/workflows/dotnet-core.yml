@@ -6,12 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:5.0
+    env: # Or as an environment variable
+      Nuget_Push_NugetOrgRepository_Token: ${{ secrets.Nuget_Push_NugetOrgRepository_Token }}
     steps:
     - name: Clone Repository
     - uses: actions/checkout@v2
 #    - name: Setup .NET Core
 #      uses: actions/setup-dotnet@v1
     - name: Build
-      run: dotnet build --configuration Release
+      run: dotnet pack --configuration Release
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - name: Push
+      run: dotnet push

@@ -10,8 +10,14 @@ namespace AppGates.Net.Build.Tests
         {
         }
 
-        [Test]
-        public void Test1()
+
+        [Test, Category("CiTest")]
+        public void DemoForCiTest()
+        {
+            Assert.Pass();
+        }
+        [Test, Category("NoCiTest")]
+        public void DemoForCiExcludedTest()
         {
             Assert.Pass();
         }
