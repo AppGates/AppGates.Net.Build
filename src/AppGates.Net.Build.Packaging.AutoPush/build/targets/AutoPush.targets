@@ -1,61 +1,54 @@
 ﻿<Project>
  
   <PropertyGroup>
-    <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">true</Nuget_AutoPushEnabled>
+    <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">$(BuildingInsideVisualStudio.Equals('True'))</Nuget_AutoPushEnabled>
     <Nuget_AutoPushPublishLevels Condition="'$(Nuget_AutoPushPublishLevels)' == ''">global</Nuget_AutoPushPublishLevels>
 
   </PropertyGroup>
 
-  <!--gitlab-->
+  <!--Project Repository-->
   <PropertyGroup>
-    <Nuget_AutoPush_Gitlab_ServerUrl Condition="'$(Nuget_AutoPush_Gitlab_ServerUrl)' == ''">$(CI_SERVER_URL)</Nuget_AutoPush_Gitlab_ServerUrl>
-    <Nuget_AutoPush_Gitlab_Project Condition="'$(Nuget_AutoPush_Gitlab_Project)' == ''">$(CI_PROJECT_ID)</Nuget_AutoPush_Gitlab_Project>
-    <Nuget_AutoPush_Gitlab_Project_Registry Condition="'$(Nuget_AutoPush_Gitlab_Project)' != ''">$(Nuget_AutoPush_Gitlab_ServerUrl)/api/v4/projects/$(Nuget_AutoPush_Gitlab_Project)/packages/nuget/index.json</Nuget_AutoPush_Gitlab_Project_Registry>
+    <Nuget_Push_ProjectRepository_ServerUrl Condition="'$(Nuget_Push_ProjectRepository_ServerUrl)' == ''">$(CI_SERVER_URL)</Nuget_Push_ProjectRepository_ServerUrl>
+    <Nuget_Push_ProjectRepository_Id Condition="'$(Nuget_Push_ProjectRepository_Id)' == ''">$(CI_PROJECT_ID)</Nuget_Push_ProjectRepository_Id>
+    <Nuget_Push_ProjectRepository_Url 
+      Condition="'$(Nuget_Push_ProjectRepository_Id)' != '' AND '$(Nuget_Push_ProjectRepository_Url)' != ''">$(Nuget_Push_ProjectRepository_ServerUrl)/api/v4/projects/$(Nuget_Push_ProjectRepository_Id)/packages/nuget/index.json</Nuget_Push_ProjectRepository_Url>
 
+    <Nuget_Push_ProjectRepository_Username
+      Condition="'$(Nuget_Push_ProjectRepository_Username)' == ''">$(CI_DEPLOY_USER)</Nuget_Push_ProjectRepository_Username>
+
+    <Nuget_Push_ProjectRepository_Username
+      Condition="'$(Nuget_Push_ProjectRepository_Username)' == ''">PushUser</Nuget_Push_ProjectRepository_Username>
     
-    <Nuget_AutoPush_Gitlab_Username
-      Condition="'$(Nuget_AutoPush_Gitlab_Username)' == ''">$(CI_DEPLOY_USER)</Nuget_AutoPush_Gitlab_Username>
+    <Nuget_Push_ProjectRepository_Password
+     Condition="'$(Nuget_Push_ProjectRepository_Password)' == ''">$(CI_DEPLOY_PASSWORD)</Nuget_Push_ProjectRepository_Password>
 
-    <Nuget_AutoPush_Gitlab_Username
-      Condition="'$(Nuget_AutoPush_Gitlab_Username)' == ''">PushUser</Nuget_AutoPush_Gitlab_Username>
-    
-    <Nuget_AutoPush_Gitlab_Password
-     Condition="'$(Nuget_AutoPush_Gitlab_Password)' == ''">$(CI_DEPLOY_PASSWORD)</Nuget_AutoPush_Gitlab_Password>
-
-    <Nuget_AutoPush_Gitlab_Password
-      Condition="'$(Nuget_AutoPush_Gitlab_Password)' == ''">$(CI_JOB_TOKEN)</Nuget_AutoPush_Gitlab_Password>
+    <Nuget_Push_ProjectRepository_Password
+      Condition="'$(Nuget_Push_ProjectRepository_Password)' == ''">$(CI_JOB_TOKEN)</Nuget_Push_ProjectRepository_Password>
 
   </PropertyGroup>
-  <ItemGroup Condition="'$(Nuget_AutoPush_Gitlab_Project_Registry)' != ''">
-    <Nuget_AutoPushSource Include="AutoPush_Gitlab_Internal">
-      <Address>$(Nuget_AutoPush_Gitlab_Project_Registry)</Address>
-      <PublishLevel>internal</PublishLevel>
-      <Username>$(Nuget_AutoPush_Gitlab_Username)</Username>
-      <Password>$(Nuget_AutoPush_Gitlab_Password)</Password>
-    </Nuget_AutoPushSource>
-  </ItemGroup>
   <!--nuget org-->
   <PropertyGroup>
-    <NugetOrgFeed Condition="'$(NugetOrgFeed)' == ''">https://api.nuget.org/v3/index.json</NugetOrgFeed>
+    <Nuget_Push_NugetOrgRepository_Url Condition="'$(Nuget_Push_NugetOrgRepository_Url)' == ''">https://api.nuget.org/v3/index.json</Nuget_Push_NugetOrgRepository_Url>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Nuget_AutoPush_NugetOrgToken)' != ''">
-    <Nuget_AutoPushSource Include="AutoPush_NugetOrg">
-      <Address>$(NugetOrgFeed)</Address>
+  <ItemGroup>
+    <Nuget_PushSource Include="NugetOrg" Condition="'$(Nuget_Push_NugetOrgRepository_Token)' != ''">
+      <Address>$(Nuget_Push_NugetOrgRepository_Url)</Address>
       <PublishLevel>global</PublishLevel>
-      <ApiKey>$(Nuget_AutoPush_NugetOrgToken)</ApiKey>
-    </Nuget_AutoPushSource>
-  </ItemGroup>
-  
-  <!--Default Push Source-->
-  <ItemGroup Condition="'$(Nuget_AutoPush_DefaultSource_Address)' != ''">
-    <Nuget_AutoPushSource Include="AutoPush_DefaultSource">
+      <ApiKey>$(Nuget_Push_NugetOrgRepository_Token)</ApiKey>
+    </Nuget_PushSource>
+    <Nuget_PushSource Include="ProjectRepository" Condition="'$(Nuget_Push_ProjectRepository_Url)' != ''">
+      <Address>$(Nuget_Push_ProjectRepository_Url)</Address>
+      <PublishLevel>internal</PublishLevel>
+      <Username>$(Nuget_Push_ProjectRepository_Username)</Username>
+      <Password>$(Nuget_Push_ProjectRepository_Password)</Password>
+    </Nuget_PushSource>
+    <Nuget_PushSource Include="Default" Condition="'$(Nuget_AutoPush_DefaultSource_Address)' != ''">
       <Address>$(Nuget_AutoPush_DefaultSource_Address)</Address>
       <Username Condition="'$(Nuget_AutoPush_DefaultSource_Username)' != ''">$(Nuget_AutoPush_DefaultSource_Username)</Username>
       <Password Condition="'$(Nuget_AutoPush_DefaultSource_Password)' != ''">$(Nuget_AutoPush_DefaultSource_Password)</Password>
       <ApiKey Condition="'$(Nuget_AutoPush_DefaultSource_ApiKey)' != ''">$(Nuget_AutoPush_DefaultSource_ApiKey)</ApiKey>
-    </Nuget_AutoPushSource>
+    </Nuget_PushSource>
   </ItemGroup>
-
 
   <Target Name="LogAutoPushSettings"  BeforeTargets="AutoPush" Condition="'$(IsPackable)' == 'true'">
     <Message Importance="$(BuildSdkLogPriority)" Text="Nuget_AutoPushEnabled is set to: '$(Nuget_AutoPushEnabled)'. To activate it set the environment variable or msbuild property Nuget_AutoPushEnabled to true."></Message>
@@ -65,7 +58,10 @@
   <Target Name="AutoPush" AfterTargets="Pack" Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '$(IsPackable)' == 'true'">
 
     <ItemGroup>
-      <Nuget_PushSource Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))" Include="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))"/>
+      <Nuget_PushSource Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))"
+                        Update="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))">
+        <IsEnabled>true</IsEnabled>
+      </Nuget_PushSource>
     </ItemGroup>
   </Target>
 
@@ -73,9 +69,11 @@
 
     <Message Importance="high" Text="Pushing to '%(Nuget_PushSource.Address)'..." />
     <ItemGroup>
-      <Nuget_PushSource_WithBasicAuth Include="@(Nuget_PushSource->HasMetadata('Password'))"/>
-      <Nuget_PushSource_WithApiKeyAuth Include="@(Nuget_PushSource->HasMetadata('ApiKey'))"/>
-      <Nuget_PushSource_WithNoAuth Include="@(Nuget_PushSource)" Exclude="@(Nuget_PushSource_WithBasicAuth);@(Nuget_PushSource_WithApiKeyAuth)"/>
+      <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('IsEnabled')->WithMetadataValue('IsEnabled','true'))"/>
+
+      <Nuget_PushSource_WithBasicAuth Include="@(Nuget_PushSource_Enabled->HasMetadata('Password'))"/>
+      <Nuget_PushSource_WithApiKeyAuth Include="@(Nuget_PushSource_Enabled->HasMetadata('ApiKey'))"/>
+      <Nuget_PushSource_WithNoAuth Include="@(Nuget_PushSource_Enabled)" Exclude="@(Nuget_PushSource_WithBasicAuth);@(Nuget_PushSource_WithApiKeyAuth)"/>
     </ItemGroup>
 
     <PropertyGroup>
