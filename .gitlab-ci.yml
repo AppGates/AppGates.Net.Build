@@ -2,6 +2,7 @@ image: mcr.microsoft.com/dotnet/sdk:latest
 variables:
   PackageOutputPath: ./_out/pack
 build:
+  stage: build
   script:
     - dotnet pack
   artifacts:
@@ -14,11 +15,15 @@ build:
      - _out/pack/*.*
 
 test:
+  stage: test
   dependencies:
-   - build  #we depend on the build and pack stage, we only want to run when its successful, and we need its artifacts
+    - build  #we depend on the build and pack stage, we only want to run when its successful, and we need its artifacts
   script:
     - dotnet test
 
 push:
+  stage: publish
+  dependencies:
+    - test
   script:
     - dotnet build /t:Push
