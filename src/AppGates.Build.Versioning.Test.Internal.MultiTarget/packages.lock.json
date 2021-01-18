@@ -5,8 +5,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.19.1610926680",
-        "contentHash": "YjoMGwubwRh/ehp5G24869hEQS3Si8PNuIU10/6XsXTBVzB55s/lE1jLZQqad7+zKPLEbL7aAqBuPCL+wsaz0Q=="
+        "resolved": "1.2.20.1610991967",
+        "contentHash": "5qNiWhPrlpDxSh45/ZaCbHum7UQ1OYzTTfCzz/gEYbYtdrsmVxAO8Opp+XaBJm6QDxaNOpkVDvGQlXawKQi8rQ=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
@@ -90,8 +90,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.19.1610926680",
-        "contentHash": "YjoMGwubwRh/ehp5G24869hEQS3Si8PNuIU10/6XsXTBVzB55s/lE1jLZQqad7+zKPLEbL7aAqBuPCL+wsaz0Q=="
+        "resolved": "1.2.20.1610991967",
+        "contentHash": "5qNiWhPrlpDxSh45/ZaCbHum7UQ1OYzTTfCzz/gEYbYtdrsmVxAO8Opp+XaBJm6QDxaNOpkVDvGQlXawKQi8rQ=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",

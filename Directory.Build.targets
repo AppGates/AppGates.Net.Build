@@ -37,6 +37,6 @@
   </Target>
   <!--End: Avoid cycle error when package builds itself-->
   
-  <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.1.3.1609081814" Project="Sdk.targets"/>
+  <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.2.20.1610991967" Project="Sdk.targets"/>
 
 </Project>
