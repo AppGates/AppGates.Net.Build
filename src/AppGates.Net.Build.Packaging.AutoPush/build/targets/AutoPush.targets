@@ -63,7 +63,7 @@
     <ItemGroup>
       <Nuget_PushSource Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))"
                         Update="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))">
-        <IsEnabled>true</IsEnabled>
+        <Enabled>true</Enabled>
       </Nuget_PushSource>
     </ItemGroup>
   </Target>
@@ -71,7 +71,7 @@
   <Target Name="PushPackage" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
 
     <ItemGroup>
-      <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('IsEnabled')->WithMetadataValue('IsEnabled','true'))"/>
+      <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('Enabled')->WithMetadataValue('Enabled','true'))"/>
 
       <Nuget_PushSource_WithBasicAuth Include="@(Nuget_PushSource_Enabled->HasMetadata('Password'))"/>
       <Nuget_PushSource_WithApiKeyAuth Include="@(Nuget_PushSource_Enabled->HasMetadata('ApiKey'))"/>
@@ -87,7 +87,7 @@
     </PropertyGroup>
     <Message  Condition="'@(Nuget_PushSource)' != ''" Importance="high" Text="Available Push Source: %(Nuget_PushSource.Identity)" />
 
-    <Message  Condition="'@(Nuget_PushSource_Enabled)' != ''" Importance="high" Text="Pushing to %(Nuget_PushSource.Identity) (%(Nuget_PushSource_Enabled.Address))..." />
+    <!--<Message  Condition="'@(Nuget_PushSource_Enabled)' != ''" Importance="high" Text="Pushing to %(Nuget_PushSource.Identity) (%(Nuget_PushSource_Enabled.Address))..." />-->
 
     <!--with config (basic auth)-->
     <Delete Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" Files="$(PushNugetConfigPath)"/>
