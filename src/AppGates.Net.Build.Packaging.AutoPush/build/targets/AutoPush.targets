@@ -35,18 +35,21 @@
       <Address>$(Nuget_Push_NugetOrgRepository_Url)</Address>
       <PublishLevel>global</PublishLevel>
       <ApiKey>$(Nuget_Push_NugetOrgRepository_Token)</ApiKey>
+      <Enabled>true</Enabled>
     </Nuget_PushSource>
     <Nuget_PushSource Include="ProjectRepository" Condition="'$(Nuget_Push_ProjectRepository_Url)' != ''">
       <Address>$(Nuget_Push_ProjectRepository_Url)</Address>
       <PublishLevel>internal</PublishLevel>
       <Username>$(Nuget_Push_ProjectRepository_Username)</Username>
       <Password>$(Nuget_Push_ProjectRepository_Password)</Password>
+      <Enabled>true</Enabled>
     </Nuget_PushSource>
     <Nuget_PushSource Include="Default" Condition="'$(Nuget_AutoPush_DefaultSource_Address)' != ''">
       <Address>$(Nuget_AutoPush_DefaultSource_Address)</Address>
       <Username Condition="'$(Nuget_AutoPush_DefaultSource_Username)' != ''">$(Nuget_AutoPush_DefaultSource_Username)</Username>
       <Password Condition="'$(Nuget_AutoPush_DefaultSource_Password)' != ''">$(Nuget_AutoPush_DefaultSource_Password)</Password>
       <ApiKey Condition="'$(Nuget_AutoPush_DefaultSource_ApiKey)' != ''">$(Nuget_AutoPush_DefaultSource_ApiKey)</ApiKey>
+      <Enabled>true</Enabled>
     </Nuget_PushSource>
   </ItemGroup>
 
