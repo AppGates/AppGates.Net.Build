@@ -5,8 +5,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.19.1610816555",
-        "contentHash": "SfmoNGf5gHgrfJLnElehESHuvp8YO9SmZADV1TJSxAOQ3ca/TP9h9BSw3hadBZNuE9anpig+Ssr7iCQA87U0wA=="
+        "resolved": "1.2.19.1610926680",
+        "contentHash": "YjoMGwubwRh/ehp5G24869hEQS3Si8PNuIU10/6XsXTBVzB55s/lE1jLZQqad7+zKPLEbL7aAqBuPCL+wsaz0Q=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
