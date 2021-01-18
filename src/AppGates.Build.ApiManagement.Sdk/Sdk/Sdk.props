@@ -1,5 +1,7 @@
 ﻿<Project>
- 
+  <PropertyGroup>
+    <UseLatestSdk Condition="'$(UseLatestSdk)' == ''">true</UseLatestSdk>
+  </PropertyGroup>
   <Choose>
     <When Condition="'$(UseLatestSdk)' == 'true'">
       <ItemGroup>

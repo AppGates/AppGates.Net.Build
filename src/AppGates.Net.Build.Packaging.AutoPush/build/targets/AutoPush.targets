@@ -65,7 +65,7 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="Push" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
+  <Target Name="PushPackage" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
 
     <ItemGroup>
       <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('IsEnabled')->WithMetadataValue('IsEnabled','true'))"/>

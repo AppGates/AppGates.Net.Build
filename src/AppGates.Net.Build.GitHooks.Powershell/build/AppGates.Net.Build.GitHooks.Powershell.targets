@@ -11,7 +11,8 @@
   </PropertyGroup>
 
   <Target Name ="DeployGitHooks" BeforeTargets="PrepareForBuild">
-    <Exec Command="git config core.hooksPath" ConsoleToMSBuild="true" StandardOutputImportance="low">
+    <Exec Command="git config core.hooksPath" WorkingDirectory="$(MSBuildProjectDirectory)" 
+          ContinueOnError="true" ConsoleToMSBuild="true" StandardOutputImportance="low">
       <Output TaskParameter="ConsoleOutput" PropertyName="CurrentHooksPath"/>
     </Exec>
     <CallTarget Targets="ConfigureHooksPath" Condition="'$(RedirectGitHookPath)' != '$(CurrentHooksPath)'"/>
@@ -22,7 +23,7 @@
       <GitConfigHookPathCommand>git config core.hooksPath $(RedirectGitHookPath)</GitConfigHookPathCommand>
     </PropertyGroup>
     <Message Importance="high" Text="Exec: $(GitConfigHookPathCommand)"/>
-    <Exec Command="$(GitConfigHookPathCommand)"/>
+    <Exec Command="$(GitConfigHookPathCommand)" WorkingDirectory="$(MSBuildProjectDirectory)"/>
     <Message Importance="high" Text="git hooks for powershell core have been configured. Run 'git config core.hooksPath' to reset the setting."/>
   </Target>
 

@@ -33,7 +33,7 @@
     <!--<RestoreForceEvaluate>true</RestoreForceEvaluate>-->
 
     <!--<UseApiManagement>$(MSBuildProjectName.Equals('AppGates.Build.ApiManagement.Tasks').Equals(false))</UseApiManagement>-->
-    <PackageOutputPath>$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
+    <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
     <!--<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>-->
     <!--<RebuildOnVisualStudioPack>true</RebuildOnVisualStudioPack>-->
 

@@ -5,8 +5,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.17.1610748182",
-        "contentHash": "zP2G+Nxqnj5fl4fasw8bDbrKcdktRDoyXykCWMyMDBqr3ZQIUPr2DgqE9M9aN29jm3Rl6dfMcY94Jc8zC27zjg=="
+        "resolved": "1.2.19.1610816555",
+        "contentHash": "SfmoNGf5gHgrfJLnElehESHuvp8YO9SmZADV1TJSxAOQ3ca/TP9h9BSw3hadBZNuE9anpig+Ssr7iCQA87U0wA=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
@@ -44,8 +44,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.18.1610780325",
-        "contentHash": "rHJH9Dsq2nDNKoxDYEEiT6ObxMmIoHYsukJBU1NS6cSxEkqqxbtKEECJ+t0mkWh5iOLSfdyYzWuouwBJ9y9kUA=="
+        "resolved": "1.2.20.1610828286",
+        "contentHash": "SqiNA6FzemKgtWwjZrdG1ICCn7KcmV9RLO2PLN2s6eUvKy7vX38s+ruoEpFgPs6R8B+FePr40/z551nSolnXhQ=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",
@@ -90,8 +90,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.17.1610748182",
-        "contentHash": "zP2G+Nxqnj5fl4fasw8bDbrKcdktRDoyXykCWMyMDBqr3ZQIUPr2DgqE9M9aN29jm3Rl6dfMcY94Jc8zC27zjg=="
+        "resolved": "1.2.19.1610816555",
+        "contentHash": "SfmoNGf5gHgrfJLnElehESHuvp8YO9SmZADV1TJSxAOQ3ca/TP9h9BSw3hadBZNuE9anpig+Ssr7iCQA87U0wA=="
       },
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
@@ -129,8 +129,8 @@
       "AppGates.Net.Build.Packaging.AutoPush": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.18.1610780325",
-        "contentHash": "rHJH9Dsq2nDNKoxDYEEiT6ObxMmIoHYsukJBU1NS6cSxEkqqxbtKEECJ+t0mkWh5iOLSfdyYzWuouwBJ9y9kUA=="
+        "resolved": "1.2.20.1610828286",
+        "contentHash": "SqiNA6FzemKgtWwjZrdG1ICCn7KcmV9RLO2PLN2s6eUvKy7vX38s+ruoEpFgPs6R8B+FePr40/z551nSolnXhQ=="
       },
       "AppGates.Net.Build.TargetPackage": {
         "type": "Direct",

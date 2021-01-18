@@ -31,6 +31,19 @@
     <Exec Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
 
   </Target>
-  
+
+  <Target Name="DeployPages">
+    <ItemGroup>
+      <InputFile Include="*.*"/>
+    </ItemGroup>
+    <Message Text ="Deployed: %(InputFile.Identity)" Importance="high"/>
+
+    <Unzip SourceFiles="$(PackageOutputPath)\pages.zip" DestinationFolder="public"/>
+
+    <ItemGroup>
+      <DeployedFile Include="public\**\*.*"/>
+    </ItemGroup>
+    <Message Text ="Deployed: %(DeployedFile.Identity)" Importance="high"/>
+  </Target>
   
 </Project>

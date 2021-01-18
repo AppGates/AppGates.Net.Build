@@ -2,9 +2,9 @@
   <!--<Sdk Name="AppGates.Build.ApiManagement.Sdk" Version="1.1.64.1608740523"/>-->
 
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <EnableDefaultItems>false</EnableDefaultItems>
+       <IsPackable>false</IsPackable>
+ <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>False</GenerateDependencyFile>
     <Nuget_AutoPushEnabled>false</Nuget_AutoPushEnabled>
     <Nuget_AutoPushPublishLevels>none</Nuget_AutoPushPublishLevels>
@@ -31,7 +31,9 @@
     <ItemGroup>
       <PackageToPush Include="$(PackageOutputPath)\*.nupkg" Exclude="$(PackageOutputPath)\*.Tests.nupkg" />
     </ItemGroup>
-    <Exec Command="dotnet nuget push %(PackageToPush.Identity) /p:SkipSolutionOperation=true" />
+    <Message Text="Push: %(PackageToPush.Identity)" Importance="high"/>
+    <!--<MSBuild  Projects="$(MSBuildProjectFullPath)" Targets="PushPackage" 
+             Properties="Nuget_Push_PackagePath=%(PackageToPush.Identity);SkipSolutionOperation=true"/>-->
   </Target>
   
    <ItemGroup>

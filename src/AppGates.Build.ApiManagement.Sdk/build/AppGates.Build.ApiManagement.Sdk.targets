@@ -4,11 +4,17 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AppGates.Net.Build.Hooks" Version="*" PrivateAssets="all"/>
+    <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
   </ItemGroup>
 
   <Choose>
     <When Condition="'$(MSBuildProjectName)' == '$(RepositoryProjectName)'">
       <PropertyGroup>
+        <IsPackable>false</IsPackable>
+        <EnableDefaultItems>false</EnableDefaultItems>
+        <GenerateDependencyFile>False</GenerateDependencyFile>
+        <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+        
         <RootDirectory Condition="'$(RootDirectory)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), _root))</RootDirectory>
         <RootDirectory Condition="'$(RootDirectory)' == ''">$(MSBuildProjectDirectory)</RootDirectory>
         <GlobalDirectory Condition="'$(GlobalDirectory)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), _global))</GlobalDirectory>
@@ -41,7 +47,6 @@
         <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
       </ItemGroup>
 
     </Otherwise>
