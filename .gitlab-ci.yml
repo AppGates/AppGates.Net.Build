@@ -1,18 +1,19 @@
 image: mcr.microsoft.com/dotnet/sdk:latest
 variables:
   PackageOutputPath: ./_out/pack
+  LogPath: ./_out/log
 build:
   stage: build
   script:
-    - dotnet pack
+    - dotnet pack /bl:"$LogPath/build.binlog"
   artifacts:
    when: always
    expire_in: 1 day #we push everything to Artifactory, so we don't need to keep the build output for longer than one day
    paths:
      - NuGet.Config  #keep the NuGet.Config because thats the only thing we need for a package based test. We don't need to map the sources in further stages anymore.
      - _root
-     - _out/*.binlog
-     - _out/pack/*.*
+     - $LogPath/*.*
+     - $PackageOutputPath/*.*
 
 test:
   stage: test
