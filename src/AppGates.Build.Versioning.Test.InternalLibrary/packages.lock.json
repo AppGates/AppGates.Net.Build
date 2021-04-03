@@ -5,8 +5,8 @@
       "AppGates.Build.ApiManagement.Sdk": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.21",
-        "contentHash": "JKzCWMoDf9LriWKADGLtF/dkNN4PfHGSFy2cDCTFtLiY3vNwlAkag3g4I6EvjkrZJ//JrUOAnHODLufr0qEudw=="
+        "resolved": "1.2.22",
+        "contentHash": "y+YdOD1RMdTL9p5QVfykpoGpx+Wp2BDMR9l7s9jPDlc3d7HB7wLaEw3z/eoWqXD2pVxNv2PlHRm3bcxB9NI3QA=="
       },
       "AppGates.Net.Build.Deterministic": {
         "type": "Direct",

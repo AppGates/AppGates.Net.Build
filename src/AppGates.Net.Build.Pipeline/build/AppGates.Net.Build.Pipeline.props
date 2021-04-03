@@ -9,18 +9,31 @@
 
 
   <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
+    <Message Text="Pipeline Entry Target: PackSolution" Importance="high"/>
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln" />
     </ItemGroup>
-    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)" />
+    <PropertyGroup>
+      <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
+      <InnerBuildCommand>dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)</InnerBuildCommand>
+    </PropertyGroup>
+    <Message Text="Pipeline Entry Target: PackSolution" Importance="high"/>
+    <CallTarget Targets="LogPipelineEntry"/>
+    <Exec Command="$(InnerBuildCommand)" />
   </Target>
 
   <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln" />
     </ItemGroup>
+    <PropertyGroup>
+      <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
+      <InnerBuildCommand>dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)</InnerBuildCommand>
+    </PropertyGroup>
+
+    <CallTarget Targets="LogPipelineEntry"/>
     <Exec Condition="'$(BuildingInsideVisualStudio)' != 'true'" Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
-    <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)" />
+    <Exec Command="$(InnerBuildCommand)" />
   </Target>
 
   <Target Name="Test" AfterTargets="VSTest" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
@@ -54,5 +67,8 @@
     <Message Text ="Deployed: %(DeployedFile.Identity)" Importance="high"/>
   </Target>
 
-
+  <Target Name="LogPipelineEntry">
+    <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
+    <Message Text="Pipeline Inner Build Command(s): $(InnerBuildCommand)" Importance="high"/>
+  </Target>
 </Project>
