@@ -4,7 +4,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AppGates.Net.Build.Hooks" Version="*" PrivateAssets="all"/>
-    <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
   </ItemGroup>
 
   <Choose>
@@ -47,10 +46,15 @@
         <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
+        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
       </ItemGroup>
 
     </Otherwise>
   </Choose>
   <Import Project="targets\ImportGlobalImports.targets"/>
+
+  <Target Name="LogBuildSdkVersion" BeforeTargets="BeforeBuild">
+    <Message Importance="high" Text="Build SDK used from: $(MSBuildThisFileDirectory)"/>
+  </Target>
 
 </Project>
