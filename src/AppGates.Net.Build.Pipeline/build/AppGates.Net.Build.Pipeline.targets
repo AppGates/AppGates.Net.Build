@@ -1,49 +1,4 @@
 ﻿<Project>
 
-  <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
-    <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-    </ItemGroup>
-    <Exec Command="dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
-  </Target>
-  
-  <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
-    <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-    </ItemGroup>
-    <Exec Condition="'$(BuildingInsideVisualStudio)' != 'true'" Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
-    <Exec Command="dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
-  </Target>
-
-  <Target Name="Test" AfterTargets="VSTest" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
-    <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-    </ItemGroup>
-    <Exec Command="dotnet test %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true" />
-  </Target>
-  
-  <Target Name="CleanSolution" AfterTargets="CleanOnly" Condition="'$(SkipSolutionOperation)' != 'true'">
-    <Message Importance="high" Text="Clear nuget http-cache...." />
-    <Exec Command="dotnet nuget locals http-cache --clear" />
-    <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-    </ItemGroup>
-    <Exec Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
-
-  </Target>
-
-  <Target Name="DeployPages">
-    <ItemGroup>
-      <InputFile Include="*.*"/>
-    </ItemGroup>
-    <Message Text ="Deployed: %(InputFile.Identity)" Importance="high"/>
-
-    <Unzip SourceFiles="$(PackageOutputPath)\pages.zip" DestinationFolder="public"/>
-
-    <ItemGroup>
-      <DeployedFile Include="public\**\*.*"/>
-    </ItemGroup>
-    <Message Text ="Deployed: %(DeployedFile.Identity)" Importance="high"/>
-  </Target>
   
 </Project>
