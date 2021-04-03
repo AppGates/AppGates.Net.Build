@@ -4,6 +4,9 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AppGates.Net.Build.Hooks" Version="*" PrivateAssets="all"/>
+
+    <!--The push target of the pipeline depends on PushPackage from the AutoPush package.-->
+    <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
   </ItemGroup>
 
   <Choose>
@@ -46,7 +49,6 @@
         <PackageReference Include="AppGates.Net.Build.Deterministic" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.TargetPackage" Version="*" PrivateAssets="all"/>
         <PackageReference Include="AppGates.Net.Build.NoBinaryPackage" Version="*" PrivateAssets="all"/>
-        <PackageReference Include="AppGates.Net.Build.Packaging.AutoPush" Version="*" PrivateAssets="all"/>
       </ItemGroup>
 
     </Otherwise>

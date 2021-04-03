@@ -11,10 +11,10 @@
       "AppGates.Build.Versioning.Test.ExternalLibrary": {
         "type": "Direct",
         "requested": "[*, )",
-        "resolved": "1.2.41",
-        "contentHash": "HnoQRo1Nkn4dz563LbpaV4GYtavVTkAR+5pQghGIIHYwqFkcr5QOiC9Kkjbw4V/gpm+yu4rl+zQM2hSoPvvzlw==",
+        "resolved": "1.2.42",
+        "contentHash": "oQVxS+LWQ9B3OE1KJU7PlKbPoYmvGA5j2VBJ3+iQkjfM+3TxDTmB1YHC+bj1o2z2drhSWfsD4Yod7YjKkhpaDw==",
         "dependencies": {
-          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.41"
+          "AppGates.Build.Versioning.Test.TransitiveLibrary": "1.2.42"
         }
       },
       "AppGates.Net.Build.Deterministic": {
@@ -82,8 +82,8 @@
       },
       "AppGates.Build.Versioning.Test.TransitiveLibrary": {
         "type": "Transitive",
-        "resolved": "1.2.41",
-        "contentHash": "nBR4e/ugd+H2bacKxYEUP3MiAfCVsMnqPWyUx0cTMBZQoMoCZfMSOp52fqebU04Po8iYHSUXvr2PSVTvHC8cDw=="
+        "resolved": "1.2.42",
+        "contentHash": "yjP4jw73K4rb/1twe/B1pj7izO6Od2Pa//WJW4rOVhwkMimHnlgwzCJ8gDCvXKS5mVvm8k25DFPCIY5XFhxIbw=="
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",

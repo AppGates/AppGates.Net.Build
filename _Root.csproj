@@ -3,100 +3,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-       <IsPackable>false</IsPackable>
+       <!--<IsPackable>false</IsPackable>
  <EnableDefaultItems>false</EnableDefaultItems>
     <GenerateDependencyFile>False</GenerateDependencyFile>
     <Nuget_AutoPushEnabled>false</Nuget_AutoPushEnabled>
-    <Nuget_AutoPushPublishLevels>none</Nuget_AutoPushPublishLevels>
+    <Nuget_AutoPushPublishLevels>none</Nuget_AutoPushPublishLevels>-->
   </PropertyGroup>
 
-  <!--<ItemGroup>
-    <Content Include="version.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include=".git-ps-hooks\pre-commit.ps1" />
-    <None Include=".git-ps-hooks\pre-merge-commit.ps1" />
-    <None Include=".git-ps-hooks\pre-push.ps1" />
-    <None Include=".git-ps-hooks\pre-rebase.ps1" />
-    <None Include=".git-ps-hooks\pre-receive.ps1" />
-    <None Include=".gitlab-ci.yml" />
-    <None Include="Directory.Build.props" />
-    <None Include="Directory.Build.targets" />
-    <None Include="README.md" />
-    <None Include="src\.git-ps-hooks\pre-commit.ps1" />
-  </ItemGroup>-->
-
-  <Target Name="Push" Condition="'$(SkipSolutionOperation)' != 'true'">
-    <ItemGroup>
-      <PackageToPush Include="$(PackageOutputPath)\*.nupkg" Exclude="$(PackageOutputPath)\*.Tests.nupkg" />
-    </ItemGroup>
-    <Message Text="Push: %(PackageToPush.Identity)" Importance="high"/>
-    <!--<MSBuild  Projects="$(MSBuildProjectFullPath)" Targets="PushPackage" 
-             Properties="Nuget_Push_PackagePath=%(PackageToPush.Identity);SkipSolutionOperation=true"/>-->
-  </Target>
   
-   <ItemGroup>
-            <TestPackage Include="$(PackageOutputPath)\*.Tests.*.nupkg" />
-    </ItemGroup>
-   
-  <Target Name="PackageTest" Condition="@(TestPackage-&gt;Count()) &gt; 0">
-    <PropertyGroup>
-      <TestIndicator>.Tests</TestIndicator>
-      <!--<SemVerRegEx><![CDATA[^((?in)^(?<Major>0|[1-9]\d*)\.(?<Minor>0|[1-9]\d*)\.(?<Patch>0|[1-9]\d*)(?<PreReleaseTagWithSeparator>-(?<PreReleaseTag>([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*)(\.([a-z-][\da-z-]+|[\da-z-]+[a-z-][\da-z-]*|0|[1-9]\d*))*))?(?<BuildMetadataWithSeparator>\+(?<BuildMetadata>[\da-z-]+(\.[\da-z-]+)*))?$)$]]></SemVerRegEx>-->
-    </PropertyGroup>
-    <ItemGroup>
-      <TestPackage_Hlp Include="@(TestPackage)">
-      <SplitIndex>$([System.String]::new('%(Filename)').IndexOf('$(TestIndicator).'))</SplitIndex>
-      <PackageName>$([System.String]::new('%(Filename)').Substring(0,%(TestPackage_Hlp.SplitIndex)))$(TestIndicator)</PackageName>
-      <Version>$([System.String]::new('%(Filename)').Replace('%(TestPackage_Hlp.PackageName).',''))</Version>
-               <!--<Version>$([System.Text.RegularExpressions.Regex]::Match('%(Filename)', '$(SemVerRegEx)'))</Version>-->
-        <!--<Name>$([System.String]::Copy('%(Filename)').Replace('%(TestPackageExtended.Version)', ''))</Name>-->
-      </TestPackage_Hlp>
-    
-      <TestPackageExtended Include="@(TestPackage_Hlp->'%(PackageName)')">
-      </TestPackageExtended>
-    </ItemGroup>
-    <PropertyGroup>
-      <TestRunProjectDirectory>$(BaseIntermediateOutputPath)\TestRun\%(TestPackageExtended.PackageName)\</TestRunProjectDirectory>
-      <TestTargetFramework Condition="'$(TestTargetFramework)' == ''">net50</TestTargetFramework>
-      <TestRunProjectTemplate>
-        <![CDATA[
-<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>[TestTargetFramework]</TargetFramework>
-  </PropertyGroup>
-  <ItemGroup>
-     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="*"/>
-     <PackageReference Include="NUnit3TestAdapter" Version="*"/>
-     <PackageReference Include="[TestPackageName]" Version="[TestPackageVersion]"/>
-  </ItemGroup>
-</Project>
-      ]]>
-      </TestRunProjectTemplate>
-      <TestRunProjectContent>$(TestRunProjectTemplate.Replace('[TestTargetFramework]','$(TestTargetFramework)').Replace('[TestPackageName]','%(TestPackageExtended.PackageName)').Replace('[TestPackageVersion]','%(TestPackageExtended.Version)'))</TestRunProjectContent>
-      <CreateEnvironmentCommand>dotnet</CreateEnvironmentCommand>
-      <TestCaseFilter Condition="'$(TestCaseFilter)' == ''">"(TestCategory=CiTest)%26(TestCategory!=NoCiTest)"</TestCaseFilter>
-      <TestResultsPath Condition="'$(TestResultsPath)' == ''">$([System.IO.Path]::GetFullPath('$(PackageOutputPath)\..\test'))</TestResultsPath>
-
-      <RestoreTestCommand>dotnet publish --force -o "publish"</RestoreTestCommand>
-       <PackageTestCommand>dotnet vstest "%(TestPackageExtended.PackageName).dll" --logger:"trx;LogFileName=%(TestPackageExtended.PackageName).trx" --ResultsDirectory:"$(TestResultsPath)" --TestCaseFilter:$(TestCaseFilter)</PackageTestCommand>
-    </PropertyGroup>
-    <Message Text="TestPropertyx: $(TestPropertyx)" Importance="high" />
-      <Message Text="TestPackage: %(TestPackageExtended.PackageName) / %(TestPackageExtended.Version) / %(TestPackageExtended.Filename)" Importance="high" />
-      <WriteLinesToFile File="$(TestRunProjectDirectory)TestRun.csproj" Lines="$(TestRunProjectContent)" Overwrite="true" />
-     <Message Text="TestRun Project:" Importance="high" /> 
-     <Message Text="$(TestRunProjectContent)" Importance="high" /> 
-    <Message Text="[$(TestRunProjectDirectory)] $(RestoreTestCommand)" Importance="high" />
-    <Exec Command="$(RestoreTestCommand)" WorkingDirectory="$(TestRunProjectDirectory)" />
-    <PropertyGroup>
-      <TestBinaryDirectory>$(TestRunProjectDirectory)\publish</TestBinaryDirectory>
-    </PropertyGroup>
-    <Copy SourceFiles="$(TestBinaryDirectory)\TestRun.runtimeconfig.json" DestinationFiles="$(TestBinaryDirectory)\%(TestPackageExtended.PackageName).runtimeconfig.json" />    
-    <Message Text="[$(TestBinaryDirectory)] $(PackageTestCommand)" Importance="high" />
-  <Exec Command="$(PackageTestCommand)" WorkingDirectory="$(TestBinaryDirectory)" />
-
-  </Target>
   <!-- BEGIN disable default compile and copy binary behaviour -->
   <!--<Target Name="Build" DependsOnTargets=""></Target>
   <Target Name="CoreCompile" />
