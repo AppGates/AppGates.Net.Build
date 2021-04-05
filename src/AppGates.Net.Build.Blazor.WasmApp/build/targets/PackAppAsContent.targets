@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Project InitialTargets="BlazorWasmAppBuildPackInitialization">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+
+    <!--no way yet to tear down the hosting process yet-->
+    <OpenBrowserOnOnPack Condition="'$(OpenBrowserOnOnPack)' == ''">false</OpenBrowserOnOnPack>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <TransitivePackEnabled>false</TransitivePackEnabled>
+    <IsPackable>true</IsPackable>
+    <FallbackToAppOn404 Condition="'$(FallbackToAppOn404)' == ''">true</FallbackToAppOn404>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--add the same content as 404 so that we can reroute within the blazor app-->
+    <Content Condition="'$(FallbackToAppOn404)' == 'true'" Include="..\$(MSBuildProjectName)\wwwroot\index.html" Link="wwwroot\404.html"/>
+  </ItemGroup>
+
+    
+  <Target Name="BlazorWasmAppBuildPackInitialization">
+    <PropertyGroup>
+      <PackDependsOn>PrePackBlazorWasmApp; Build; _IntermediatePack; GenerateNuspec; </PackDependsOn>
+    </PropertyGroup>
+  </Target>
+
+  <Target Name="PrePackBlazorWasmApp">
+    <PropertyGroup>
+      <DeployOnBuild>true</DeployOnBuild>
+      <BlazorEnableCompression Condition="'$(BlazorEnableCompression)' == ''">true</BlazorEnableCompression>
+      <PublishTrimmed Condition="'$(PublishTrimmed)' == ''">true</PublishTrimmed>
+    </PropertyGroup>
+    <Message Text="Pack Settings: FallbackToAppOn404: '$(FallbackToAppOn404)' | BlazorEnableCompression: '$(BlazorEnableCompression)' | PublishTrimmed: '$(PublishTrimmed)' " Importance="high"/>
+  </Target>
+
+  <Target Name="PreparePublishedPack" BeforeTargets="GenerateNuspec">
+    <ItemGroup>
+      <_PackageFiles Remove="@(_PackageFiles)"/>
+      <_BuildOutputInPackage Remove="@(_BuildOutputInPackage)"/>
+      <_ProjectReferencesWithVersions Remove="@(_ProjectReferencesWithVersions)"/>
+      <_PackageFiles Include="$(PublishUrl)\**\*.*"
+                     PackagePath="content%(RecursiveDir)\%(Filename)%(Extension)" />
+    </ItemGroup>
+
+    <Exec Condition="'$(OpenBrowserOnOnPack)' == 'true'"
+          Command="start dotnet serve -o -p 0"
+          WorkingDirectory="$(PublishUrl)\wwwroot"
+          />
+  </Target>
+  <Target Name="LogBlazorWasmPackSourceDirectory" AfterTargets="GenerateNuspec">
+    <PropertyGroup>
+      <PublishFullPath>$([System.IO.Path]::GetFullPath( '$(PublishUrl)' ))</PublishFullPath>
+    </PropertyGroup>
+    <Message Text="Built Package from: file://$(PublishFullPath)" Importance="high"/>
+    <PropertyGroup>
+      <ServeCommand>
+        dotnet tool update -g dotnet-serve
+        dotnet-serve -o -p 0 -d "$(PublishFullPath)\wwwroot"
+      </ServeCommand>
+      <ServeBatchFile>$(PublishFullPath)\wwwroot\serve.bat</ServeBatchFile>
+    </PropertyGroup>
+    <WriteLinesToFile File="$(ServeBatchFile)" Lines="$(ServeCommand)" Overwrite="true"/>
+    
+    <Message Text="Serve: file://$([System.IO.Path]::GetFullPath('$(ServeBatchFile)'))" Importance="high"/>
+
+  </Target>
+
+</Project>

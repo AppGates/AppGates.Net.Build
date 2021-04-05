@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.7.0" PrivateAssets="all" />
+
+    <!--Required for the show message box sample - or the package needs to be added on consumer side.-->
+    <!--<PackageReference Include="Newtonsoft.Json" Version="*" />-->
+
+    <!--Include Inline task files-->
+    <Compile Update="build\**\*.cs">
+      <Pack>true</Pack>
+      <PackagePath>/</PackagePath>
+    </Compile>
+
+  </ItemGroup>
+
+</Project>

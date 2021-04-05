@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_Root", "..\_Root.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{31C4B62E-6445-48D8-B748-FA885B432D81}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGates.Build.Samples.InlineTaskDistribution", "AppGates.Build.Samples.InlineTaskDistribution\AppGates.Build.Samples.InlineTaskDistribution.csproj", "{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,10 @@ Global
 		{B772A285-AC10-4204-8585-144588072E32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B772A285-AC10-4204-8585-144588072E32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B772A285-AC10-4204-8585-144588072E32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{DBB6D0C4-EE90-4AC4-A971-8936B96FBFF3} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 		{DDEF6F32-75A0-49B1-BDBB-C75FC1BE0439} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 		{B772A285-AC10-4204-8585-144588072E32} = {31C4B62E-6445-48D8-B748-FA885B432D81}
+		{7082F836-8841-4EE9-93BD-F8CD6EEFB4BE} = {AA4E5AFD-F072-49CB-9240-18B1B4FCA462}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A1A1C38-2115-4B0C-AC66-0623B2BCB102}

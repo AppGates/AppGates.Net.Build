@@ -7,40 +7,51 @@
     <AdditionalBuildArguments Condition="'$(AdditionalBuildArguments)' == ''"></AdditionalBuildArguments>
   </PropertyGroup>
 
-
   <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
-    <Message Text="Pipeline Entry Target: PackSolution" Importance="high"/>
-    <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-    </ItemGroup>
     <PropertyGroup>
       <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
-      <InnerBuildCommand>dotnet pack %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)</InnerBuildCommand>
     </PropertyGroup>
-    <Message Text="Pipeline Entry Target: PackSolution" Importance="high"/>
-    <CallTarget Targets="LogPipelineEntry"/>
-    <Exec Command="$(InnerBuildCommand)" />
+    
+    <ItemGroup>
+      <SolutionFileToPack Include="src\*.sln" />
+      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet pack %(Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)')"/>
+    </ItemGroup>
+
+    <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
+    <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
+    <Exec Command="%(InnerBuildCommand.Identity)" />
   </Target>
 
   <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
+    <PropertyGroup>
+      <PipelineEntryTarget>BuildSolution</PipelineEntryTarget>
+    </PropertyGroup>
+    
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln" />
+      <InnerBuildCommand Condition="'$(BuildingInsideVisualStudio)' != 'true'"
+                      Include="@(SolutionFileToPack->'dotnet restore %(Identity) --force-evaluate /p:SkipSolutionOperation=true')" />
+      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)')"/>
     </ItemGroup>
-    <PropertyGroup>
-      <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
-      <InnerBuildCommand>dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)</InnerBuildCommand>
-    </PropertyGroup>
 
-    <CallTarget Targets="LogPipelineEntry"/>
-    <Exec Condition="'$(BuildingInsideVisualStudio)' != 'true'" Command="dotnet restore %(SolutionFileToPack.Identity) --force-evaluate /p:SkipSolutionOperation=true" />
-    <Exec Command="$(InnerBuildCommand)" />
+    <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
+    <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
+    <Exec Command="%(InnerBuildCommand.Identity)" />
   </Target>
 
   <Target Name="Test" AfterTargets="VSTest" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
+    <PropertyGroup>
+      <PipelineEntryTarget>Test</PipelineEntryTarget>
+    </PropertyGroup>
+    
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln" />
+      <InnerBuildCommand Include="dotnet test %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)" />
     </ItemGroup>
-    <Exec Command="dotnet test %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)" />
+    
+    <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
+    <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
+    <Exec Command="%(InnerBuildCommand.Identity)" />
   </Target>
 
   <ItemGroup>
@@ -105,7 +116,7 @@
 
   </Target>
 
-  
+
   <Target Name="CleanSolution" AfterTargets="CleanOnly" Condition="'$(SkipSolutionOperation)' != 'true'">
     <Message Importance="high" Text="Clear nuget http-cache...." />
     <Exec Command="dotnet nuget locals http-cache --clear" />
@@ -129,7 +140,7 @@
     <Exec Command="$(InnerBuildCommand)" />
   </Target>
 
-  
+
   <Target Name="DeployPages">
     <ItemGroup>
       <InputFile Include="*.*"/>

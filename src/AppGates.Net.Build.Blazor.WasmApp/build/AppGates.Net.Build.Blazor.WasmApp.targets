@@ -1,0 +1,4 @@
+﻿<Project>
+  <Import Condition="'$(UsingMicrosoftNETSdkBlazorWebAssembly)' == 'true'" Project="targets\PackAppAsContent.targets"/>
+
+</Project>

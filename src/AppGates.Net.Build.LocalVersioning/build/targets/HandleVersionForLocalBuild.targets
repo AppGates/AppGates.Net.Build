@@ -32,7 +32,7 @@
     </PropertyGroup>
   </Target>
   <Target Name="IncrementLocalBuildIdAfterSuccessfulPack"
-          Condition="$(IsPackable)"
+          Condition="'$(IsPackable)' != 'false'"
           AfterTargets="GenerateNuspec"
           DependsOnTargets="GetLocalBuildId">
 

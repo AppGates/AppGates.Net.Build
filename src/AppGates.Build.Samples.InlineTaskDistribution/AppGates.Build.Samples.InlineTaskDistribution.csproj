@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="AppGates.Net.Build.Tasks" Version="*" ExcludeAssets="Compile;Runtime" PrivateAssets="all"/>
+    <PackageReference Include="Newtonsoft.Json" Version="*" ExcludeAssets="Compile;Runtime" PrivateAssets="all"/>
+  </ItemGroup>
+  
+  <Target Name="InlineTaskDemo" 
+          Condition="'$(BuildingInsideVisualStudio)' == 'true'" 
+          BeforeTargets="BeforeBuild">
+    <LoadMyDependencies/>
+    <ShowMessageBox/>
+  </Target>
+  
+</Project>

@@ -15,7 +15,7 @@
     <Nuget_Push_ProjectRepository_Id>23327371</Nuget_Push_ProjectRepository_Id>
     <Nuget_Push_ProjectRepository_Username>$(GitLab_UserName)</Nuget_Push_ProjectRepository_Username>
     <Nuget_Push_ProjectRepository_Password>$(GitLab_AccessToken)</Nuget_Push_ProjectRepository_Password>
-    <Nuget_Push_NugetOrgRepository_Token>$(AppGates_Nuget_PushToken)</Nuget_Push_NugetOrgRepository_Token>
+    <!--<Nuget_Push_NugetOrgRepository_Token>$(AppGates_Nuget_PushToken)</Nuget_Push_NugetOrgRepository_Token>-->
   </PropertyGroup>
   <Import Condition="$(UseVersioningSdk)" Sdk="AppGates.Build.ApiManagement.Sdk" Version="1.2.20.1610991967" Project="Sdk.props"/>
 

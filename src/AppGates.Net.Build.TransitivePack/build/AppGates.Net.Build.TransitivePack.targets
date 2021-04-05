@@ -1,10 +1,13 @@
 ﻿<Project>
+  <PropertyGroup>
+    <TransitivePackEnabled Condition="'$(TransitivePackEnabled)' == ''">true</TransitivePackEnabled>
+  </PropertyGroup>
 
    <Import Project="targets\SupressVisualStudioDepedencyBuild.targets" 
-          Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+          Condition="'$(TransitivePackEnabled)' == 'true' AND '$(BuildingInsideVisualStudio)' == 'true'"/>
 
   <Import Project="targets\FixVisualStudioPack.targets" 
-          Condition="'$(BuildingInsideVisualStudio)' == 'true'"/>
+          Condition="'$(TransitivePackEnabled)' == 'true' AND '$(BuildingInsideVisualStudio)' == 'true'"/>
 
 
   <!--Will be invoked by FixVisualStudioPack.targets-->

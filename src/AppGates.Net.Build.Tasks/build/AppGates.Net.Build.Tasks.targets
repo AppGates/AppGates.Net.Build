@@ -1,0 +1,6 @@
+﻿<Project>
+
+  <Import Project="targets\ShowMessageBoxInline\ShowMessageBox.targets"/>
+
+
+</Project>

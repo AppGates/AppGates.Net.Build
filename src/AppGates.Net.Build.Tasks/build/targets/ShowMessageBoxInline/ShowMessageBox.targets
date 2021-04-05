@@ -1,0 +1,36 @@
+﻿<Project>
+
+  <ItemGroup>
+    <PackageReference Update="Newtonsoft.Json" Version="*"  GeneratePathProperty="true" />
+  </ItemGroup>
+
+  <UsingTask TaskName="ShowMessageBox" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup />
+
+    <Task>
+      <Reference Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\Newtonsoft.Json.dll"/>
+      <Code Type="Class" Language="cs" Source="$(MSBuildThisFileDirectory)ShowMessageBox.cs" />
+    </Task>
+  </UsingTask>
+
+
+  <!--Workaround Ensure Depedency is loaded: https://github.com/dotnet/msbuild/issues/5106-->
+  <UsingTask
+	TaskName="LoadMyDependencies"
+	TaskFactory="CodeTaskFactory"
+	AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <Task>
+      <Reference Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\Newtonsoft.Json.dll"/>
+      <Code Type="Fragment" Language="cs"></Code>
+    </Task>
+  </UsingTask>
+  
+  <!--Demo-->
+  <!--<Target Name="ShowMessageBox" BeforeTargets="BeforeBuild">
+    <Message Importance="high" Text="PkgNewtonsoft_Json: $(PkgNewtonsoft_Json)"/>
+    <LoadMyDependencies/>
+    <ShowMessageBox />
+  </Target>-->
+
+
+</Project>
