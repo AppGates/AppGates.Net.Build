@@ -13,7 +13,7 @@
       <PackageOutputFullPath>$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))</PackageOutputFullPath>
     </PropertyGroup>
     
-    <MakeDir Directories="$(PackageOutputFullPath)"/>
+    <MakeDir Directories="$(PackageOutputFullPath)" />
     
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln">
