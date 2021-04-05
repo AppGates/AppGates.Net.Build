@@ -10,12 +10,13 @@
   <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
     <PropertyGroup>
       <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
+      <PackageOutputFullPath>$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))</PackageOutputFullPath>
     </PropertyGroup>
     
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln">
       </SolutionFileToPack>
-      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet pack %(Identity) /p:SkipSolutionOperation=true $([MSBuild]::Unescape($(AdditionalBuildArguments)))' )"/>
+      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet pack %(Identity) /p:SkipSolutionOperation=true /p:RestoreAdditionalProjectSources=$(PackageOutputFullPath) /p:PackageOutputPath=$(PackageOutputFullPath) $([MSBuild]::Unescape($(AdditionalBuildArguments)))' )"/>
     </ItemGroup>
 
     <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
