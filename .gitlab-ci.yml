@@ -2,7 +2,6 @@ image: mcr.microsoft.com/dotnet/sdk:latest
 variables:
   PackageOutputPath: ./_out/pack
   LogPath: ./_out/log
-  RestoreAdditionalProjectSources: $PackageOutputPath
 build:
   stage: build
   script:
