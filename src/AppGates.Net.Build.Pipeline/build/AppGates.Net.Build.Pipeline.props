@@ -13,8 +13,9 @@
     </PropertyGroup>
     
     <ItemGroup>
-      <SolutionFileToPack Include="src\*.sln" />
-      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet pack %(Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)')"/>
+      <SolutionFileToPack Include="src\*.sln">
+      </SolutionFileToPack>
+      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet pack %(Identity) /p:SkipSolutionOperation=true $([MSBuild]::Unescape($(AdditionalBuildArguments)))' )"/>
     </ItemGroup>
 
     <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
