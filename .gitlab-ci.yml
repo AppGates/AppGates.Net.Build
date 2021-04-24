@@ -27,6 +27,7 @@ test:
 push:
   stage: deploy
   dependencies:
+    - build
     - test
   script:
     - dotnet build /t:Push
