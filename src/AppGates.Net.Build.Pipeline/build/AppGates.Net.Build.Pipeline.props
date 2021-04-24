@@ -7,7 +7,21 @@
     <AdditionalBuildArguments Condition="'$(AdditionalBuildArguments)' == ''"></AdditionalBuildArguments>
   </PropertyGroup>
 
-  <Target Name="PackSolution" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
+  <Target Name="PackSolutionWithMsBuild" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
+    
+       <PropertyGroup>
+      <PipelineEntryTarget>PackSolutionWithMsBuild</PipelineEntryTarget>
+      <PackageOutputFullPath>$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))</PackageOutputFullPath>
+    </PropertyGroup>
+    
+    <MakeDir Directories="$(PackageOutputFullPath)" />
+    
+    <ItemGroup>
+      <SolutionFileToPack Include="src\*.sln"/>
+    </ItemGroup>
+      <MSBuild Projects="@(SolutionFileToPack)" Targets="Pack" Properties="SkipSolutionOperation=true;RestoreAdditionalProjectSources=$(PackageOutputFullPath);PackageOutputPath=$(PackageOutputFullPath)"/>
+  </Target>
+  <Target Name="PackSolution" Condition="'$(SkipSolutionOperation)' != 'true'">
     <PropertyGroup>
       <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
       <PackageOutputFullPath>$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))</PackageOutputFullPath>
