@@ -145,10 +145,13 @@
 
   </Target>
 
-  <Target Name="Push" Condition="'$(SkipSolutionOperation)' != 'true'">
-    <ItemGroup>
+  <Target Name="CollectNugetPackages">
+     <ItemGroup>
       <PackageToPush Include="$(PackageOutputPath)\*.nupkg" Exclude="$(PackageOutputPath)\*.Tests.nupkg" />
     </ItemGroup>
+
+  </Target>
+  <Target Name="Push" DependsOnTargets="CollectNugetPackages" Condition="'$(SkipSolutionOperation)' != 'true'">
     <Message Text="Push: %(PackageToPush.Identity)" Importance="high"/>
     <CallTarget Targets="PushPackage"/>
   </Target>

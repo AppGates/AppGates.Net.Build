@@ -1,5 +1,5 @@
 ﻿<Project>
- 
+
   <PropertyGroup>
     <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">$(BuildingInsideVisualStudio.Equals('True'))</Nuget_AutoPushEnabled>
     <Nuget_AutoPushPublishLevels Condition="'$(Nuget_AutoPushPublishLevels)' == ''">global</Nuget_AutoPushPublishLevels>
@@ -10,7 +10,7 @@
   <PropertyGroup>
     <Nuget_Push_ProjectRepository_ServerUrl Condition="'$(Nuget_Push_ProjectRepository_ServerUrl)' == ''">$(CI_SERVER_URL)</Nuget_Push_ProjectRepository_ServerUrl>
     <Nuget_Push_ProjectRepository_Id Condition="'$(Nuget_Push_ProjectRepository_Id)' == ''">$(CI_PROJECT_ID)</Nuget_Push_ProjectRepository_Id>
-    <Nuget_Push_ProjectRepository_Url 
+    <Nuget_Push_ProjectRepository_Url
       Condition="'$(Nuget_Push_ProjectRepository_Id)' != '' AND '$(Nuget_Push_ProjectRepository_Url)' != ''">$(Nuget_Push_ProjectRepository_ServerUrl)/api/v4/projects/$(Nuget_Push_ProjectRepository_Id)/packages/nuget/index.json</Nuget_Push_ProjectRepository_Url>
 
     <Nuget_Push_ProjectRepository_Username
@@ -18,7 +18,7 @@
 
     <Nuget_Push_ProjectRepository_Username
       Condition="'$(Nuget_Push_ProjectRepository_Username)' == ''">PushUser</Nuget_Push_ProjectRepository_Username>
-    
+
     <Nuget_Push_ProjectRepository_Password
      Condition="'$(Nuget_Push_ProjectRepository_Password)' == ''">$(CI_DEPLOY_PASSWORD)</Nuget_Push_ProjectRepository_Password>
 
@@ -69,11 +69,11 @@
   </Target>
 
   <Target Name="PushPackage" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
-    
+
     <ItemGroup Condition="'@(PackageToPush)' == ''">
       <PackageToPush Include="$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg"/>
     </ItemGroup>
-    
+
     <ItemGroup>
       <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('Enabled')->WithMetadataValue('Enabled','true'))"/>
 
@@ -83,12 +83,9 @@
     </ItemGroup>
 
     <PropertyGroup>
-      <PushWithApiKeyCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_PushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
-      <PushWithConfigCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
-      <PushWithNoAuthCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
       <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
     </PropertyGroup>
-    
+
     <Message  Condition="'@(Nuget_PushSource)' != ''" Importance="high" Text="Available Push Source: %(Nuget_PushSource.Identity)" />
 
     <!--<Message  Condition="'@(Nuget_PushSource_Enabled)' != ''" Importance="high" Text="Pushing to %(Nuget_PushSource.Identity) (%(Nuget_PushSource_Enabled.Address))..." />-->
@@ -106,14 +103,14 @@
     <Message Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''"  Importance="high" Text="$([System.IO.File]::ReadAllText('$(PushNugetConfigPath)'))"/>
 
     <Exec Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
-          Command="$(PushWithConfigCommand)" />
+          Command="dotnet nuget push @(PackageToPush->'%(Identity)') --skip-duplicate --source %(Nuget_PushSource_WithBasicAuth.Identity)" />
 
     <!--with api key-->
     <Exec Condition="'@(Nuget_PushSource_WithApiKeyAuth)' != ''"
-          Command="$(PushWithApiKeyCommand)" />
+          Command="dotnet nuget push @(PackageToPush->'%(Identity)') --skip-duplicate --source %(Nuget_PushSource_WithApiKeyAuth.Address) --api-key %(Nuget_PushSource_WithApiKeyAuth.ApiKey)" />
 
     <!--without auth-->
     <Exec Condition="'@(Nuget_PushSource_WithNoAuth)' != ''"
-          Command="$(PushWithNoAuthCommand)" />
+          Command="dotnet nuget push @(PackageToPush->'%(Identity)') --source %(Nuget_PushSource_WithNoAuth.Address)" />
   </Target>
 </Project>
