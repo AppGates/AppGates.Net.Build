@@ -31,3 +31,9 @@ push:
     - test
   script:
     - dotnet build /t:Push /bl:"$LogPath/push.binlog"
+  artifacts:
+   when: always
+   expire_in: 1 day #we push everything to Artifactory, so we don't need to keep the build output for longer than one day
+   paths:
+     - $LogPath/*.*
+     - $PackageOutputPath/*.*
