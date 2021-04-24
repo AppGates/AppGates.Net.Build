@@ -1,7 +1,7 @@
 ﻿<Project>
 
   <PropertyGroup>
-    <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">$(BuildingInsideVisualStudio.Equals('True'))</Nuget_AutoPushEnabled>
+    <Nuget_AutoPushEnabled Condition="'$(Nuget_AutoPushEnabled)' == ''">true</Nuget_AutoPushEnabled>
     <Nuget_AutoPushPublishLevels Condition="'$(Nuget_AutoPushPublishLevels)' == ''">global</Nuget_AutoPushPublishLevels>
 
   </PropertyGroup>
@@ -58,8 +58,7 @@
     <Message Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '@(Nuget_AutoPushSource)' != ''" Importance="$(BuildSdkLogPriority)" Text="Pushing to sources '@(Nuget_AutoPushSource)' you can change it by adding items to the 'Nuget_AutoPushSource' item group. The identity is the name of the source, possible MetaData Items are: Address, Username/Password or ApiKey."></Message>
   </Target>
 
-  <Target Name="AutoPush" AfterTargets="Pack" Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '$(IsPackable)' == 'true'">
-
+  <Target Name="PrepareForAutoPush">
     <ItemGroup>
       <Nuget_PushSource Condition="$(Nuget_AutoPushPublishLevels.Contains('%(Nuget_AutoPushSource.PublishLevel)'))"
                         Update="@(Nuget_AutoPushSource->HasMetadata('PublishLevel'))">
@@ -67,10 +66,13 @@
       </Nuget_PushSource>
       <PackageToPush Include="$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg"/>
     </ItemGroup>
-  
+  </Target>
+  <Target Name="AutoPush" AfterTargets="GenerateNuspec" DependsOnTargets="PrepareForAutoPush" Condition="'$(Nuget_AutoPushEnabled)' == 'true' AND '$(IsPackable)' == 'true'">
+    <CallTarget  Targets="PushPackage" />
   </Target>
 
-  <Target Name="PushPackage" AfterTargets="AutoPush" Condition="'@(PackageToPush)' != ''">
+
+  <Target Name="PushPackage" >
     <ItemGroup>
       <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('Enabled')->WithMetadataValue('Enabled','true'))"/>
 
@@ -105,7 +107,7 @@
         <SourceName>%(Nuget_PushSource_WithBasicAuth.Identity)</SourceName>
       </PackageToPush_WithBasicAuth>
     </ItemGroup>
-    <Exec Condition="'@(Nuget_PushSource_WithBasicAuth)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
+    <Exec Condition="'%(PackageToPush_WithBasicAuth.SourceName)' != ''" WorkingDirectory="$(IntermediateOutputPath)"
           Command="dotnet nuget push %(PackageToPush_WithBasicAuth.Identity) --skip-duplicate --source %(PackageToPush_WithBasicAuth.SourceName)" />
 
     <!--with api key-->
@@ -115,7 +117,7 @@
         <ApiKey>%(Nuget_PushSource_WithApiKeyAuth.ApiKey)</ApiKey>
       </PackageToPush_WithApiKey>
     </ItemGroup>
-    <Exec Condition="'@(Nuget_PushSource_WithApiKeyAuth)' != ''"
+    <Exec Condition="'@(PackageToPush_WithApiKey)' != ''"
           Command="dotnet nuget push %(PackageToPush_WithApiKey.Identity) --skip-duplicate --source %(PackageToPush_WithApiKey.Address) --api-key %(PackageToPush_WithApiKey.ApiKey)" />
 
     <!--without auth-->
