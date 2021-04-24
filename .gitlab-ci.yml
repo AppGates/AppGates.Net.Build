@@ -22,7 +22,7 @@ test:
   dependencies:
     - build  #we depend on the build and pack stage, we only want to run when its successful, and we need its artifacts
   script:
-    - dotnet test
+    - dotnet test /bl:"$LogPath/test.binlog"
 
 push:
   stage: deploy
@@ -30,4 +30,4 @@ push:
     - build
     - test
   script:
-    - dotnet build /t:Push
+    - dotnet build /t:Push /bl:"$LogPath/push.binlog"

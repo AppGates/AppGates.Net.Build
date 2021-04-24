@@ -19,8 +19,8 @@ jobs:
     - name: Build
       run: dotnet pack /bl:"$LogPath/build.binlog"
     - name: Test
-      run: dotnet test
+      run: dotnet test /bl:"$LogPath/test.binlog"
     - name: Push
-      run: dotnet build /t:Push
+      run: dotnet build /t:Push /bl:"$LogPath/push.binlog"
       env: # Or as an environment variable
        Nuget_Push_NugetOrgRepository_Token: ${{ secrets.Nuget_Push_NugetOrgRepository_Token }}
