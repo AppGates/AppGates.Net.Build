@@ -31,21 +31,26 @@
     <Message Importance="high" Text="NoBuild: $(NoBuild)"/>-->
 
     <!--Ensure recursive restore and build-->
-    
-    <!--<CallTarget Targets="Restore"/>-->
-    <!--<CallTarget Targets="Rebuild"/>-->
+    <PropertyGroup>
+      <CustomPackTargets Condition="'$(CustomPackTargets)' == ''" >Build</CustomPackTargets>
+    </PropertyGroup>
     <MSBuild
-      Targets="Build"
+      Targets="$(CustomPackTargets)"
       Projects="$(MSBuildProjectFullPath)"
       RemoveProperties="BuildingInsideVisualStudio"
        />
-
+    
     <!--Pack dependencies recursive-->
     <CallTarget Targets="RecursivePack"/>
     <!--<Message Importance="high" Text="PackSelf: $(MSBuildProjectName), IsPackable: $(IsPackable)"/>-->
 
     <!--Pack this project-->
-    <CallTarget Targets="GenerateNuspec" Condition="$(IsPackable)"/>
+    <MSBuild
+     Targets="Pack"
+     Condition="$(IsPackable)"
+     Projects="$(MSBuildProjectFullPath)"
+     RemoveProperties="BuildingInsideVisualStudio"
+       />
   </Target>
 
 
