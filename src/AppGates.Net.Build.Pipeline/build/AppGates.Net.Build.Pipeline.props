@@ -150,12 +150,7 @@
       <PackageToPush Include="$(PackageOutputPath)\*.nupkg" Exclude="$(PackageOutputPath)\*.Tests.nupkg" />
     </ItemGroup>
     <Message Text="Push: %(PackageToPush.Identity)" Importance="high"/>
-    <PropertyGroup>
-      <PipelineEntryTarget>Push</PipelineEntryTarget>
-      <InnerBuildCommand>dotnet build /t:PushPackage %(PackageToPush.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)</InnerBuildCommand>
-    </PropertyGroup>
-    <CallTarget Targets="LogPipelineEntry"/>
-    <Exec Command="$(InnerBuildCommand)" />
+    <CallTarget Targets="PushPackage"/>
   </Target>
 
 

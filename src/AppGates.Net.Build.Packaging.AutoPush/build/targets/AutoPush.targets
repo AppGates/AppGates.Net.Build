@@ -69,7 +69,11 @@
   </Target>
 
   <Target Name="PushPackage" AfterTargets="AutoPush" Condition="'$(IsPackable)' != 'false'">
-
+    
+    <ItemGroup Condition="'@(PackageToPush)' == ''">
+      <PackageToPush Include="$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg"/>
+    </ItemGroup>
+    
     <ItemGroup>
       <Nuget_PushSource_Enabled Include="@(Nuget_PushSource->HasMetadata('Enabled')->WithMetadataValue('Enabled','true'))"/>
 
@@ -79,12 +83,12 @@
     </ItemGroup>
 
     <PropertyGroup>
-      <Nuget_Push_PackagePath>$(PackageOutputPath.TrimEnd('\').TrimEnd('/'))\$(PackageId).$(PackageVersion).nupkg</Nuget_Push_PackagePath>
-      <PushWithApiKeyCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_PushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
-      <PushWithConfigCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
-      <PushWithNoAuthCommand>dotnet nuget push $(Nuget_Push_PackagePath) --skip-duplicate --source "%(Nuget_PushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
+      <PushWithApiKeyCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithApiKeyAuth.Address)" --api-key "%(Nuget_PushSource_WithApiKeyAuth.ApiKey)" </PushWithApiKeyCommand>
+      <PushWithConfigCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithBasicAuth.Identity)"</PushWithConfigCommand>
+      <PushWithNoAuthCommand>dotnet nuget push %(PackageToPush.Identity) --skip-duplicate --source "%(Nuget_PushSource_WithNoAuth.Address)"</PushWithNoAuthCommand>
       <PushNugetConfigPath>$(IntermediateOutputPath)\nuget.config</PushNugetConfigPath>
     </PropertyGroup>
+    
     <Message  Condition="'@(Nuget_PushSource)' != ''" Importance="high" Text="Available Push Source: %(Nuget_PushSource.Identity)" />
 
     <!--<Message  Condition="'@(Nuget_PushSource_Enabled)' != ''" Importance="high" Text="Pushing to %(Nuget_PushSource.Identity) (%(Nuget_PushSource_Enabled.Address))..." />-->

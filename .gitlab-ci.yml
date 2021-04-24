@@ -1,6 +1,7 @@
 image: mcr.microsoft.com/dotnet/sdk:latest
 variables:
   GIT_STRATEGY: clone
+  GIT_DEPTH: 0
   PackageOutputPath: ./_out/pack
   LogPath: ./_out/log
 build:
