@@ -117,7 +117,7 @@
         <ApiKey>%(Nuget_PushSource_WithApiKeyAuth.ApiKey)</ApiKey>
       </PackageToPush_WithApiKey>
     </ItemGroup>
-    <Exec Condition="'@(PackageToPush_WithApiKey)' != ''"
+    <Exec Condition="'%(PackageToPush_WithApiKey.ApiKey)' != ''"
           Command="dotnet nuget push %(PackageToPush_WithApiKey.Identity) --skip-duplicate --source %(PackageToPush_WithApiKey.Address) --api-key %(PackageToPush_WithApiKey.ApiKey)" />
 
     <!--without auth-->
@@ -126,7 +126,7 @@
         <Address>%(Nuget_PushSource_WithNoAuth.Address)</Address>
       </PackageToPush_WithNoAuth>
     </ItemGroup>
-    <Exec Condition="'@(PackageToPush_WithNoAuth)' != ''"
+    <Exec Condition="'%(PackageToPush_WithNoAuth.Address)' != ''"
           Command="dotnet nuget push %(PackageToPush_WithNoAuth.Identity) --source %(PackageToPush_WithNoAuth.Address)" />
   </Target>
 </Project>
