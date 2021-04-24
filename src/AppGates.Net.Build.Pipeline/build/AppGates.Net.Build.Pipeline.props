@@ -19,9 +19,9 @@
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln"/>
     </ItemGroup>
-      <MSBuild Projects="@(SolutionFileToPack)" Targets="Pack" Properties="SkipSolutionOperation=true;RestoreAdditionalProjectSources=$(PackageOutputFullPath);PackageOutputPath=$(PackageOutputFullPath)"/>
+      <MSBuild Projects="@(SolutionFileToPack)" Targets="Restore;Pack" Properties="SkipSolutionOperation=true;RestoreAdditionalProjectSources=$(PackageOutputFullPath);PackageOutputPath=$(PackageOutputFullPath)"/>
   </Target>
-  <Target Name="PackSolution" Condition="'$(SkipSolutionOperation)' != 'true'">
+  <!--<Target Name="PackSolution" Condition="'$(SkipSolutionOperation)' != 'true'">
     <PropertyGroup>
       <PipelineEntryTarget>PackSolution</PipelineEntryTarget>
       <PackageOutputFullPath>$([System.IO.Path]::GetFullPath('$(PackageOutputPath)'))</PackageOutputFullPath>
@@ -38,7 +38,7 @@
     <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
     <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
     <Exec Command="%(InnerBuildCommand.Identity)" />
-  </Target>
+  </Target>-->
 
   <Target Name="BuildSolution" AfterTargets="Build" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
     <PropertyGroup>
