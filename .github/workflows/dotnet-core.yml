@@ -6,6 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container: mcr.microsoft.com/dotnet/sdk:5.0
+    env:
+     PackageOutputPath: ./_out/pack
+     LogPath: ./_out/log
     steps:
     - name: Clone Repository
       uses: actions/checkout@v2
@@ -14,9 +17,9 @@ jobs:
 #    - name: Setup .NET Core
 #      uses: actions/setup-dotnet@v1
     - name: Build
-      run: dotnet build /t:PackSolution /p:BuildSdkLogPriority=high --configuration Release
+      run: dotnet pack /bl:"$LogPath/build.binlog"
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet test
     - name: Push
       run: dotnet build /t:Push
       env: # Or as an environment variable

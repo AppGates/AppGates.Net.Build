@@ -7,7 +7,7 @@ variables:
 build:
   stage: build
   script:
-    - dotnet pack /bl:"$LogPath/build.binlog" /p:AdditionalBuildArguments="/bl:$LogPath/%(Filename).binlog"
+    - dotnet pack /bl:"$LogPath/build.binlog"
   artifacts:
    when: always
    expire_in: 1 day #we push everything to Artifactory, so we don't need to keep the build output for longer than one day
