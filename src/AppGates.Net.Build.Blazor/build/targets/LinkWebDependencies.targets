@@ -67,7 +67,7 @@ public class ManageLinks: Task
             x =>(Hide: bool.Parse(x.GetMetadata("Hide")), Target: CreateDirectoryInfo(x.GetMetadata("AbsoluteTargetPath")),Source: CreateDirectoryInfo(x.GetMetadata("SourcePath")))).ToArray();
       
         var gitIgnoreFile = new FileInfo(Path.Combine(projectDirectory.FullName, ".gitIgnore"));
-        var gitIgnoreLineList = File.ReadAllLines(gitIgnoreFile.FullName).ToList();
+        var gitIgnoreLineList = gitIgnoreFile.Exists ? File.ReadAllLines(gitIgnoreFile.FullName).ToList() : new List<string>();
 
         try
         {
@@ -264,6 +264,7 @@ public class ManageLinks: Task
         }
     }
 }
+
 
 
 ]]>

@@ -1,5 +1,6 @@
 ﻿<Project>
   <PropertyGroup>
+	 <!--this property seems not to exists in .net6 anymore.-->
     <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
       CompileTypeScript;
       $(ResolveCurrentProjectStaticWebAssetsInputs)
@@ -7,9 +8,19 @@
 	  <TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" />
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" PrivateAssets="all" />
   </ItemGroup>
 
+	<PropertyGroup>
+		<ResolveStaticWebAssetsInputsDependsOn>AddTsToContent;$(ResolveStaticWebAssetsInputsDependsOn)</ResolveStaticWebAssetsInputsDependsOn>
+	</PropertyGroup>
+
+	<!--by default compiled *.ts files are not included in the nuget package. But we want to add them so that we can debug into them from the consumer side.-->
+	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveProjectStaticWebAssets">
+		<ItemGroup>
+			<Content Include="@(TypeScriptCompile)" Exclude="@(Content)" />
+		</ItemGroup>
+	</Target>
   <Target Name="CopyTsConfigs" BeforeTargets="FindConfigFiles">
     <Copy Condition="Exists('$(TypeScriptRootDirectory)\tsconfig.json') == false"
           SourceFiles="$(MSBuildThisFileDirectory)\tsconfig.json"

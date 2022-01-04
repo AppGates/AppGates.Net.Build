@@ -8,7 +8,12 @@
   <PropertyGroup>
     <LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
   </PropertyGroup>
-
+	
+	<ItemGroup >
+		<Content Remove="libman.json" />
+		<None Include="libman.json" />
+	</ItemGroup>
+	
   <Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
     <PropertyGroup>
       <LibManConfigurationFilePath>$(HOME)\.librarymanager\libman.config.json</LibManConfigurationFilePath>
