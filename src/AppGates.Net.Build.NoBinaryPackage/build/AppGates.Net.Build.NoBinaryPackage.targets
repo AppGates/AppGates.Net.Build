@@ -1,7 +1,7 @@
 ﻿<Project>
   <PropertyGroup Condition="'$(IsNoBinaryPackage)' == ''">
     <IsNoBinaryPackage>false</IsNoBinaryPackage>
-    <IsNoBinaryPackage Condition="Exists('$(MSBuildProjectDirectory)\build\$(MSBuildProjectName).targets')"
+    <IsNoBinaryPackage Condition="Exists('$(MSBuildProjectDirectory)\build\$(MSBuildProjectName).targets') OR Exists('$(MSBuildProjectDirectory)\Sdk\Sdk.targets')"
       >$([System.IO.Directory]::GetFiles('$(MSBuildProjectDirectory)','*.cs').get_Length().Equals(0))</IsNoBinaryPackage>
   </PropertyGroup>
 

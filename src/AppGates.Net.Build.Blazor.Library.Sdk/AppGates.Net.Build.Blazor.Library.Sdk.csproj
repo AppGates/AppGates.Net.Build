@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Update="Sdk\Sdk.props">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="Sdk\Sdk.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="Sdk\webproject\TreatAsWebProject.props">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+    <None Update="Sdk\webproject\TreatAsWebProject.targets">
+      <PackagePath>/</PackagePath>
+      <Pack>true</Pack>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,8 @@
+﻿<Project>
+	
+  <Import Project="webproject\TreatAsWebProject.props"/>
+ 
+  <ItemGroup>
+	<PackageReference Include="AppGates.Net.Build.Blazor" PrivateAssets="all" Version="*"/>
+  </ItemGroup>
+</Project>

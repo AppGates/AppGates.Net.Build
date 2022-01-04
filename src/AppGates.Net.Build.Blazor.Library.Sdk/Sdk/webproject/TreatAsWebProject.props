@@ -1,0 +1,11 @@
+﻿<Project>
+	<PropertyGroup>
+		<WebProjectType>RazorLibrary</WebProjectType>
+	</PropertyGroup>
+	<Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props"/>
+
+	<ItemGroup>
+		<FrameworkReference Remove="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="*" />
+	</ItemGroup>
+</Project>
