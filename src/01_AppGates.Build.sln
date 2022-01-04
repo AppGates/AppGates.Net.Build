@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30608.117
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.31911.260
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Build.ApiManagement.Tasks", "AppGates.Build.ApiManagement.Tasks\AppGates.Build.ApiManagement.Tasks.csproj", "{068CA0E3-74DF-4F09-8D99-E650FD7020A5}"
 EndProject
@@ -37,9 +37,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Pipeline
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Tests", "AppGates.Net.Build.Tests\AppGates.Net.Build.Tests.csproj", "{BB818415-769E-4526-A338-FCEE64488E92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGates.Net.Build.Blazor.WasmApp", "AppGates.Net.Build.Blazor.WasmApp\AppGates.Net.Build.Blazor.WasmApp.csproj", "{D77E88AD-0D55-42CB-BAD0-8F12671FF82A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Blazor.WasmApp", "AppGates.Net.Build.Blazor.WasmApp\AppGates.Net.Build.Blazor.WasmApp.csproj", "{D77E88AD-0D55-42CB-BAD0-8F12671FF82A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGates.Net.Build.Tasks", "AppGates.Net.Build.Tasks\AppGates.Net.Build.Tasks.csproj", "{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Tasks", "AppGates.Net.Build.Tasks\AppGates.Net.Build.Tasks.csproj", "{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Blazor", "AppGates.Net.Build.Blazor\AppGates.Net.Build.Blazor.csproj", "{8DAFFC02-404F-425E-95E8-24240E64A0FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -115,6 +117,10 @@ Global
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DAFFC02-404F-425E-95E8-24240E64A0FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DAFFC02-404F-425E-95E8-24240E64A0FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DAFFC02-404F-425E-95E8-24240E64A0FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DAFFC02-404F-425E-95E8-24240E64A0FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -137,6 +143,7 @@ Global
 		{BB818415-769E-4526-A338-FCEE64488E92} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{D77E88AD-0D55-42CB-BAD0-8F12671FF82A} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
+		{8DAFFC02-404F-425E-95E8-24240E64A0FE} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A1A1C38-2115-4B0C-AC66-0623B2BCB102}

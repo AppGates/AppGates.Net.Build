@@ -1,0 +1,28 @@
+﻿<Project>
+  <Import Project="FixLibmanRestore.targets"/>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" 
+                      Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
+  </PropertyGroup>
+
+  <Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
+    <PropertyGroup>
+      <LibManConfigurationFilePath>$(HOME)\.librarymanager\libman.config.json</LibManConfigurationFilePath>
+      <LibManConfiguration>
+        {
+        "config": {
+        "http_proxy": "$(LibManProxyServer)",
+        "https_proxy": "$(LibManProxyServer)"
+        }
+        }
+      </LibManConfiguration>
+    </PropertyGroup>
+    <Message Text="Write LibMan Config: $(LibManConfiguration) to $(LibManConfigurationFilePath)" Importance="high"/>
+    <WriteLinesToFile File="$(LibManConfigurationFilePath)" Lines="$(LibManConfiguration.Trim())"/>
+
+  </Target>
+</Project>
