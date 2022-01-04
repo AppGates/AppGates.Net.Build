@@ -8,6 +8,7 @@
     </RebuildDependsOn>
   </PropertyGroup>
 
+
   <Target Name="BeforeRebuild" />
   <Target Name="Rebuild" DependsOnTargets="$(RebuildDependsOn)"/>
   <Target Name="AfterRebuild" />

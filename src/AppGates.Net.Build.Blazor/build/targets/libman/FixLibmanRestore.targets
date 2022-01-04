@@ -1,0 +1,18 @@
+﻿<Project>
+  <PropertyGroup>
+    <!--Github issue: https://github.com/dotnet/aspnetcore/issues/34039-->
+    <!--ensure that the libman restore is executed before the project static web assets processing and that the restored files
+    are added as content--> 
+    <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>LibraryManagerRestore;FixLibManRestore;$(ResolveCurrentProjectStaticWebAssetsInputsDependsOn)</ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+  </PropertyGroup>
+
+
+  <Target Name="FixLibManRestore" AfterTargets="LibraryManagerRestore">
+    <ItemGroup>
+      <Content  Include="%(FilesForPackagingFromProject.Identity)" Exclude="@(Content)">
+      </Content>
+    </ItemGroup>
+
+  </Target>
+
+</Project>

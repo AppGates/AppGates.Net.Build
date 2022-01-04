@@ -1,0 +1,40 @@
+<Project>
+	<PropertyGroup Condition="'$(WebProjectType)' == '' AND Exists('$(MSBuildProjectDirectory)\wwwroot\')">
+		<WebProjectType>RazorLibrary</WebProjectType>
+		<WebProjectType Condition="'$(PublishableProject)' != ''">BlazorApp</WebProjectType>
+	</PropertyGroup>
+	<PropertyGroup>
+		<EnableTypeScript Condition="'$(EnableTypeScript)' == ''">true</EnableTypeScript>
+		<OutputType Condition="'$(WebProjectType)' == 'RazlorLibrary'">Library</OutputType>
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
+	
+	<!--To avoid warning NU5119 when a .gitignore file is placed in the wwwroot
+    https://docs.microsoft.com/de-de/nuget/reference/errors-and-warnings/nu5119
+    and also avoid that it is packed.
+    -->
+	<ItemGroup Condition="Exists('wwwroot\.gitignore')">
+		<Content Remove="wwwroot\.gitignore" />
+		<None Include="wwwroot\.gitignore" />
+	</ItemGroup>
+
+	<Import Condition="Exists('$(MSBuildProjectDirectory)\libman.json')" 
+			Project="targets\libman\IncludeLibman.targets" />
+	
+	<Import Condition="'$(WebProjectType)' != ''"
+			Project="targets\LinkWebDependencies.targets"/>
+
+	<Import Condition="'$(EnableTypeScript)' == 'true'"
+			Project="targets\typescript\IncludeTypeScript.targets" />
+
+	
+	<Target Name="LogWebProjectType" AfterTargets="AfterBuild">
+		<Message Importance="high" Text="Detected WebProjectType: '$(WebProjectType)'"/>
+	</Target>
+
+
+</Project>

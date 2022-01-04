@@ -38,7 +38,7 @@
       <_BuildOutputInPackage Remove="@(_BuildOutputInPackage)"/>
       <_ProjectReferencesWithVersions Remove="@(_ProjectReferencesWithVersions)"/>
       <_PackageFiles Include="$(PublishUrl)\**\*.*"
-                     PackagePath="content%(RecursiveDir)\%(Filename)%(Extension)" />
+                     PackagePath="tools%(RecursiveDir)\%(Filename)%(Extension)" />
     </ItemGroup>
 
     <Exec Condition="'$(OpenBrowserOnOnPack)' == 'true'"

@@ -1,0 +1,19 @@
+﻿<Project>
+  <PropertyGroup>
+    <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+      CompileTypeScript;
+      $(ResolveCurrentProjectStaticWebAssetsInputs)
+    </ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+	  <TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" />
+  </ItemGroup>
+
+  <Target Name="CopyTsConfigs" BeforeTargets="FindConfigFiles">
+    <Copy Condition="Exists('$(TypeScriptRootDirectory)\tsconfig.json') == false"
+          SourceFiles="$(MSBuildThisFileDirectory)\tsconfig.json"
+          DestinationFolder="$(TypeScriptRootDirectory)" />
+
+  </Target>
+</Project>
