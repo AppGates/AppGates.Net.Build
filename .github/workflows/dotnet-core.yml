@@ -5,7 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: mcr.microsoft.com/dotnet/sdk:5.0
+    container: mcr.microsoft.com/dotnet/latest
     env:
      PackageOutputPath: ./_out/pack
      LogPath: ./_out/log
