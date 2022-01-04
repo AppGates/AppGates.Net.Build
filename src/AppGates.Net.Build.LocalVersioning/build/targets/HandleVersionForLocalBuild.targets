@@ -41,7 +41,7 @@
       <PackageFilePath>$(PackageOutputAbsolutePath)$(PackageId).$(PackageVersion).nupkg</PackageFilePath>
     </PropertyGroup>
     <WriteLinesToFile File="$(VersionDirtyFileFullPath)" Lines="" ></WriteLinesToFile>
-    <Message Importance="high"  Text="PackagePath: file://$(PackageFilePath)"></Message>
+    <Message Importance="high"  Text="PackagePath: file://$(PackageFilePath.Replace('\','/'))"></Message>
   </Target>
 
   <Target Name="DoIncrementLocalBuildId">
