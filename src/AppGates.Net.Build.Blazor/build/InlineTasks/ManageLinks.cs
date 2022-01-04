@@ -96,7 +96,7 @@ public class ManageLinks: Task
 
                         if (actualSource.FullName != expected.Source.FullName)
                         {
-                            Log($"Delete link because the link source chnage from '{actualSource.FullName}' to '{expected.Source.FullName}'");
+                            Log($"Delete link because the link source changed from '{actualSource.FullName}' to '{expected.Source.FullName}'");
 
                             expected.Target.Delete(true);
                             expected.Target.Refresh();
@@ -229,28 +229,36 @@ public class ManageLinks: Task
 
         public static string GetFinalPathName(string path)
         {
-            var h = CreateFile(path,
-                FILE_READ_EA,
-                FileShare.ReadWrite | FileShare.Delete,
-                IntPtr.Zero,
-                FileMode.Open,
-                FILE_FLAG_BACKUP_SEMANTICS,
-                IntPtr.Zero);
-            if (h == INVALID_HANDLE_VALUE)
-                throw new Win32Exception();
-
             try
             {
-                var sb = new StringBuilder(1024);
-                var res = GetFinalPathNameByHandle(h, sb, 1024, 0);
-                if (res == 0)
+                
+                var h = CreateFile(path,
+                    FILE_READ_EA,
+                    FileShare.ReadWrite | FileShare.Delete,
+                    IntPtr.Zero,
+                    FileMode.Open,
+                    FILE_FLAG_BACKUP_SEMANTICS,
+                    IntPtr.Zero);
+                if (h == INVALID_HANDLE_VALUE)
                     throw new Win32Exception();
 
-                return sb.ToString();
-            }
-            finally
+                try
+                {
+                    var sb = new StringBuilder(1024);
+                    var res = GetFinalPathNameByHandle(h, sb, 1024, 0);
+                    if (res == 0)
+                        throw new Win32Exception();
+
+                    return sb.ToString();
+                }
+                finally
+                {
+                    CloseHandle(h);
+                }
+
+            }catch(Exception ex)
             {
-                CloseHandle(h);
+                throw new ApplicationException($"Unable to get the long path version of '{path}'. See inner exception for more details", ex);
             }
         }
     }

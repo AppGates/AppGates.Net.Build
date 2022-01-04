@@ -8,6 +8,8 @@
 		<OutputType Condition="'$(WebProjectType)' == 'RazorLibrary'">Library</OutputType>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
+
+	
 	
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
@@ -36,6 +38,20 @@
 	<Import Condition="'$(EnableTypeScript)' == 'true'"
 			Project="targets\typescript\IncludeTypeScript.targets" />
 
+	<!--fix for RCL and SDK combination-->
+	<PropertyGroup>
+		
+		<!--<ResolveStaticWebAssetsInputsDependsOn>ResolveStaticWebAssetsConfiguration;$(ResolveStaticWebAssetsInputsDependsOn)</ResolveStaticWebAssetsInputsDependsOn>-->
+	</PropertyGroup>
+	
+	<!--
+		ResolveStaticWebAssetsConfiguration is a target that needs to be evaluated, in any case when web assets are discovered.
+		In .NET6 this is not modeled correctly for design time builds that are triggered when a custom SDK is used together with RazorClassLibraries.
+		If the target doesn't run before _ResolveJsModuleInputs we get a compile error that states that the BasePath is not configured
+		-->
+	<Target Name="FixRclAndSdkCombination" BeforeTargets="ResolveProjectStaticWebAssets" DependsOnTargets="ResolveStaticWebAssetsConfiguration">
+		
+	</Target>
 	
 	<Target Name="LogWebProjectType" AfterTargets="AfterBuild">
 		<Message Importance="high" Text="Detected WebProjectType: '$(WebProjectType)'"/>
