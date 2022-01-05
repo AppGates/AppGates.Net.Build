@@ -284,9 +284,9 @@ public class ManageLinks: Task
 
 	<PropertyGroup>
 		<WebProjectType Condition="'$(WebProjectType)' == ''" ></WebProjectType>
-		<HideWebAssetDependencies Condition="'$(HideWebAssetDependencies)' == ''">true</HideWebAssetDependencies>
+		<!--<HideWebAssetDependencies Condition="'$(HideWebAssetDependencies)' == ''">true</HideWebAssetDependencies>
 		<AddDependencyWebAssetsToProject Condition="'$(AddDependencyWebAssetsToProject)' == ''">$(HideWebAssetDependencies.Equals(false))</AddDependencyWebAssetsToProject>
-		<HideWebAssetLinkFolders Condition="'$(HideWebAssetLinkFolders)' == ''">$(HideWebAssetDependencies)</HideWebAssetLinkFolders>
+		<HideWebAssetLinkFolders Condition="'$(HideWebAssetLinkFolders)' == ''">$(HideWebAssetDependencies)</HideWebAssetLinkFolders>-->
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -311,19 +311,18 @@ public class ManageLinks: Task
 			<SourcePath>%(RootDir)%(Directory)\wwwroot</SourcePath>
 		</ProjectDependencyLink>
 		<DependencyLinkSource Include="@(PackageDependencyLink);@(ProjectDependencyLink)"/>
-		<DependencyLink Include="@(DependencyLinkSource->'%(Identity)|Debug')"
-				Condition="'$(RelativeDebugLinkRootPath)' != ''" >
+		<DependencyLink Include="@(DependencyLinkSource->'%(Identity)|Debug')">
 			<GitIgnorePath>$(RelativeDebugLinkRootPath.Replace('\','/'))%(DependencyName)</GitIgnorePath>
 			<AbsoluteTargetPath>$(DebugLinkRootPath)%(DependencyName)</AbsoluteTargetPath>
 			<LinkExists Condition="Exists(%(AbsoluteTargetPath))">true</LinkExists>
-			<Hide>false</Hide>
+			<Hide>$(RelativeDebugLinkRootPath.Equals(''))</Hide>
 		</DependencyLink>
-		<DependencyLink Include="@(DependencyLinkSource->'%(Identity)|Compile')">
+		<!--<DependencyLink Include="@(DependencyLinkSource->'%(Identity)|Compile')">
 			<GitIgnorePath>%(DependencyName)</GitIgnorePath>
 			<AbsoluteTargetPath>$(MSBuildProjectDirectory)\%(DependencyName)</AbsoluteTargetPath>
 			<LinkExists Condition="Exists(%(AbsoluteTargetPath))">true</LinkExists>
 			<Hide>$(HideWebAssetDependencies)</Hide>
-		</DependencyLink>
+		</DependencyLink>-->
 		<DependencyLinkContentFile Include="@(DependencyLink->WithMetadataValue('LinkExists','true')->'%(AbsoluteTargetPath)\**\*')"/>
 	</ItemGroup>
 
