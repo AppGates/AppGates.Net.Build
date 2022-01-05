@@ -1,15 +1,15 @@
 ﻿<Project>
-  <PropertyGroup>
-	 <!--this property seems not to exists in .net6 anymore.-->
-    <ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
-      CompileTypeScript;
-      $(ResolveCurrentProjectStaticWebAssetsInputs)
-    </ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
-	  <TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" PrivateAssets="all" />
-  </ItemGroup>
+	<PropertyGroup>
+		<!--this property seems not to exists in .net6 anymore.-->
+		<ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+			CompileTypeScript;
+			$(ResolveCurrentProjectStaticWebAssetsInputs)
+		</ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+		<TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" PrivateAssets="all" />
+	</ItemGroup>
 
 
 	<!--[Add Typescript files to the RCL package]: by default compiled *.ts files are not included in the nuget package. But we want to add them so that we can debug into them from the consumer side.-->
@@ -18,22 +18,51 @@
 	</PropertyGroup>
 
 	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveProjectStaticWebAssets">
+
 		<ItemGroup>
 			<!--<None Include="@(TypeScriptCompile)" Exclude="@(None)" ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest" />-->
 			<Content Include="@(TypeScriptCompile)" Exclude="@(Content)"
 					 ExcludeFromSingleFile="true" Pack="false" CopyToPublishDirectory="PreserveNewest"/>
-	
+
 			<!--<None Update="@(None)"
 				   ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest"/>-->
 		</ItemGroup>
+
+		
+		
+		<!--<ItemGroup>
+			<TypescriptFileToInclude
+				Include="@(TypeScriptCompile)" Exclude="@(Content)"/>
+		</ItemGroup>
+		<DiscoverStaticWebAssets
+		 Candidates="@(TypescriptFileToInclude)"
+		 SourceId="$(PackageId)"
+		 Pattern="wwwroot/**"
+		 ContentRoot="$(MSBuildProjectDirectory)\wwwroot\"
+		 BasePath="$(StaticWebAssetBasePath)"
+		>
+			<Output TaskParameter="DiscoveredStaticWebAssets" ItemName="StaticWebAsset" />
+		</DiscoverStaticWebAssets>-->
+
 	</Target>
 	<!--End - [Add Typescript files to the RCL package]-->
 
 
 	<Target Name="CopyTsConfigs" BeforeTargets="FindConfigFiles">
-    <Copy Condition="Exists('$(TypeScriptRootDirectory)\tsconfig.json') == false"
-          SourceFiles="$(MSBuildThisFileDirectory)\tsconfig.json"
-          DestinationFolder="$(TypeScriptRootDirectory)" />
+		<Copy Condition="Exists('$(TypeScriptRootDirectory)\tsconfig.json') == false"
+			  SourceFiles="$(MSBuildThisFileDirectory)\tsconfig.json"
+			  DestinationFolder="$(TypeScriptRootDirectory)" />
 
-  </Target>
+	</Target>
+
+
+	<!--Typescript compilation against linked dependencies causes the emitted js of those dependencies packaged as content files
+	We want to avoid that-->
+	<Target Name="RemoveUnwantedContent" BeforeTargets="GetTypeScriptOutputForPublishing">
+		<ItemGroup>
+			<JavascriptToRemove  Include="@(GeneratedJavascript)" Exclude="wwwroot\**"/>
+			<GeneratedJavascript Remove="@(JavascriptToRemove)"/>
+
+		</ItemGroup>
+	</Target>
 </Project>

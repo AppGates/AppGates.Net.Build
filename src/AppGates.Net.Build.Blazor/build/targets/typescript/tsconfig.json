@@ -9,6 +9,18 @@
     "target": "es2015",
     "module": "es2015",
     "skipLibCheck": false,
-    "typeRoots": [ "./@types"]
+
+    // we could disable emitting js and js.map files in RCLs and do emit them only during the Blazor application build
+    // advantages: 
+    //  - smaller footprint in the nuget packages
+    //  - maybe some performance gain
+    //  - the blazor app could use then bundling or any other build chain to finally build everything together
+    // disadvantages:
+    //  - The RCL packages can not be used out of the box - without assuming that the final application will build the js files
+    //
+    // for now we emit .js and .js.map files and pack them together with the .ts files in the nuget package.
+    // "noEmit": true,
+
+    "typeRoots": [ "./@types" ]
   }
 }
