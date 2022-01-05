@@ -19,11 +19,11 @@
 
 	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveProjectStaticWebAssets">
 		<ItemGroup>
-			<None Include="@(TypeScriptCompile)" Exclude="@(None)" />
-			<!--<Content Include="@(TypeScriptCompile)" Exclude="@(Content)"
-					 ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest"/>
+			<!--<None Include="@(TypeScriptCompile)" Exclude="@(None)" ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest" />-->
+			<Content Include="@(TypeScriptCompile)" Exclude="@(Content)"
+					 ExcludeFromSingleFile="true" Pack="false" CopyToPublishDirectory="PreserveNewest"/>
 	
-			<None Update="@(None)"
+			<!--<None Update="@(None)"
 				   ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest"/>-->
 		</ItemGroup>
 	</Target>
