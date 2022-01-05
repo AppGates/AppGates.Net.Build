@@ -345,7 +345,7 @@ public class ManageLinks: Task
 		<!--<None  Remove="@(DependencyLinkContentFile->WithMetadataValue('Hide','true'))" />-->
 	</ItemGroup>
 
-	<Target Name="CreateLinks" BeforeTargets="PrepareForBuild" >
+	<Target Name="CreateLinks" BeforeTargets="BeforeBuild" >
 		<!--<PropertyGroup>
 			<LinkedFilesGitIgnorePath>$(MSBuildProjectDirectory)\.gitIgnore</LinkedFilesGitIgnorePath>
 		</PropertyGroup>
