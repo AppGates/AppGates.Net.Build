@@ -1,2 +1,6 @@
 <Project>
+	<PropertyGroup>
+		<!--Set this in the props file to make sure that RCL are packable, but also avoid conflicts with the transitive packaging solution for Visual Studio-->
+		<IsPackable>true</IsPackable>
+	</PropertyGroup>
 </Project>

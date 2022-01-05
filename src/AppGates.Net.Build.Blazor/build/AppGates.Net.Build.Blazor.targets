@@ -6,7 +6,6 @@
 	<PropertyGroup>
 		<EnableTypeScript Condition="'$(EnableTypeScript)' == ''">true</EnableTypeScript>
 		<OutputType Condition="'$(WebProjectType)' == 'RazorLibrary'">Library</OutputType>
-		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	

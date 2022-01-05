@@ -19,7 +19,7 @@
 
 	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveProjectStaticWebAssets">
 		<ItemGroup>
-			<Content Include="@(TypeScriptCompile)" Exclude="@(Content)" />
+			<None Include="@(TypeScriptCompile)" Exclude="@(None)" />
 			<!--<Content Include="@(TypeScriptCompile)" Exclude="@(Content)"
 					 ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest"/>
 	
