@@ -1,2 +1,2 @@
-dotnet build --no-restore 
+dotnet pack --no-restore 
 pause
