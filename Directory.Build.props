@@ -6,7 +6,7 @@
     <Message Text="IsNoBinaryPackage: $(IsNoBinaryPackage)" Importance="high"/>
   </Target>-->
   <PropertyGroup>
-	  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
 	  <!--RS0016/RS0017: skip api change warning-->
 	  <!--NU5111: allow powershell files in package-->
