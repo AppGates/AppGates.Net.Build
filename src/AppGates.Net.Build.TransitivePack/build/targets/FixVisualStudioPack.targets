@@ -41,7 +41,7 @@
        />
     
     <!--Pack dependencies recursive-->
-    <CallTarget Targets="RecursivePack"/>
+    <CallTarget Condition="'$(RequiresTransitivePack)' == 'true'" Targets="RecursivePack"/>
     <!--<Message Importance="high" Text="PackSelf: $(MSBuildProjectName), IsPackable: $(IsPackable)"/>-->
 
     <!--Pack this project-->

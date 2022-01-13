@@ -6,8 +6,6 @@
     <!--no way yet to tear down the hosting process yet-->
     <OpenBrowserOnOnPack Condition="'$(OpenBrowserOnOnPack)' == ''">false</OpenBrowserOnOnPack>
     <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
-    <TransitivePackEnabled>false</TransitivePackEnabled>
-    <IsPackable>true</IsPackable>
     <FallbackToAppOn404 Condition="'$(FallbackToAppOn404)' == ''">true</FallbackToAppOn404>
   </PropertyGroup>
 
@@ -19,7 +17,7 @@
     
   <Target Name="BlazorWasmAppBuildPackInitialization">
     <PropertyGroup>
-      <PackDependsOn>PrePackBlazorWasmApp; Build; _IntermediatePack; GenerateNuspec; </PackDependsOn>
+      <PackDependsOn>PrePackBlazorWasmApp; DotNetPublish; _IntermediatePack; GenerateNuspec; </PackDependsOn>
     </PropertyGroup>
   </Target>
 
@@ -50,7 +48,7 @@
     <PropertyGroup>
       <PublishFullPath>$([System.IO.Path]::GetFullPath( '$(PublishUrl)' ))</PublishFullPath>
     </PropertyGroup>
-    <Message Text="Built Package from: file://$(PublishFullPath)" Importance="high"/>
+    <Message Text="Built Package from: file://$(PublishFullPath.Replace('\','/'))" Importance="high"/>
     <PropertyGroup>
       <ServeCommand>
         dotnet tool update -g dotnet-serve
@@ -60,7 +58,7 @@
     </PropertyGroup>
     <WriteLinesToFile File="$(ServeBatchFile)" Lines="$(ServeCommand)" Overwrite="true"/>
     
-    <Message Text="Serve: file://$([System.IO.Path]::GetFullPath('$(ServeBatchFile)'))" Importance="high"/>
+    <Message Text="Serve: file://$(ServeBatchFile.Replace('\','/'))" Importance="high"/>
 
   </Target>
 

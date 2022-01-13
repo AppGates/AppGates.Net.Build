@@ -1,6 +1,7 @@
 ﻿<Project>
   <PropertyGroup>
     <TransitivePackEnabled Condition="'$(TransitivePackEnabled)' == ''">true</TransitivePackEnabled>
+	  <RequiresTransitivePack Condition="'$(RequiresTransitivePack)' == ''">true</RequiresTransitivePack>
   </PropertyGroup>
 
    <Import Project="targets\SupressVisualStudioDepedencyBuild.targets" 

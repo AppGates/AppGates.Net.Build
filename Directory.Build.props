@@ -6,6 +6,11 @@
     <Message Text="IsNoBinaryPackage: $(IsNoBinaryPackage)" Importance="high"/>
   </Target>-->
   <PropertyGroup>
+	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+	  <!--RS0016/RS0017: skip api change warning-->
+	  <!--NU5111: allow powershell files in package-->
+	  <WarningsNotAsErrors>$(WarningsNotAsErrors);RS0016;RS0017;NU5111;</WarningsNotAsErrors>
     <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/23327371/packages/nuget/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
 
     <UseVersioningSdk>true</UseVersioningSdk>

@@ -1,5 +1,9 @@
 ﻿<Project>
 
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<TransitivePackEnabled>false</TransitivePackEnabled>
 
+	</PropertyGroup>
 
 </Project>

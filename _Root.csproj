@@ -3,8 +3,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <!--<AdditionalBuildArguments>/bl:%25(Filename).binlog</AdditionalBuildArguments>-->
   </PropertyGroup>
- 
 
+	<Target Name="TestBuild">
+		<RemoveDir Directories="$(MSBuildThisFileDirectory)\_out" />
+		<Exec Command="git clean -fdX" WorkingDirectory="$(MSBuildThisFileDirectory)\src" />
+		<Exec Command="dotnet restore /bl:$(MSBuildThisFileDirectory)\_buildlog\build.binlog" WorkingDirectory="$(MSBuildThisFileDirectory)\src" />
+		<Exec Command="dotnet build /p:GeneratePackageOnBuild=true /p:SkipSolutionOperation=true /bl:$(MSBuildThisFileDirectory)\_buildlog\build.binlog" WorkingDirectory="$(MSBuildThisFileDirectory)\src" />
+
+	</Target>
   
 
  

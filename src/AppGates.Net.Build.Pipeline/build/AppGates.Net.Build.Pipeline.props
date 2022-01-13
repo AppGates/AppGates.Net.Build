@@ -7,6 +7,7 @@
     <AdditionalBuildArguments Condition="'$(AdditionalBuildArguments)' == ''"></AdditionalBuildArguments>
   </PropertyGroup>
 
+	<Target Name="Pack"></Target>
   <Target Name="PackSolutionWithMsBuild" AfterTargets="Pack" Condition="'$(SkipSolutionOperation)' != 'true'">
     
        <PropertyGroup>
@@ -49,12 +50,13 @@
       <SolutionFileToPack Include="src\*.sln" />
       <InnerBuildCommand Condition="'$(BuildingInsideVisualStudio)' != 'true'"
                       Include="@(SolutionFileToPack->'dotnet restore %(Identity) --force-evaluate /p:SkipSolutionOperation=true')" />
-      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet build %(SolutionFileToPack.Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)')"/>
+      <InnerBuildCommand Include="@(SolutionFileToPack->'dotnet build %(Identity) /p:SkipSolutionOperation=true $(AdditionalBuildArguments)')"/>
     </ItemGroup>
 
     <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
     <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
-    <Exec Command="%(InnerBuildCommand.Identity)" />
+    <Exec Command="%(InnerBuildCommand.Identity)"
+		  WorkingDirectory="$(MSBuildProjectDirectory)" />
   </Target>
 
   <Target Name="Test" AfterTargets="VSTest" Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(SkipSolutionOperation)' != 'true'">
@@ -69,7 +71,8 @@
     
     <Message Text="Pipeline Entry Target: $(PipelineEntryTarget)" Importance="high"/>
     <Message Text="Inner Build Command: %(InnerBuildCommand.Identity)" Importance="high"/>
-    <Exec Command="%(InnerBuildCommand.Identity)" />
+    <Exec Command="%(InnerBuildCommand.Identity)"
+		   WorkingDirectory="$(MSBuildProjectDirectory)"/>
   </Target>
 
   <ItemGroup>
