@@ -1,6 +1,10 @@
 ﻿<Project>
 	<PropertyGroup>
 		<WebProjectType>RazorLibrary</WebProjectType>
+
+		<!--Fix for: error NETSDK1150: The referenced project '../FabricClassLibrary/FabricClassLibrary.csproj' is a non self-contained executable.  A non self-contained executable cannot be referenced by a self-contained executable.-->
+		<OutputType>Library</OutputType>
+		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 	<Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props"/>
 
