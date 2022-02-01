@@ -1,5 +1,5 @@
 <Project>
-	<PropertyGroup Condition="'$(WebProjectType)' == '' AND Exists('$(MSBuildProjectDirectory)\wwwroot\')">
+	<PropertyGroup Condition="'$(WebProjectType)' == ''">
 		<WebProjectType>RazorLibrary</WebProjectType>
 		<WebProjectType Condition="'$(PublishableProject)' != ''">BlazorApp</WebProjectType>
 	</PropertyGroup>
