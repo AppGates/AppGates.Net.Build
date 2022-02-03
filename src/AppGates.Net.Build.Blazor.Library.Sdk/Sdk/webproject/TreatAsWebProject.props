@@ -1,4 +1,5 @@
 ﻿<Project>
+	<Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props"/>
 	<PropertyGroup>
 		<WebProjectType>RazorLibrary</WebProjectType>
 
@@ -6,7 +7,6 @@
 		<OutputType>Library</OutputType>
 		<IsPackable>true</IsPackable>
 	</PropertyGroup>
-	<Import Sdk="Microsoft.NET.Sdk.Web" Project="Sdk.props"/>
 
 	<ItemGroup>
 		<FrameworkReference Remove="Microsoft.AspNetCore.App" />
