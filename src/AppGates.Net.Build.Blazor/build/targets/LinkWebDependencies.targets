@@ -347,6 +347,8 @@ public class ManageLinks: Task
 
 	<Target Name="CreateLinks" BeforeTargets="BeforeBuild" >
 		<ManageLinks Links="@(DependencyLink->'%(AbsoluteTargetPath)'->Distinct())" ProjectDirectoryPath="$(MSBuildProjectDirectory)"/>
+	</Target>
+
 
 	<!--We need to exclude the linked assets in Blazor apps for debugging purposes from 
 	the static web asset handling, because it would result in duplicates-->
@@ -363,5 +365,4 @@ public class ManageLinks: Task
 	</Target>
 	<!--done-->
 	
-	</Target>
 </Project>
