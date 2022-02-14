@@ -346,39 +346,22 @@ public class ManageLinks: Task
 	</ItemGroup>
 
 	<Target Name="CreateLinks" BeforeTargets="BeforeBuild" >
-		<!--<PropertyGroup>
-			<LinkedFilesGitIgnorePath>$(MSBuildProjectDirectory)\.gitIgnore</LinkedFilesGitIgnorePath>
-		</PropertyGroup>
-
-		<Message
-			Condition="Exists('%(DependencyLink.AbsoluteTargetPath)') == false"
-			Text="Link: %(DependencyLink.SourcePath) to %(DependencyLink.AbsoluteTargetPath)"
-			Importance="high"
-			/>
-
-		<ReadLinesFromFile
-			File="$(LinkedFilesGitIgnorePath)">
-			<Output TaskParameter="Lines"  PropertyName="ProjectGitIgnoreContent"/>
-		</ReadLinesFromFile>
-
-		<WriteLinesToFile
-			Condition="$(ProjectGitIgnoreContent.Contains('%(DependencyLink.GitIgnorePath)').Equals(false))"
-			File="$(LinkedFilesGitIgnorePath)"
-			Lines="%(DependencyLink.GitIgnorePath)/*"
-			/>
-
-		<MakeDir
-			Condition="Exists('$(DebugLinkRootPath)') == false"
-			 Directories="$(DebugLinkRootPath)"
-			/>
-		<Exec
-			Condition="Exists('%(DependencyLink.AbsoluteTargetPath)') == false"
-			Command="mklink /J %(DependencyLink.AbsoluteTargetPath) %(DependencyLink.SourcePath)"
-			/>-->
-
-		<!--<Message Importance="high" Condition="%(DependencyLink.Hide)" Text="Hide: %(DependencyLink.AbsoluteTargetPath)"/>-->
 		<ManageLinks Links="@(DependencyLink->'%(AbsoluteTargetPath)'->Distinct())" ProjectDirectoryPath="$(MSBuildProjectDirectory)"/>
 
+	<!--We need to exclude the linked assets in Blazor apps for debugging purposes from 
+	the static web asset handling, because it would result in duplicates-->
+    <PropertyGroup>
+		<ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+			$(ResolveCurrentProjectStaticWebAssetsInputsDependsOn);ExcludeLinkedWebAssets;</ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
+	</PropertyGroup>
 
+	<Target Name="ExcludeLinkedWebAssets" >
+		<ItemGroup>
+			<Content Remove="wwwroot\_content\**"/>
+			<ContentWithTargetPath Remove="wwwroot\_content\**"/>
+		</ItemGroup>
+	</Target>
+	<!--done-->
+	
 	</Target>
 </Project>
