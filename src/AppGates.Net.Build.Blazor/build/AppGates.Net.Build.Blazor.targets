@@ -4,6 +4,7 @@
 		<WebProjectType Condition="'$(PublishableProject)' != ''">BlazorApp</WebProjectType>
 	</PropertyGroup>
 	<PropertyGroup>
+		<EnableWebAssetLinking Condition="'$(EnableWebAssetLinking)' == ''">true</EnableWebAssetLinking>
 		<EnableTypeScript Condition="'$(EnableTypeScript)' == ''">true</EnableTypeScript>
 		<OutputType Condition="'$(WebProjectType)' == 'RazorLibrary'">Library</OutputType>
 	</PropertyGroup>
@@ -31,7 +32,7 @@
 	<Import Condition="Exists('$(MSBuildProjectDirectory)\libman.json')" 
 			Project="targets\libman\IncludeLibman.targets" />
 	
-	<Import Condition="'$(WebProjectType)' != ''"
+	<Import Condition="'$(EnableWebAssetLinking)' AND '$(WebProjectType)' != ''"
 			Project="targets\LinkWebDependencies.targets"/>
 
 	<Import Condition="'$(EnableTypeScript)' == 'true'"
