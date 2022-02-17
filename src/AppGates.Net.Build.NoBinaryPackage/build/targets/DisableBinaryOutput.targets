@@ -1,11 +1,14 @@
 ﻿<Project>
   <PropertyGroup>
+	  <KeepDependencies Condition="'$(KeepDependencies)' == ''">false</KeepDependencies>
     <DevelopmentDependency>true</DevelopmentDependency>
-	  <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+	  <SuppressDependenciesWhenPacking>$(KeepDependencies.Equals('false'))</SuppressDependenciesWhenPacking>
 	  <IncludeBuildOutput>false</IncludeBuildOutput>
     <IncludeProjectBinaryOutput>false</IncludeProjectBinaryOutput>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <NoWarn>$(NoWarn);CS2008</NoWarn>
+
+	  <!--NU5128 is created when you have a netstandard2.0 dependency but no netstandard 2.0 lib folder... which is totally fine for build packages-->
+	  <NoWarn>$(NoWarn);CS2008;NU5128</NoWarn>
 
   </PropertyGroup>
   <Target Name="RemoveOtherCompileItems" BeforeTargets="CoreCompile">

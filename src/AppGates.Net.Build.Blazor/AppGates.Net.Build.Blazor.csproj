@@ -6,8 +6,16 @@
   <ItemGroup>
 	  <PackageReference Include="Microsoft.Build.Tasks.Core" Version="*" PrivateAssets="all" />
 	  
-	  <!--Add the potential dependencies, so that they are already restored, when used within the build packages targets-->
-	  <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" ExcludeAssets="all" />
-	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*" ExcludeAssets="all" />
   </ItemGroup>
+
+	<!--Add the potential dependencies, so that they are already restored, when used within the build packages targets-->
+	<PropertyGroup>
+		<KeepDependencies>true</KeepDependencies>
+	</PropertyGroup>
+	<ItemGroup>
+		<!--Include native to simply include something otherwise the dependency is not kept-->
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" IncludeAssets="native" PrivateAssets="none" />
+		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*" IncludeAssets="native" PrivateAssets="none" />
+	</ItemGroup>
+		
 </Project>

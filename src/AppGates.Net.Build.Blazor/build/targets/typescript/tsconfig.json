@@ -21,6 +21,6 @@
     // for now we emit .js and .js.map files and pack them together with the .ts files in the nuget package.
     // "noEmit": true,
 
-    "typeRoots": [ "./@types" ]
+    //"typeRoots": [ "./@types" ]
   }
 }
