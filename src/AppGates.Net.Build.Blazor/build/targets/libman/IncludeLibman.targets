@@ -1,8 +1,10 @@
 ﻿<Project>
   <Import Project="FixLibmanRestore.targets"/>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.LibraryManager.Build" 
-                      Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
+	  <PackageReference Include="Microsoft.Web.LibraryManager.Build"
+						Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
+	  <PackageReference Update="Microsoft.Web.LibraryManager.Build"
+						Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
   </ItemGroup>
 	<!--Not sure if necessary, but ensure that libman restore runs before typescript build-->
 	<PropertyGroup>

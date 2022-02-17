@@ -8,7 +8,8 @@
 		<TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" IncludeAssets="build" PrivateAssets="all" />
+		<PackageReference Update="Microsoft.TypeScript.MSBuild" Version="*" IncludeAssets="build" PrivateAssets="all" />
 	</ItemGroup>
 
 
