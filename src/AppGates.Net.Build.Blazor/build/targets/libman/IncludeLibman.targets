@@ -1,11 +1,14 @@
 ﻿<Project>
   <Import Project="FixLibmanRestore.targets"/>
   <ItemGroup>
-	  <PackageReference Include="Microsoft.Web.LibraryManager.Build"
-						Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
-	  <PackageReference Update="Microsoft.Web.LibraryManager.Build"
-						Version="*" IncludeAssets="build"  ExcludeAssets="compile,runtime"  PrivateAssets="all" />
+	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*"
+						GeneratePathProperty="true" IncludeAssets="None" PrivateAssets="all" />
   </ItemGroup>
+	<PropertyGroup>
+		<LibmanPackageTargetPathWithoutExtension>$(PkgMicrosoft_Web_LibraryManager_Build)\build\Microsoft.Web.LibraryManager.Build</LibmanPackageTargetPathWithoutExtension>
+	</PropertyGroup>
+	<Import Project="$(LibmanPackageTargetPathWithoutExtension).props" />
+
 	<!--Not sure if necessary, but ensure that libman restore runs before typescript build-->
 	<PropertyGroup>
 		<CompileTypeScriptDependsOn>$(LibraryManagerRestore);$(CompileTypeScriptDependsOn)</CompileTypeScriptDependsOn>
@@ -36,4 +39,7 @@
     <WriteLinesToFile File="$(LibManConfigurationFilePath)" Lines="$(LibManConfiguration.Trim())"/>
 
   </Target>
+	
+	<Import Project="$(LibmanPackageTargetPathWithoutExtension).targets" />
+
 </Project>
