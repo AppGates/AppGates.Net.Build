@@ -19,10 +19,17 @@
     https://docs.microsoft.com/de-de/nuget/reference/errors-and-warnings/nu5119
     and also avoid that it is packed.
     -->
-	<ItemGroup Condition="Exists('wwwroot\.gitignore')">
+	<!--<ItemGroup Condition="Exists('wwwroot\.gitignore')">
 		<Content Remove="wwwroot\.gitignore" />
 		<None Include="wwwroot\.gitignore" />
+	</ItemGroup>-->
+
+	<ItemGroup>
+		<Content Remove="wwwroot\**\.gitignore" />
+		<None Include="wwwroot\**\.gitignore" />
 	</ItemGroup>
+
+	
 	
 	<ItemGroup Condition="Exists('Properties\launchsettings.json')">
 		<Content Remove="Properties\launchsettings.json" />

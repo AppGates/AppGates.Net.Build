@@ -17,7 +17,7 @@
 		<ResolveStaticWebAssetsInputsDependsOn>AddTypescriptFilesToContent;$(ResolveStaticWebAssetsInputsDependsOn)</ResolveStaticWebAssetsInputsDependsOn>
 	</PropertyGroup>
 
-	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveProjectStaticWebAssets">
+	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveCurrentProjectStaticWebAssetsInputs">
 
 		<ItemGroup>
 			<!--<None Include="@(TypeScriptCompile)" Exclude="@(None)" ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest" />-->
