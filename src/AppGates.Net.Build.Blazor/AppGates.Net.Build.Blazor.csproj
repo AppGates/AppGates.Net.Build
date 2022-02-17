@@ -4,6 +4,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="*" PrivateAssets="all" />
+	  <PackageReference Include="Microsoft.Build.Tasks.Core" Version="*" PrivateAssets="all" />
+	  
+	  <!--Add the potential dependencies, so that they are already restored, when used within the build packages targets-->
+	  <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" ExcludeAssets="all" />
+	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*" ExcludeAssets="all" />
   </ItemGroup>
 </Project>
