@@ -7,6 +7,12 @@
 		</ResolveCurrentProjectStaticWebAssetsInputsDependsOn>
 		<TypeScriptRootDirectory Condition="'$(TypeScriptRootDirectory)' == ''">$(MSBuildProjectDirectory)\wwwroot\</TypeScriptRootDirectory>
 	</PropertyGroup>
+
+
+	<!--New workaround to reference packages within build packages:
+	1. Set the reference as dependency on the build package project (see AppGates.Net.Build.Blazor.csproj)
+	2. Reference the dependency within the target with GeneratePathProperty=true, don't include any asset (which doesn't get pulled anyway)
+	3. Import the build/[package].props and build /[package].targets based on the generated path property.-->
 	<ItemGroup>
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*"  
 						  GeneratePathProperty="true" IncludeAssets="None" PrivateAssets="all" />
@@ -23,33 +29,24 @@
 	</PropertyGroup>
 
 	<Target Name="AddTypescriptFilesToContent"  BeforeTargets="ResolveCurrentProjectStaticWebAssetsInputs">
-
 		<ItemGroup>
-			<!--<None Include="@(TypeScriptCompile)" Exclude="@(None)" ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest" />-->
 			<Content Include="@(TypeScriptCompile)" Exclude="@(Content)"
 					 ExcludeFromSingleFile="true" Pack="false" CopyToPublishDirectory="PreserveNewest"/>
-
-			<!--<None Update="@(None)"
-				   ExcludeFromSingleFile="true" CopyToPublishDirectory="PreserveNewest"/>-->
 		</ItemGroup>
-
-		
-		
-		<!--<ItemGroup>
-			<TypescriptFileToInclude
-				Include="@(TypeScriptCompile)" Exclude="@(Content)"/>
-		</ItemGroup>
-		<DiscoverStaticWebAssets
-		 Candidates="@(TypescriptFileToInclude)"
-		 SourceId="$(PackageId)"
-		 Pattern="wwwroot/**"
-		 ContentRoot="$(MSBuildProjectDirectory)\wwwroot\"
-		 BasePath="$(StaticWebAssetBasePath)"
-		>
-			<Output TaskParameter="DiscoveredStaticWebAssets" ItemName="StaticWebAsset" />
-		</DiscoverStaticWebAssets>-->
-
 	</Target>
+	
+	<!--Workaround for the typescript output files (*.js, *.js.map) The content items are produced with full path,
+	but ResolveCurrentProjectStaticWebAssetsInputs expects items with relative path--> 
+	<Target Name="IncludeContentWithFullPath" BeforeTargets="ResolveCurrentProjectStaticWebAssetsInputs">
+		<ItemGroup>
+			<ContentToModify  Include="@(Content)" Condition="$([System.String]::Copy('%(Identity)').Replace('\','/').Contains('/wwwroot/'))">
+				<RelativeWwwrootPath>$([MSBuild]::MakeRelative('$(MSBuildProjectDirectory)', '%(Identity)'))</RelativeWwwrootPath>
+			</ContentToModify>
+			<Content Remove="@(ContentToModify)"></Content>
+			<Content Include="@(ContentToModify->'%(RelativeWwwrootPath)')"/>
+		</ItemGroup>
+	</Target>
+	
 	<!--End - [Add Typescript files to the RCL package]-->
 
 
@@ -65,12 +62,15 @@
 	We want to avoid that-->
 	<Target Name="RemoveUnwantedContent" BeforeTargets="GetTypeScriptOutputForPublishing">
 		<ItemGroup>
-			<JavascriptToRemove  Include="@(GeneratedJavascript)" Exclude="wwwroot\**"/>
+			<JavascriptNotToRemove Include="$(MSBuildProjectDirectory)/wwwroot/**"/>
+			<!--for linux-->
+			<JavascriptNotToRemove Include="wwwroot\**"/>
+			<!--for windows-->
+			<JavascriptToRemove  Include="@(GeneratedJavascript)" Exclude="@(JavascriptNotToRemove)"/>
 			<GeneratedJavascript Remove="@(JavascriptToRemove)"/>
 
 		</ItemGroup>
 	</Target>
-
 	<Import Project="$(TypeScriptPackageTargetPathWithoutExtension).targets" />
 
 </Project>
