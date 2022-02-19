@@ -35,8 +35,12 @@
 		<Content Remove="Properties\launchsettings.json" />
 		<None Include="Properties\launchsettings.json" />
 	</ItemGroup>
+
+	<PropertyGroup>
+		<LibManJsonFilePath Condition="'$(LibManJsonFilePath)' == ''" >$(MSBuildProjectDirectory)\libman.json</LibManJsonFilePath>
+	</PropertyGroup>
 	
-	<Import Condition="Exists('$(MSBuildProjectDirectory)\libman.json')" 
+	<Import Condition="Exists('$(LibManJsonFilePath)')" 
 			Project="targets\libman\IncludeLibman.targets" />
 	
 	<Import Condition="'$(EnableWebAssetLinking)' AND '$(WebProjectType)' != ''"

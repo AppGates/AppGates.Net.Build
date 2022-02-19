@@ -2,10 +2,12 @@
 	<Import Project="FixLibmanRestore.targets"/>
 
 	<!--Include libman.json in package under "info" folder-->
+	
 	<ItemGroup>
-		<Content Remove="$(MSBuildProjectDirectory)\libman.json" />
-		<None Remove="$(MSBuildProjectDirectory)\libman.json" />
-		<None Include="$(MSBuildProjectDirectory)\libman.json" Condition="Exists('libman.json')" Pack="true" PackagePath="/info/"/>
+		<Content Remove="$(LibManJsonFilePath)" />
+		<!--<None Remove="$(LibManJsonFilePath)" />-->
+		<None Include="$(LibManJsonFilePath)" Pack="true" IncludeInPackage="true" PackagePath="info/"/>
+		<None Update="$(LibManJsonFilePath)" Pack="true" IncludeInPackage="true" PackagePath="info/"/>
 	</ItemGroup>
 
 	<!--New workaround to reference packages within build packages:
@@ -30,7 +32,7 @@
 		<LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
 	</PropertyGroup>
 
-	<Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
+	<Target Name="SetLibManProxy" Condition="'$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
 		<PropertyGroup>
 			<LibManConfigurationFilePath>$(HOME)\.librarymanager\libman.config.json</LibManConfigurationFilePath>
 			<LibManConfiguration>
