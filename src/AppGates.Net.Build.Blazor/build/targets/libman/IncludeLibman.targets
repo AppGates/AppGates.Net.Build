@@ -23,10 +23,11 @@
   <PropertyGroup>
     <LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
   </PropertyGroup>
-	
-	<ItemGroup >
-		<Content Remove="libman.json" />
-		<None Include="libman.json" />
+
+	<ItemGroup>
+		<Content Remove="$(MSBuildProjectDirectory)\libman.json" />
+		<None Remove="$(MSBuildProjectDirectory)\libman.json" />
+		<None Include="$(MSBuildProjectDirectory)\libman.json" Condition="Exists('libman.json')" Pack="true" PackagePath="/info/"/>
 	</ItemGroup>
 	
   <Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
