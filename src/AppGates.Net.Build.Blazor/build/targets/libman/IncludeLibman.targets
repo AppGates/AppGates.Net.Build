@@ -1,15 +1,21 @@
 ﻿<Project>
-  <Import Project="FixLibmanRestore.targets"/>
-	
-	
+	<Import Project="FixLibmanRestore.targets"/>
+
+	<!--Include libman.json in package under "info" folder-->
+	<ItemGroup>
+		<Content Remove="$(MSBuildProjectDirectory)\libman.json" />
+		<None Remove="$(MSBuildProjectDirectory)\libman.json" />
+		<None Include="$(MSBuildProjectDirectory)\libman.json" Condition="Exists('libman.json')" Pack="true" PackagePath="/info/"/>
+	</ItemGroup>
+
 	<!--New workaround to reference packages within build packages:
 	1. Set the reference as dependency on the build package project (see AppGates.Net.Build.Blazor.csproj)
 	2. Reference the dependency within the target with GeneratePathProperty=true, don't include any asset (which doesn't get pulled anyway)
 	3. Import the build/[package].props and build /[package].targets based on the generated path property.-->
-  <ItemGroup>
-	  <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*"
-						GeneratePathProperty="true" IncludeAssets="None" PrivateAssets="all" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*"
+						  GeneratePathProperty="true" IncludeAssets="None" PrivateAssets="all" />
+	</ItemGroup>
 	<PropertyGroup>
 		<LibmanPackageTargetPathWithoutExtension>$(PkgMicrosoft_Web_LibraryManager_Build)\build\Microsoft.Web.LibraryManager.Build</LibmanPackageTargetPathWithoutExtension>
 	</PropertyGroup>
@@ -20,33 +26,27 @@
 		<CompileTypeScriptDependsOn>$(LibraryManagerRestore);$(CompileTypeScriptDependsOn)</CompileTypeScriptDependsOn>
 	</PropertyGroup>
 
-  <PropertyGroup>
-    <LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
-  </PropertyGroup>
+	<PropertyGroup>
+		<LibManProxyServer Condition="'$(LibManProxyServer)' == ''"></LibManProxyServer>
+	</PropertyGroup>
 
-	<ItemGroup>
-		<Content Remove="$(MSBuildProjectDirectory)\libman.json" />
-		<None Remove="$(MSBuildProjectDirectory)\libman.json" />
-		<None Include="$(MSBuildProjectDirectory)\libman.json" Condition="Exists('libman.json')" Pack="true" PackagePath="/info/"/>
-	</ItemGroup>
-	
-  <Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
-    <PropertyGroup>
-      <LibManConfigurationFilePath>$(HOME)\.librarymanager\libman.config.json</LibManConfigurationFilePath>
-      <LibManConfiguration>
-        {
-        "config": {
-        "http_proxy": "$(LibManProxyServer)",
-        "https_proxy": "$(LibManProxyServer)"
-        }
-        }
-      </LibManConfiguration>
-    </PropertyGroup>
-    <Message Text="Write LibMan Config: $(LibManConfiguration) to $(LibManConfigurationFilePath)" Importance="high"/>
-    <WriteLinesToFile File="$(LibManConfigurationFilePath)" Lines="$(LibManConfiguration.Trim())"/>
+	<Target Name="SetLibManProxy" Condition="Exists('libman.json') AND '$(LibManProxyServer)' != ''" BeforeTargets="LibraryManagerRestore">
+		<PropertyGroup>
+			<LibManConfigurationFilePath>$(HOME)\.librarymanager\libman.config.json</LibManConfigurationFilePath>
+			<LibManConfiguration>
+				{
+				"config": {
+				"http_proxy": "$(LibManProxyServer)",
+				"https_proxy": "$(LibManProxyServer)"
+				}
+				}
+			</LibManConfiguration>
+		</PropertyGroup>
+		<Message Text="Write LibMan Config: $(LibManConfiguration) to $(LibManConfigurationFilePath)" Importance="high"/>
+		<WriteLinesToFile File="$(LibManConfigurationFilePath)" Lines="$(LibManConfiguration.Trim())"/>
 
-  </Target>
-	
+	</Target>
+
 	<Import Project="$(LibmanPackageTargetPathWithoutExtension).targets" />
 
 </Project>
