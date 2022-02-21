@@ -5,7 +5,10 @@
 						  GeneratePathProperty="true" IncludeAssets="None" PrivateAssets="all" />
 	</ItemGroup>
 	<PropertyGroup>
-		<PackageReferencesOnlyPackageTargetPathWithoutExtension>$(PkgAppGates_Net_Build_PackageReferencesOnly_Sdk)\build\AppGates.Net.Build.PackageReferencesOnly.Sdk</PackageReferencesOnlyPackageTargetPathWithoutExtension>
+		<PackageReferencesOnlyPackageTargetPathWithoutExtension
+			Condition="'$(PkgAppGates_Net_Build_PackageReferencesOnly_Sdk)' != ''" >$(PkgAppGates_Net_Build_PackageReferencesOnly_Sdk)\build\AppGates.Net.Build.PackageReferencesOnly.Sdk</PackageReferencesOnlyPackageTargetPathWithoutExtension>
+		<PackageReferencesOnlyPackageTargetPathWithoutExtension
+		Condition="'$(PkgAppGates_Net_Build_PackageReferencesOnly_Sdk)' == ''" >..\build\AppGates.Net.Build.PackageReferencesOnly.Sdk</PackageReferencesOnlyPackageTargetPathWithoutExtension>
 	</PropertyGroup>
 	<Import Project="$(PackageReferencesOnlyPackageTargetPathWithoutExtension).props" />
 

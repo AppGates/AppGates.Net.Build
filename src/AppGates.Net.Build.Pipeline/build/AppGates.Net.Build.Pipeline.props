@@ -16,7 +16,12 @@
     </PropertyGroup>
     
     <MakeDir Directories="$(PackageOutputFullPath)" />
-    
+
+	  <PropertyGroup>
+		  <AddLocalPackageSourceCommand>dotnet nuget add source "$(PackageOutputFullPath)"</AddLocalPackageSourceCommand>
+	  </PropertyGroup>
+	<Exec Command="$(AddLocalPackageSourceCommand)"/>
+	  
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln"/>
     </ItemGroup>
