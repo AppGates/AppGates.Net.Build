@@ -1,2 +1,0 @@
-AppGates.Build.Versioning.Test.MultiTargetLibrary.Class1
-AppGates.Build.Versioning.Test.MultiTargetLibrary.Class1.Class1() -> void

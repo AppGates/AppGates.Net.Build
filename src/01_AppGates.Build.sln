@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppGates.Net.Build.Tasks", "AppGates.Net.Build.Tasks\AppGates.Net.Build.Tasks.csproj", "{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppGates.Net.Build.PackageReferencesOnly.Sdk", "AppGates.Net.Build.PackageReferencesOnly.Sdk\AppGates.Net.Build.PackageReferencesOnly.Sdk.csproj", "{9830D2D8-7264-429E-A616-E4DA79134BDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -109,6 +111,10 @@ Global
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9830D2D8-7264-429E-A616-E4DA79134BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9830D2D8-7264-429E-A616-E4DA79134BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9830D2D8-7264-429E-A616-E4DA79134BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9830D2D8-7264-429E-A616-E4DA79134BDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -130,6 +136,7 @@ Global
 		{2C85C721-5244-4F1F-9AF5-0CA0CA752BAF} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{BB818415-769E-4526-A338-FCEE64488E92} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 		{EF2B5E04-1A95-4B36-806A-98B6E3FC5C4A} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
+		{9830D2D8-7264-429E-A616-E4DA79134BDF} = {FFF8E523-AC7A-41A4-8ED5-BE15D1EF0C14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1A1A1C38-2115-4B0C-AC66-0623B2BCB102}

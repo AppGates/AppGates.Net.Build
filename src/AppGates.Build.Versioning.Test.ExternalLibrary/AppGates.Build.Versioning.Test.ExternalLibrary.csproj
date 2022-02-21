@@ -1,11 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk;AppGates.Net.Build.PackageReferencesOnly.Sdk/1.3.38.1645419667">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AppGates.Build.Versioning.Test.TransitiveLibrary\AppGates.Build.Versioning.Test.TransitiveLibrary.csproj" />
+	  <PackageReference Include="AppGates.Build.Versioning.Test.TransitiveLibrary" Version="*"/>
+    <!--<ProjectReference Include="..\AppGates.Build.Versioning.Test.TransitiveLibrary\AppGates.Build.Versioning.Test.TransitiveLibrary.csproj" />-->
   </ItemGroup>
 
  

@@ -1,0 +1,108 @@
+﻿<Project>
+	<PropertyGroup>
+		<!--we need to be able to supprress some packages to replace (e.g. build package) otherwise visual studio restores packages endless-->
+		<ReplacePackageReferences Condition="'$(ReplacePackageReferences)' == ''">true</ReplacePackageReferences>
+	</PropertyGroup>
+
+	<Choose>
+		<When Condition="$(ReplacePackageReferences)">
+			<PropertyGroup>
+				<HasSolution Condition="'$(HasSolution)' == ''"></HasSolution>
+			</PropertyGroup>
+
+			<Choose>
+				<When Condition="'$(SolutionPath)' != '' AND '$(SolutionPath)' != '*undefined*' AND Exists('$(SolutionPath)')">
+					<PropertyGroup>
+						<SolutionContentSplitPattern>
+							<![CDATA[
+Global
+]]>
+						</SolutionContentSplitPattern>
+						<SolutionFileContent>$([System.IO.File]::ReadAllText($(SolutionPath)).Replace($(SolutionContentSplitPattern),"|").Split('|')[0])</SolutionFileContent>
+						<SmartSolutionDir>$([System.IO.Path]::GetDirectoryName( $(SolutionPath) ))</SmartSolutionDir>
+						<HasSolution>true</HasSolution>
+					</PropertyGroup>
+				</When>
+				<Otherwise>
+					<PropertyGroup>
+						<HasSolution>false</HasSolution>
+					</PropertyGroup>
+				</Otherwise>
+			</Choose>
+
+			<PropertyGroup>
+				<SkipProjectReferenceResolutionViaSolution Condition="$(SkipProjectReferenceResolutionViaSolution) == ''" >false</SkipProjectReferenceResolutionViaSolution>
+				<SkipProjectReferenceResolutionViaSourceRootDirectory Condition="$(SkipProjectReferenceResolutionViaSourceRootDirectory) == ''" >false</SkipProjectReferenceResolutionViaSourceRootDirectory>
+				<ProjectReferenceResolutionRoot Condition="'$(ProjectReferenceResolutionRoot)' == '' AND $(HasSolution) == false">$(SourceRootDirectory)</ProjectReferenceResolutionRoot>
+				<ProjectPaths Condition="'$(ProjectPaths)' == ''"></ProjectPaths>
+				<ProjectReferenceResolutionWay></ProjectReferenceResolutionWay>
+			</PropertyGroup>
+
+			<Choose>
+				<When Condition="$(HasSolution) AND $(SkipProjectReferenceResolutionViaSolution) == false">
+					<PropertyGroup>
+						<ProjectPathInSolutionFileRegexPattern>", "(.*)", </ProjectPathInSolutionFileRegexPattern>
+						<RelativeProjectPaths>$([System.Text.RegularExpressions.Regex]::Matches('$(SolutionFileContent)','$(ProjectPathInSolutionFileRegexPattern)',System.Text.RegularExpressions.RegexOptions.ExplicitCapture))</RelativeProjectPaths>
+						<ProjectPaths>$(RelativeProjectPaths.Replace('", "', '$(SmartSolutionDir)\').Replace('", ',''))</ProjectPaths>
+						<ProjectReferenceResolutionWay>$(ProjectReferenceResolutionWay)|Solution|</ProjectReferenceResolutionWay>
+					</PropertyGroup>
+				</When>
+			</Choose>
+			<Choose>
+				<When Condition="'$(SkipProjectReferenceResolutionViaSourceRootDirectory)' == 'false' AND '$(ProjectReferenceResolutionRoot)' != '' AND Exists('$(ProjectReferenceResolutionRoot)')">
+					<PropertyGroup>
+						<ProjectPathsFromFolder>$([System.IO.Directory]::GetFiles('$(ProjectReferenceResolutionRoot)','*.csproj',System.IO.SearchOption.AllDirectories))</ProjectPathsFromFolder>
+						<ProjectPaths>$(ProjectPaths);$(ProjectPathsFromFolder)</ProjectPaths>
+						<ProjectReferenceResolutionWay>$(ProjectReferenceResolutionWay)|ResolutionRoot|</ProjectReferenceResolutionWay>
+					</PropertyGroup>
+				</When>
+			</Choose>
+			<Choose>
+				<When Condition="'$(ProjectPaths)' != ''">
+					<ItemGroup>
+						<!-- Keep the identity of the  packagereference -->
+						<SmartPackageReference Include="@(PackageReference  -> WithMetadataValue('SuppressReferenceReplacement', ''))">
+							<PackageName>%(Identity)</PackageName>
+							<HasProject>$(ProjectPaths.Contains('%(Identity).csproj'))</HasProject>
+							<!--Backslash check might be a problem on linux, so we would have to check for slash or backslash-->
+							<!--<HasProject>$(ProjectPaths.Contains('\%(Identity).csproj'))</HasProject>-->
+						</SmartPackageReference>
+
+						<!-- Filter them by mapping them to another itemGroup using the WithMetadataValue item function -->
+						<PackageInSolution Include="@(SmartPackageReference -> WithMetadataValue('HasProject', True) )">
+							<ProjectPath>$([System.Text.RegularExpressions.Regex]::Match( '$(ProjectPaths)', '[^;]+%(PackageName).csproj' ))</ProjectPath>
+						</PackageInSolution>
+
+					</ItemGroup>
+				</When>
+			</Choose>
+
+			<ItemGroup>
+
+				<ProjectReference  Include="@(PackageInSolution -> '%(ProjectPath)' )">
+					<Version></Version>
+					<NuGetPackageId></NuGetPackageId>
+				</ProjectReference>
+
+				<!-- Remove the package references that are now referenced as projects -->
+				<PackageReference Remove="@(PackageInSolution -> '%(PackageName)' )"/>
+			</ItemGroup>
+
+		</When>
+
+	</Choose>
+
+	<Target Name="LogDynamicPackageResoltion" BeforeTargets="BeforeBuild">
+
+		<Message Importance="$(BuildSdkLogPriority)" Text="HasSolution: $(HasSolution)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="SolutionPath: $(SolutionPath)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="SolutionContentSplitPattern: $(SolutionContentSplitPattern)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="SolutionFileContent: $(SolutionFileContent)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectPaths: $(ProjectPaths)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectReferenceResolutionRoot: $(ProjectReferenceResolutionRoot)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectReferenceResolutionWay: $(ProjectReferenceResolutionWay)"/>
+
+	</Target>
+
+
+</Project>

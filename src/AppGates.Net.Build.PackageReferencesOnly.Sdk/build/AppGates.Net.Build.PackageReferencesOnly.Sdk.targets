@@ -1,0 +1,4 @@
+﻿<Project>
+	<Import Project="targets\ResolvePackageToProjectReferences.targets"/>
+ 
+</Project>

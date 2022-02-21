@@ -10,12 +10,11 @@
     <!--Required for the show message box sample - or the package needs to be added on consumer side.-->
     <PackageReference Include="Newtonsoft.Json" Version="*" />
 
-    <!--Include Inline task files-->
-    <Compile Update="build\**\*.cs">
-      <Pack>true</Pack>
-      <PackagePath>/</PackagePath>
-    </Compile>
-
+    <!--Include Inline task files (wildcard behind build is required, 
+	otherwise the relative path in the package gets messed up and 
+	can't be fixed with PackagePath due to a msbuild bug. -->
+	  <None  Include="$(MSBuildProjectDirectory)\build*\**\*.cs"
+			   Pack="true"  />
   </ItemGroup>
 
 </Project>

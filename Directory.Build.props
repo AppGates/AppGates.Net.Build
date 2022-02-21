@@ -6,15 +6,17 @@
     <Message Text="IsNoBinaryPackage: $(IsNoBinaryPackage)" Importance="high"/>
   </Target>-->
   <PropertyGroup>
+	  <BuildSdkLogPriority>high</BuildSdkLogPriority>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
 	  <!--RS0016/RS0017: skip api change warning-->
 	  <!--NU5111: allow powershell files in package-->
 	  <WarningsNotAsErrors>$(WarningsNotAsErrors);RS0016;RS0017;NU5111;</WarningsNotAsErrors>
-    <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/23327371/packages/nuget/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
 
     <UseVersioningSdk>true</UseVersioningSdk>
     <UseLatestSdk>true</UseLatestSdk>
+	<UseApiManagement>false</UseApiManagement>
+	<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
     <!--<UseVersioningSdk  Condition="'$(MSBuildProjectName)' == 'AppGates.Build.ApiManagement.Sdk'" >false</UseVersioningSdk>-->
     <Nuget_Push_ProjectRepository_ServerUrl>https://gitlab.com</Nuget_Push_ProjectRepository_ServerUrl>
     <Nuget_Push_ProjectRepository_Id>23327371</Nuget_Push_ProjectRepository_Id>
@@ -41,6 +43,8 @@
     <PackageOutputPath Condition="'$(PackageOutputPath)' == ''">$(MSBuildThisFileDirectory)pack\</PackageOutputPath>
     <!--<RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>-->
     <!--<RebuildOnVisualStudioPack>true</RebuildOnVisualStudioPack>-->
+    <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/23327371/packages/nuget/index.json;$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
+    <RestoreAdditionalProjectSources Condition="Exists('$(PackageOutputPath)')" >$(PackageOutputPath);$(RestoreAdditionalProjectSources)</RestoreAdditionalProjectSources>
 
   </PropertyGroup>
 

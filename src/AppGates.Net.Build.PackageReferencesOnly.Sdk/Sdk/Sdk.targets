@@ -1,0 +1,6 @@
+﻿<Project>
+
+	<Import Project="$(PackageReferencesOnlyPackageTargetPathWithoutExtension).targets" />
+
+
+</Project>
