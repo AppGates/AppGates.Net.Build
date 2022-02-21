@@ -2,6 +2,7 @@
 	<PropertyGroup>
 		<!--we need to be able to supprress some packages to replace (e.g. build package) otherwise visual studio restores packages endless-->
 		<ReplacePackageReferences Condition="'$(ReplacePackageReferences)' == ''">true</ReplacePackageReferences>
+		<ReplaceProjectReferences Condition="'$(ReplaceProjectReferences)' == ''">true</ReplaceProjectReferences>
 	</PropertyGroup>
 
 	<Choose>
@@ -78,10 +79,12 @@ Global
 			</Choose>
 
 			<ItemGroup>
-
-				<ProjectReference  Include="@(PackageInSolution -> '%(ProjectPath)' )">
+				<ProjectReferenceFromPackageReference Include="@(PackageInSolution -> '%(ProjectPath)' )">
 					<Version></Version>
 					<NuGetPackageId></NuGetPackageId>
+				</ProjectReferenceFromPackageReference>
+
+				<ProjectReference  Include="@(ProjectReferenceFromPackageReference)">
 				</ProjectReference>
 
 				<!-- Remove the package references that are now referenced as projects -->
@@ -89,10 +92,34 @@ Global
 			</ItemGroup>
 
 		</When>
+		
+	</Choose>
+	<Choose>
+		<When Condition="$(ReplaceProjectReferences) AND '$(_RestoreSolutionFileUsed)' == ''">
+			<ItemGroup>
 
+				<!-- Keep the identity of the  project reference (relative path), determine the project name and whether the project is contained in the current solution -->
+				<SmartProjectReference Include="@(ProjectReference)" Exclude="@(ProjectReferenceFromPackageReference)">
+					<OriginalIdentity>%(Identity)</OriginalIdentity>
+					<ProjectName>$([System.IO.Path]::GetFileNameWithoutExtension( $([System.IO.Path]::GetFullPath( '%(OriginalIdentity)' )) ))</ProjectName>
+					<InSolution>$(SolutionFileContent.Contains('\%(ProjectName).csproj'))</InSolution>
+				</SmartProjectReference>
+
+				<!-- Filter them by mapping them to another itemGroup using the WithMetadataValue item function -->
+				<ProjectNotInSolution Include="@(SmartProjectReference -> WithMetadataValue('InSolution', False) )">
+				</ProjectNotInSolution>
+
+				<!--Reference the latest version of the package (why not * ? > see https://github.com/NuGet/Home/issues/7328-->
+				<PackageReference  Include="@(ProjectNotInSolution -> '%(ProjectName)' )" Version="[*,9999.0]"/>
+
+				<!-- Remove the project references that are now referenced as packages -->
+				<ProjectReference Remove="@(ProjectNotInSolution -> '%(OriginalIdentity)' )"/>
+			</ItemGroup>
+
+		</When>
 	</Choose>
 
-	<Target Name="LogDynamicPackageResoltion" BeforeTargets="BeforeBuild">
+	<!--<Target Name="LogDynamicPackageResoltion" BeforeTargets="BeforeBuild">
 
 		<Message Importance="$(BuildSdkLogPriority)" Text="HasSolution: $(HasSolution)"/>
 		<Message Importance="$(BuildSdkLogPriority)" Text="SolutionPath: $(SolutionPath)"/>
@@ -101,8 +128,10 @@ Global
 		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectPaths: $(ProjectPaths)"/>
 		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectReferenceResolutionRoot: $(ProjectReferenceResolutionRoot)"/>
 		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectReferenceResolutionWay: $(ProjectReferenceResolutionWay)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="SmartProjectReference: %(SmartProjectReference.Identity)"/>
+		<Message Importance="$(BuildSdkLogPriority)" Text="ProjectReferenceFromPackageReference: %(ProjectReferenceFromPackageReference.Identity)"/>
 
-	</Target>
+	</Target>-->
 
 
 </Project>
