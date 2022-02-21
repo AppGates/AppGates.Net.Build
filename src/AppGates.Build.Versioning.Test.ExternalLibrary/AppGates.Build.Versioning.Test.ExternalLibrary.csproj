@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk;AppGates.Net.Build.PackageReferencesOnly.Sdk/1.3.39">
+﻿<Project Sdk="Microsoft.NET.Sdk;AppGates.Net.Build.PackageReferencesOnly.Sdk/1.3.40">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
