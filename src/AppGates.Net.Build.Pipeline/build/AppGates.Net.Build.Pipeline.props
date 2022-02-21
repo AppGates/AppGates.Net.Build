@@ -20,7 +20,7 @@
 	  <PropertyGroup>
 		  <AddLocalPackageSourceCommand>dotnet nuget add source "$(PackageOutputFullPath)"</AddLocalPackageSourceCommand>
 	  </PropertyGroup>
-	<Exec Command="$(AddLocalPackageSourceCommand)"/>
+	<Exec Command="$(AddLocalPackageSourceCommand)" ContinueOnError="true" />
 	  
     <ItemGroup>
       <SolutionFileToPack Include="src\*.sln"/>
