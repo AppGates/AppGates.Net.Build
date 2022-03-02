@@ -1,7 +1,19 @@
 <Project>
 
+	<UsingTask 
+		TaskName="ManageLinks" 
+		TaskFactory="RoslynCodeTaskFactory" 
+		AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+		<ParameterGroup />
+
+		<Task>
+			<Code Type="Class" Language="cs" Source="$(MSBuildThisFileDirectory)ManageLinks.cs" />
+		</Task>
+	</UsingTask>
+	
+	<!--Obsolete-->
 	<UsingTask
-    TaskName="ManageLinks"
+    TaskName="ManageLinksOld"
     TaskFactory="RoslynCodeTaskFactory"
     AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll" >
 		<Task>

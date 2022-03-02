@@ -17,6 +17,7 @@ public class ManageLinks: Task
     [Required]
     public ITaskItem[] Links { get; set; }
 
+    void LogMessage(string message) => this.Log.LogMessage(MessageImportance.High, message);
     public override bool Execute()
     {
         if (string.IsNullOrEmpty(this.ProjectDirectoryPath))
@@ -26,8 +27,7 @@ public class ManageLinks: Task
         var linkComment= "# auto-generated debug link - don't modifiy this and the next line, remove the dependency instead";
         var projectDirectory = CreateDirectoryInfo(this.ProjectDirectoryPath);
 
-        void Log(string message) => this.Log.LogMessage(MessageImportance.High, message);
-        Log($"Manage debug and compile links for project '{projectDirectory.FullName}' ...");
+        LogMessage($"Manage debug and compile links for project '{projectDirectory.FullName}' ...");
 
         IEnumerable<(DirectoryInfo LinkedDirectory, Action RemoveLink)> GetLinks(DirectoryInfo projectDir, string linkCom,IList<string> gitIgnoreLines)
         {
@@ -40,7 +40,7 @@ public class ManageLinks: Task
                     var path = Path.Combine(projectDir.FullName,
                         gitIgnoreLines[lineIndex + 1].Replace('/', Path.DirectorySeparatorChar).Trim(Path.DirectorySeparatorChar));
                     var absoluteIgnoreDirectory = CreateDirectoryInfo(path);
-                    Log($"Found link definition '{absoluteIgnoreDirectory.FullName}'");
+                    LogMessage($"Found link definition '{absoluteIgnoreDirectory.FullName}'");
 
                     yield return (absoluteIgnoreDirectory, () =>
                     {
@@ -67,13 +67,13 @@ public class ManageLinks: Task
             var mappings = FullOuterJoin(expectedLinks,existingLinks, x => x.Target.FullName, x => x.LinkedDirectory.FullName,
                 (expected, existing,_) => (expected, existing)).ToArray();
 
-            Log( $"Discovered '{expectedLinks.Length}' expected links and '{existingLinks.Length}' existing links. Created '{mappings.Length}' mappings.");
+            LogMessage( $"Discovered '{expectedLinks.Length}' expected links and '{existingLinks.Length}' existing links. Created '{mappings.Length}' mappings.");
 
             foreach (var mapping in mappings)
             {
                 if (mapping.expected.Target == default)
                 {
-                    Log($"Remove link '{ mapping.existing.LinkedDirectory.FullName}' ...");
+                    LogMessage($"Remove link '{ mapping.existing.LinkedDirectory.FullName}' ...");
                     mapping.existing.RemoveLink();
                 }
                 else if (mapping.existing == default)
@@ -82,7 +82,7 @@ public class ManageLinks: Task
                         .Replace(projectDirectory.FullName, String.Empty)
                         .Replace(Path.DirectorySeparatorChar, '/');
 
-                    Log($"Add link '{gitIgnore}' to git ignore ...");
+                    LogMessage($"Add link '{gitIgnore}' to git ignore ...");
                     gitIgnoreLineList.Add(linkComment);
                     gitIgnoreLineList.Add(gitIgnore);
 
@@ -96,7 +96,7 @@ public class ManageLinks: Task
 
                         if (actualSource.FullName != expected.Source.FullName)
                         {
-                            Log($"Delete link because the link source changed from '{actualSource.FullName}' to '{expected.Source.FullName}'");
+                            LogMessage($"Delete link because the link source changed from '{actualSource.FullName}' to '{expected.Source.FullName}'");
 
                             expected.Target.Delete(true);
                             expected.Target.Refresh();
@@ -105,26 +105,13 @@ public class ManageLinks: Task
 
                     if (!expected.Target.Exists)
                     {
-                        var message = $"Linking '{expected.Source.FullName}' to '{expected.Target.FullName}'";
-                        if (!expected.Target.Parent.Exists)
-                            expected.Target.Parent.Create();
 
-                        var startInfo = new ProcessStartInfo(
-                            "cmd.exe", 
-                            $"/c mklink /J \"{expected.Target.FullName}\" \"{expected.Source.FullName}\"");
-                        startInfo.CreateNoWindow = true;
-
-                        var linkProcess = Process.Start(startInfo);
-                        linkProcess.WaitForExit();
-                        if (linkProcess.ExitCode != 0)
-                        {
-                            throw new ApplicationException($"{message} failed.");
-                        }
-                        Log($"{message} successful.");
+                        CreateSymbolicLink(expected.Source, expected.Target,LogMessage);
+                       
                         if (expected.Hide)
                         {
                             expected.Target.Refresh();
-                            Log($"Hide '{expected.Target.FullName}'");
+                            LogMessage($"Hide '{expected.Target.FullName}'");
                             if ((expected.Target.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
                             {
                                 //Add Hidden flag    
@@ -141,6 +128,60 @@ public class ManageLinks: Task
             File.WriteAllLines(gitIgnoreFile.FullName, gitIgnoreLineList.Where(x => x != null));
         }
         return true;
+
+    }
+
+    public void CreateSymbolicLink(DirectoryInfo source, DirectoryInfo target, Action<string> logMessage = null)
+    {
+        var message = $"Link '{source.FullName}' to '{target.FullName}'";
+        if (!target.Parent.Exists)
+            target.Parent.Create();
+
+        // #if NET6_0_OR_GREATER  // compilation symbols seem not to be set by the inline task compiler.
+        var isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+        if (!isWindows && Environment.Version.Major >= 6) // on windows the .NET 6 API seems not to work. The call is successful, but no symlink is created afterwards.
+        {
+            logMessage?.Invoke($"{message} with .NET6+ Api, because framework version is {Environment.Version}.");
+            //Directory.CreateSymbolicLink( target.FullName,source.FullName);
+            typeof(Directory).InvokeMember("CreateSymbolicLink",
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.InvokeMethod, null, null,
+                new object[] { target.FullName, source.FullName });
+        }
+        else
+        {
+            //#else
+            logMessage?.Invoke($"{message} with fallback approach, because framework version is {Environment.Version}.");
+            if (isWindows)
+            {
+                var startInfo = new ProcessStartInfo(
+                    "cmd.exe",
+                    $"/c mklink /J \"{target.FullName}\" \"{source.FullName}\"");
+                startInfo.CreateNoWindow = true;
+
+                var linkProcess = Process.Start(startInfo);
+                linkProcess.WaitForExit();
+                if (linkProcess.ExitCode != 0)
+                {
+                    throw new ApplicationException($"{message} failed.");
+                }
+            }
+            else
+            {
+                var startInfo = new ProcessStartInfo(
+                    "ln",
+                    $"-sf \"{source.FullName}\"´\"{target.FullName}\"");
+                startInfo.CreateNoWindow = true;
+
+                var linkProcess = Process.Start(startInfo);
+                linkProcess.WaitForExit();
+                if (linkProcess.ExitCode != 0)
+                {
+                    throw new ApplicationException($"{message} failed.");
+                }
+            }
+        }
+        //#endif
+        logMessage?.Invoke($"{message} successful.");
 
     }
 

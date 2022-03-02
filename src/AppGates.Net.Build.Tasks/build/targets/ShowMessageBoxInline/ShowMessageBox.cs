@@ -6,11 +6,18 @@ public class ShowMessageBox : Task
 {
     [Output]
     public bool Result { get; set; }
+
+    [Required]
+    public string Message { get; set; }
+    
+    [Required]
+    public string Title { get; set; }
+
     public override bool Execute()
     {
         var json = JsonConvert.SerializeObject(new { Hello = "Hello", World = "World", Number = 123 });
 
-        var result = MessageBox.Show(json, "Nice?", MessageBoxButtons.YesNo);
+        var result = MessageBox.Show(Message, Title, MessageBoxButtons.YesNo);
         this.Result = result == MessageBoxResult.Ok || result == MessageBoxResult.Yes;
         return true;
     }

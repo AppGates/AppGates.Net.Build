@@ -44,7 +44,7 @@
 			Project="targets\libman\IncludeLibman.targets" />
 	
 	<Import Condition="'$(EnableWebAssetLinking)' AND '$(WebProjectType)' != ''"
-			Project="targets\LinkWebDependencies.targets"/>
+			Project="targets\webAssetLink\LinkWebDependencies.targets"/>
 
 	<Import Condition="'$(EnableTypeScript)' == 'true'"
 			Project="targets\typescript\IncludeTypeScript.targets" />

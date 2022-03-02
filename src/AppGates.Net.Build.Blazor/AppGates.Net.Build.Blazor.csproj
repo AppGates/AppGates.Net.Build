@@ -17,5 +17,12 @@
 		<PackageReference Include="Microsoft.TypeScript.MSBuild" Version="*" IncludeAssets="native" PrivateAssets="none" />
 		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="*" IncludeAssets="native" PrivateAssets="none" />
 	</ItemGroup>
+	<ItemGroup>
+		<!--Include Inline task files (wildcard behind build is required, 
+	otherwise the relative path in the package gets messed up and 
+	can't be fixed with PackagePath due to a msbuild bug. -->
+		<None Include="$(MSBuildProjectDirectory)\build*\**\*.cs" Pack="true" />
+
+	</ItemGroup>
 		
 </Project>
